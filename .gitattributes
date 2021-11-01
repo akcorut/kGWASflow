@@ -1,0 +1,3 @@
+*.smk linguist-language=Python
+Snakefile linguist-language=Python
+*.snake linguist-language=Python

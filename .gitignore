@@ -1,0 +1,21 @@
+*
+!workflow
+!workflow/*
+!workflow/*.snake
+!workflow/envs
+!workflow/envs/*
+!workflow/rules
+!workflow/rules/*
+!workflow/report
+!workflow/report/*
+!workflow/schema
+!workflow/schema/*
+!workflow/scripts
+!workflow/scripts/*
+!config
+# !config/*
+!config/config.yaml
+!config/cluster.yaml
+!.gitignore
+!.gitattributes
+!README.md

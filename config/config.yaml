@@ -1,0 +1,53 @@
+# Samples Sheets
+samples: ../config/samples.tsv
+
+# =================================================================================================
+#     Workflow Settings
+# =================================================================================================
+
+settings:
+
+  trimming: 
+    activate: false
+
+# =================================================================================================
+#     Tool Parameters
+# =================================================================================================
+
+params:
+
+  # ----------------------------------------------------------------------
+  #     FastQC Params
+  # ----------------------------------------------------------------------
+
+  fastqc:
+    # Additional parameters for fastqc
+    extra: ""
+
+    # Number of threads for fastqc
+    threads: 8
+
+  # ----------------------------------------------------------------------
+  #     MultiQC Params
+  # ----------------------------------------------------------------------
+
+  multiqc: ""
+
+  # ----------------------------------------------------------------------
+  #     cutadapt Params
+  # ----------------------------------------------------------------------
+  cutadapt:
+    # Number of threads for cutadapt
+    threads: 36
+
+    # See cutadapt manual:
+    # https://cutadapt.readthedocs.io/en/stable/guide.html
+    # Set params for single end files
+    se:
+      adapters: ""
+      extra: ""
+    # Set params for paired end files
+    # https://cutadapt.readthedocs.io/en/stable/guide.html
+    pe:
+      adapters: ""
+      extra: ""
