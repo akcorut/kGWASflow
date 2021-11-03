@@ -18,38 +18,14 @@ import pathlib
 from os import path
 
 # =================================================================================================
-#     Min Version and Report
-# =================================================================================================
-
-# Make Sure Minimun Snakemake version
-min_version("6.10")
-basedir = workflow.basedir
-
-# Description of the workflow can be found in the final report
-report: "../report/workflow.rst"
-
-# =================================================================================================
 #     Laod Config File
 # =================================================================================================
-
-configfile: "../config/config.yaml"
 
 # validate(config, schema="../schemas/config.schema.yaml")
 
 # =================================================================================================
 #     Sample Sheets and Wildcard Constraints
 # =================================================================================================
-
-# samples = (
-#     pd.read_csv(
-#         config["samples"],
-#         sep="\t",
-#         dtype={"sample_name": str},
-#         comment="#",
-#     )
-#     .set_index("sample_name", drop=False)
-#     .sort_index()
-# )
 
 samples = (
     pd.read_csv(
@@ -61,8 +37,9 @@ samples = (
     .set_index(["sample_name", "library_name"], drop=False)
     .sort_index()
 )
+samples.index.names = ["sample_name", "library_name"]
 
-# Make sure indes always str type
+# Make sure indeces always str type
 samples.index = samples.index.set_levels([i.astype(str) for i in samples.index.levels])
 
 # Generate sample and library names lists
@@ -94,23 +71,44 @@ logger.info("")
 #     Common Helper Functions
 # =================================================================================================
 
-def get_fastq(wildcards):
+def get_reads(wildcards):
     """Get fastq files using samples sheet."""
     fastqs = samples.loc[(wildcards.sample, wildcards.library), ["fq1", "fq2"]].dropna()
     if len(fastqs) == 2:
+        # paired-end
         return {"r1": fastqs.fq1, "r2": fastqs.fq2}
     else:
+        # single end
         return {"r1": fastqs.fq1}
 
-def get_input_path_for_input_list(wildcards):
+## Source: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/blob/40e9aed1e2534ae6d262b6f7a05e8b625f127682/workflow/rules/common.smk#L59-L62
+def is_single_end(sample, library):
+    no_fq2 = pd.isnull(samples.loc[(sample, library), "fq2"])
+    return no_fq2
+
+def get_input_path_for_generate_input_lists():
+    """Get input path of reads to create input lists."""
     if config["settings"]["trimming"]["activate"]:
         return "results/trimmed"
     else:
         return "results/reads"
 
-def get_output_path_for_input_list(wildcards):
+def get_generate_input_lists_target():
     if config["settings"]["trimming"]["activate"]:
-        return "results/trimmed/{sample}/input_files.txt"
+        return expand("results/trimmed/{sample}/input_files.txt", sample=sample_names)
     else:
-        return "results/reads/{sample}/input_files.txt"
+        return expand("results/reads/{sample}/input_files.txt", sample=sample_names)
 
+# =================================================================================================
+
+def get_target_output(wildcards):
+    """
+    Get all final outputs.
+    """
+
+    target_output = []
+
+    target_output.extend(expand("results/qc/multiqc.html")),
+    target_output.extend(get_generate_input_lists_target()),
+
+    return target_output
