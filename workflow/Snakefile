@@ -1,10 +1,24 @@
-include: "rules/common.smk"
+# =================================================================================================
 
-rule all:
-    input:
-        "results/qc/multiqc.html",
-        expand("results/reads/{sample}/input_files.txt", sample=sample_names)
+from snakemake.utils import min_version
 
+# Make Sure Minimun Snakemake version
+min_version("6.10")
+
+# Load config file
+configfile: "config/config.yaml"
+
+# Description of the workflow can be found in the final report
+report: "report/workflow.rst"
+
+# =================================================================================================
+
+include: "rules/common.smk"      
 include: "rules/qc.smk"
 include: "rules/trimming.smk"
 include: "rules/count_kmers.smk"
+
+rule all:
+    input:
+        get_target_output,
+
