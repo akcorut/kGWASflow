@@ -19,3 +19,5 @@
 !.gitignore
 !.gitattributes
 !README.md
+workflow/*.err
+workflow/*.out
