@@ -4,7 +4,7 @@
 
 rule cutadapt_pe:
     input:
-        unpack(get_fastq),
+        unpack(get_reads),
     output:
         fastq1="results/trimmed/{sample}/{library}_1.fastq.gz",
         fastq2="results/trimmed/{sample}/{library}_2.fastq.gz",
@@ -27,7 +27,7 @@ rule cutadapt_pe:
 
 rule cutadapt_se:
     input:
-        unpack(get_fastq),
+        unpack(get_reads),
     output:
         fastq="results/trimmed/{sample}/{library}.single.fastq.gz",
         qc="results/trimmed/{sample}/{library}.single.qc.txt",
