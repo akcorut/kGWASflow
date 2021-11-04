@@ -1,0 +1,8 @@
+name: kmers_gwas
+channels:
+  - anaconda
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - libgcc=5.2.0
