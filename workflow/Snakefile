@@ -6,19 +6,20 @@ from snakemake.utils import min_version
 min_version("6.10")
 
 # Load config file
-configfile: "config/config.yaml"
+configfile: "../config/config.yaml"
 
 # Description of the workflow can be found in the final report
 report: "report/workflow.rst"
 
 # =================================================================================================
 
-include: "rules/common.smk"      
+include: "rules/common.smk"     
 include: "rules/qc.smk"
 include: "rules/trimming.smk"
+include: "rules/build_kmers_gwas.smk"
 include: "rules/count_kmers.smk"
 
-rule all:
-    input:
-        get_target_output,
 
+rule all:
+    input: 
+        get_target_output,
