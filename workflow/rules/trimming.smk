@@ -42,3 +42,5 @@ rule cutadapt_se:
         "Performing trimming using cutadapt on on the following files: {input}"
     wrapper:
         "0.79.0/bio/cutadapt/se"
+
+# =================================================================================================

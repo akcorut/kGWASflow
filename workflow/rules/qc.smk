@@ -41,3 +41,5 @@ rule multiqc:
         "Performing MultiQC on the FastQC results..."
     wrapper:
         "0.79.0/bio/multiqc"
+
+# =================================================================================================
