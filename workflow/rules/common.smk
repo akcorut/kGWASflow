@@ -68,6 +68,19 @@ logger.info("===================================================================
 logger.info("")
 
 # =================================================================================================
+#     Determine kmersGWAS Version and Path
+#     # Source: https://github.com/voichek/kmersGWAS/
+# =================================================================================================
+
+KMERSGWAS_DIR = "scripts/external/kmers_gwas"
+KMERSGWAS_VERSION = "v0.2-beta"
+KMERSGWAS_ZIP_PREFIX = "v0_2_beta"
+KMERSGWAS_ZIP_NAME = f"{KMERSGWAS_VERSION}.zip"
+KMERSGWAS_ZIP_PATH = os.path.join(KMERSGWAS_DIR, KMERSGWAS_ZIP_NAME)
+KMERSGWAS_PY_PATH = os.path.join(KMERSGWAS_DIR, "kmers_gwas.py")
+KMERSGWAS_BIN_PATH = os.path.join(KMERSGWAS_DIR, "bin/")
+
+# =================================================================================================
 #     Common Helper Functions
 # =================================================================================================
 
@@ -95,20 +108,39 @@ def get_input_path_for_generate_input_lists():
 
 def get_generate_input_lists_target():
     if config["settings"]["trimming"]["activate"]:
-        return expand("results/trimmed/{sample}/input_files.txt", sample=sample_names)
+        return expand(
+            "results/trimmed/{sample}/input_files.txt", sample=sample_names
+        )
     else:
-        return expand("results/reads/{sample}/input_files.txt", sample=sample_names)
+        return expand(
+            "results/reads/{sample}/input_files.txt", sample=sample_names
+        )
 
 # =================================================================================================
 
 def get_target_output(wildcards):
     """
-    Get all final outputs.
+    Get all requested inputs (target outputs) for rule all.
     """
 
     target_output = []
 
-    target_output.extend(expand("results/qc/multiqc.html")),
-    target_output.extend(get_generate_input_lists_target()),
-
+    target_output.extend(
+        expand(
+            "results/qc/multiqc.html"
+        )
+    ),
+    target_output.extend(
+        expand(
+            "results/kmers_count/{sample}/kmers_with_strand", sample=sample_names
+        )
+    ),
+    target_output.extend(
+        expand(
+            [
+                "results/plots/kmers_count/kmc_canon_total_reads_vs_unique_kmers.joint_plot.png",
+                "results/plots/kmers_count/kmc_all_total_reads_vs_unique_kmers.joint_plot.png"
+            ]
+        )
+    )
     return target_output
