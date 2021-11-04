@@ -14,6 +14,14 @@ settings:
 #     Tool Parameters
 # =================================================================================================
 
+resources:
+  kmers_gwas: 
+
+
+# =================================================================================================
+#     Tool Parameters
+# =================================================================================================
+
 params:
 
   # ----------------------------------------------------------------------
@@ -51,3 +59,21 @@ params:
     pe:
       adapters: ""
       extra: ""
+      
+# ----------------------------------------------------------------------
+  #     kmc
+  # ----------------------------------------------------------------------
+
+  kmc:
+    threads: 30
+    
+    # k-mer length (should be between 15-31)
+    kmer_len: 31
+    
+    # Threshold for counted k-mers. For example if 
+    # it is 2, k-mer has to appear at least 2 times to be
+    # counted. This parameter depends on the coverage, but should be
+    # the same for all the individuals.
+    count_thresh: 2
+
+    extra: ""
