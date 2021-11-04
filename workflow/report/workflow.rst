@@ -1,1 +1,3 @@
-k-mers-based GWAS.
+kGWASflow:  A Snakemake Pipeline for k-mers-based GWAS 
+
+This workflow performs k-mers-based GWAS analysis on single- or paired-end whole genome sequencing data. Quality control analysis was done using `FastQC <https://www.bioinformatics.babraham.ac.uk/projects/fastqc/>`_. k-mers-based GWAS analysis was done following `the method of Voichek et al. (2020) <https://github.com/voichek/kmersGWAS/blob/master/manual.pdf>`_. k-mers were counted using `KMC <https://github.com/refresh-bio/KMC>`_.
