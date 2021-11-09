@@ -61,19 +61,20 @@ def plot_kmers_stats(target_df, out_path, plot_name):
     plt.figure(figsize=(9, 9))
     plt.scatter(X, Y, alpha=0.5)
     slope, intercept = np.polyfit(X, Y, 1)
-    plt.plot(X, slope*X + intercept)
+    plt.plot(X, slope*X + intercept,color="red")
     plt.xlabel("No. of unique kmers")
     plt.ylabel("No. of total reads")
     plt.title(plot_name) 
-    plt.savefig(out_path + "/" + plot_name + '.plot.png')
+    plt.savefig(out_path + "/" + plot_name + '.scatter_plot.pdf')
 
     # Plot the joint plot.
-    sns_plot_2= sns.jointplot(x="unique_kmers", y="total_reads", data=target_df, kind="reg", height=9)
+    sns_plot_2= sns.jointplot(x="unique_kmers", y="total_reads", 
+    data=target_df, kind="reg", height=9, joint_kws={'line_kws':{'color':'red'}})
     r, p = stats.pearsonr(target_df["unique_kmers"], target_df["total_reads"])
     phantom, = sns_plot_2.ax_joint.plot([], [], linestyle="", alpha=0)
     sns_plot_2.ax_joint.legend([phantom],['r={:f}, p={:f}'.format(r,p)])
     plt.suptitle(plot_name)
-    plt.savefig(out_path + "/" + plot_name + '.joint_plot.png')
+    plt.savefig(out_path + "/" + plot_name + '.joint_plot.pdf')
 
 ## Generate stats tables for both canonized and non-canonized k-mers
 kmc_canon_stats= generate_kmers_stats_tab(dir_path=path, file_name="kmc_canon.log", dir_names=dir_names)
