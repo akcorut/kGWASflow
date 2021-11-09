@@ -18,7 +18,11 @@ include: "rules/qc.smk"
 include: "rules/trimming.smk"
 include: "rules/build_kmers_gwas.smk"
 include: "rules/count_kmers.smk"
+include: "rules/combine_and_filter_kmers.smk"
+include: "rules/generate_kmers_table.smk"
+include: "rules/kmers_gwas.smk"
 
+# =================================================================================================
 
 rule all:
     input: 
