@@ -24,9 +24,9 @@ settings:
     use_snps:
       # This will be ignored if use_kmers is activated
       activate: false
-      # if activated, you need to provide a SNP table in PLINK
-      # format (.bed) 
-      # https://www.cog-genomics.org/plink/1.9/formats#bed
+      # If activated, you need to provide a SNP table in PLINKformat (.bed).
+      # PLINK .bed format: https://www.cog-genomics.org/plink/1.9/formats#bed
+      ## !!! The order of the samples in SNP table has to be the same as in the samples sheet (samples.tsv file) !!!
       snps_plink_file: ""
 
 
