@@ -24,9 +24,12 @@ from os import path
 # validate(config, schema="../schemas/config.schema.yaml")
 
 # =================================================================================================
-#     Sample Sheets and Wildcard Constraints
+#     Sample and Phenotype Sheets + Wildcard Constraints
 # =================================================================================================
 
+# ===================== Samples ===================== #
+
+# Read samples sheet (samples.tsv)
 samples = (
     pd.read_csv(
         config["samples"],
@@ -46,10 +49,30 @@ samples.index = samples.index.set_levels([i.astype(str) for i in samples.index.l
 sample_names=list(set(samples.index.get_level_values("sample_name")))
 library_names=list(set(samples.index.get_level_values("library_name")))
 
+# ==================== Phenotypes ===================== #
+
+# Read phenotypes sheet (phenos.tsv)
+phenos = (
+    pd.read_csv(
+        config["phenotypes"],
+        sep="\t",
+        dtype={"pheno_name": str},
+        comment="#",
+    )
+    .set_index(["pheno_name"], drop=False)
+    .sort_index()
+)
+
+# Generate phenotype names list
+pheno_names=list(set(phenos.index.get_level_values("pheno_name")))
+
+# ==================== Wildcards ===================== #
+
 # Wildcard constraints: Allowing only sample and library names from the samples sheet to be used
 wildcard_constraints:
     sample="|".join(sample_names),
-    library="|".join(library_names)
+    library="|".join(library_names),
+    pheno="|".join(pheno_names)
 
 # =================================================================================================
 #     Pipeline User Output
@@ -94,6 +117,11 @@ def get_reads(wildcards):
         # single end
         return {"r1": fastqs.fq1}
 
+def get_phenos(wildcards):
+    """Get fastq files using samples sheet."""
+    pheno_names = phenos.loc[(wildcards.pheno), ["pheno_path"]].dropna()
+    return {"pheno_path": pheno_names.pheno_path}
+
 ## Source: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/blob/40e9aed1e2534ae6d262b6f7a05e8b625f127682/workflow/rules/common.smk#L59-L62
 # def is_single_end(sample, library):
 #     no_fq2 = pd.isnull(samples.loc[(sample, library), "fq2"])
@@ -136,11 +164,6 @@ def get_target_output(wildcards):
             "results/qc/multiqc.html"
         )
     ),
-    # target_output.extend(
-    #     expand(
-    #         "results/kmers_count/{sample}/kmers_with_strand", sample=sample_names
-    #     )
-    # ),
     target_output.extend(
         expand(
             [
@@ -164,6 +187,12 @@ def get_target_output(wildcards):
                 "results/kmers_table/kmers_table.table",
                 "results/kmers_table/kmers_table.kinship"
             ]
+        )
+    ),
+    target_output.extend(
+        expand(
+            "results/kmers_gwas/{pheno}/kmers/pass_threshold_5per",
+            pheno= pheno_names
         )
     ),
     return target_output
