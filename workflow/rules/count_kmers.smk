@@ -187,8 +187,8 @@ rule kmers_stats:
         )
     params:
         input_path= "logs/kmc",
-        out_table_path= "results/tables/kmers_count",
-        out_plot_path= "results/plots/kmers_count"
+        out_table_path= lambda w, output: os.path.dirname(output.kmc_all_stats),
+        out_plot_path= lambda w, output: os.path.dirname(output.kmc_all_plot)
     conda:
         "../envs/kmers_stats.yaml"
     message:
