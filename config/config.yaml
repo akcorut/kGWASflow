@@ -1,5 +1,6 @@
 # Samples Sheets
 samples: ../config/samples.tsv
+phenotypes: ../config/phenos.tsv
 
 # =================================================================================================
 #     Workflow Settings
@@ -8,14 +9,35 @@ samples: ../config/samples.tsv
 settings:
 
   trimming: 
+    # Set to true in order to perform addapter trimming on raw reads
     activate: false
 
+  kmers_gwas:
+    # TODO Convert kmers table to PLINK 
+    # PLINK-conversion:
+    # # Set to true in order to convert k-mers table to PLINK format (.bed)
+    #   activate: false
+
+    use_kmers_kinship:
+      activate: true
+    # This will be ignored if use_kmers is activated
+    use_snps:
+      # This will be ignored if use_kmers is activated
+      activate: false
+      # if activated, you need to provide a SNP table in PLINK
+      # format (.bed) 
+      # https://www.cog-genomics.org/plink/1.9/formats#bed
+      snps_plink_file: ""
+
+
+        
+
 # =================================================================================================
-#     Tool Parameters
+#     Resoruces
 # =================================================================================================
 
 resources:
-  kmers_gwas: 
+  kmers_gwas:
 
 
 # =================================================================================================
@@ -60,8 +82,8 @@ params:
       adapters: ""
       extra: ""
       
-# ----------------------------------------------------------------------
-  #     kmc
+  # ----------------------------------------------------------------------
+  #     KMC
   # ----------------------------------------------------------------------
 
   kmc:
@@ -77,3 +99,23 @@ params:
     count_thresh: 2
 
     extra: ""
+
+  # ----------------------------------------------------------------------
+  #     kmersGWAS
+  # ----------------------------------------------------------------------
+
+  kmers_gwas:
+    threads: 30
+
+    # Minor allele count (min allowed appearance of a k-mer)
+    minor_allele_count: 5
+    
+    # Minor allele frequency
+    minor_allele_freq: 0.05
+    # Minimum percent of appearance in each strand form
+    min_percent_app: 0.2
+    
+    # Maximal number of variants in each PLINK bed file
+    max_num_var: 10000000
+
+    snps_num: 10000
