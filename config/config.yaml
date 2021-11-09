@@ -29,9 +29,6 @@ settings:
       ## !!! The order of the samples in SNP table has to be the same as in the samples sheet (samples.tsv file) !!!
       snps_plink_file: ""
 
-
-        
-
 # =================================================================================================
 #     Resoruces
 # =================================================================================================
@@ -105,17 +102,37 @@ params:
   # ----------------------------------------------------------------------
 
   kmers_gwas:
+    # Number of threads to use
     threads: 30
 
-    # Minor allele count (min allowed appearance of a k-mer)
-    minor_allele_count: 5
-    
-    # Minor allele frequency
-    minor_allele_freq: 0.05
     # Minimum percent of appearance in each strand form
     min_percent_app: 0.2
+
+    # Minor allele count (min allowed appearance of a k-mer) 
+    # (Default is: 5)
+    minor_allele_count: 5
+    
+    # Minor allele frequency 
+    # (Default is: 0.05)
+    minor_allele_freq: 0.05
     
     # Maximal number of variants in each PLINK bed file
     max_num_var: 10000000
 
-    snps_num: 10000
+    # Number of k-mers to filter from first step 
+    # (Default is: 10001)
+    kmers_number: 10001
+
+    # Number of permutations to define the threshold 
+    # (at least 20 recommended, Default is: 100)
+    n_permutations: 100
+
+    # Number of snps to filter from the first step 
+    # (Default is: 10001)
+    snps_num: 10001
+
+    ## Min number of data points (samples) allowed 
+    # (Default is: 30)
+    min_data_points: 15
+
+    extra: ""
