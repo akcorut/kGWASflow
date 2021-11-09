@@ -1,0 +1,1 @@
+Scatter plot for unique canonized k-mer counts to assess the correlation between the number of total reads and the number of unique canonized k-mers. The x-axis shows the number of unique canonized k-mers and the y-axis shows the number of total reads. The line of best fit is colored red.

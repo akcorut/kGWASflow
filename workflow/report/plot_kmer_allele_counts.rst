@@ -1,0 +1,1 @@
+Bar plot showing the number of k-mers appeared in exactly "n" number of accessions (n goes between 1 to total number of accessions/samples).
