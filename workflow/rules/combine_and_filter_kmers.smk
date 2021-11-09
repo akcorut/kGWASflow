@@ -7,7 +7,8 @@
 
 rule generate_kmers_list_paths:
     input:
-        expand("results/kmers_count/{u.sample_name}/kmers_with_strand", u=samples.itertuples())
+        kmers_with_strand = expand("results/kmers_count/{u.sample_name}/kmers_with_strand", u=samples.itertuples()),
+        samples_tab = config["samples"]
     output:
         "results/kmers_list/kmers_list_paths.txt"
     params:
@@ -17,7 +18,7 @@ rule generate_kmers_list_paths:
         "Generating kmers_list_paths.txt..."
     shell:
         """
-        python scripts/generate_kmers_list_paths.py -i {params.input_dir} -o {params.out_dir}
+        python scripts/generate_kmers_list_paths.py -i {params.input_dir} -s {input.samples_tab} -o {params.out_dir}
         """
 
 # =================================================================================================
@@ -30,7 +31,7 @@ rule combine_and_filter:
         kmers_list = rules.generate_kmers_list_paths.output,
         kmersGWAS_bin = rules.extract_kmersGWAS.output.kmersGWAS_bin,
     output:
-        kmers_to_use = protected("results/kmers_list/kmers_to_use"),
+        kmers_to_use = "results/kmers_list/kmers_to_use",
         shareness = "results/kmers_list/kmers_to_use.shareness"
     params:
         kmer_len = config["params"]["kmc"]["kmer_len"],
