@@ -5,11 +5,11 @@
 if not config["settings"]["trimming"]["activate"]:
     rule create_symlink:
         input:
-            r1= lambda wildcards: samples.loc[(wildcards.sample, wildcards.library), ["fq1"]],
-            r2= lambda wildcards: samples.loc[(wildcards.sample, wildcards.library), ["fq2"]]
+            r1 = lambda wildcards: samples.loc[(wildcards.sample, wildcards.library), ["fq1"]],
+            r2 = lambda wildcards: samples.loc[(wildcards.sample, wildcards.library), ["fq2"]]
         output:
-            r1= "results/reads/{sample}/{library}_1.fastq",
-            r2= "results/reads/{sample}/{library}_2.fastq",
+            r1 = "results/reads/{sample}/{library}_1.fastq",
+            r2 = "results/reads/{sample}/{library}_2.fastq",
         message:
             "Creating symbolic links for fastq file..."
         threads: 1
@@ -59,15 +59,15 @@ rule kmc_canonical:
     input:
         rules.generate_input_lists.output
     output:
-        kmc_suf= temp("results/kmers_count/{sample}/output_kmc_canon.kmc_suf"),
-        kmc_pre= temp("results/kmers_count/{sample}/output_kmc_canon.kmc_pre")
+        kmc_suf = temp("results/kmers_count/{sample}/output_kmc_canon.kmc_suf"),
+        kmc_pre = temp("results/kmers_count/{sample}/output_kmc_canon.kmc_pre")
     params:
         # outdir_prefix = "results/kmers_count/{sample}/",
         outdir_prefix = lambda wildcards, output: output[0][:-24],
         outfile_prefix = lambda wildcards, output: output[0][:-8],
-        kmer_len= config["params"]["kmc"]["kmer_len"],
-        count_threshold= config["params"]["kmc"]["count_thresh"],
-        extra= config["params"]["kmc"]["extra"]
+        kmer_len = config["params"]["kmc"]["kmer_len"],
+        count_threshold = config["params"]["kmc"]["count_thresh"],
+        extra = config["params"]["kmc"]["extra"]
     log:
         "logs/kmc/{sample}/kmc_canon.log"
     conda:
@@ -92,14 +92,14 @@ rule kmc_non_canonical:
     input:
         rules.generate_input_lists.output
     output:
-        kmc_suf= temp("results/kmers_count/{sample}/output_kmc_all.kmc_suf"),
-        kmc_pre= temp("results/kmers_count/{sample}/output_kmc_all.kmc_pre")
+        kmc_suf = temp("results/kmers_count/{sample}/output_kmc_all.kmc_suf"),
+        kmc_pre = temp("results/kmers_count/{sample}/output_kmc_all.kmc_pre")
     params:
         # outdir_prefix = "results/kmers_count/{sample}/",
         outdir_prefix = lambda wildcards, output: output[0][:-22],
         outfile_prefix = lambda wildcards, output: output[0][:-8],
-        kmer_len= config["params"]["kmc"]["kmer_len"],
-        extra= config["params"]["kmc"]["extra"]
+        kmer_len = config["params"]["kmc"]["kmer_len"],
+        extra = config["params"]["kmc"]["extra"]
     log:
         "logs/kmc/{sample}/kmc_all.log"
     conda:
@@ -120,17 +120,6 @@ rule kmc_non_canonical:
 #     Combine the outputs from the two KMC run
 # =================================================================================================
 
-# rule create_kmers_gwas_conda_env:
-#     input:
-#         env_yaml= "envs/kmers_gwas_py2.yaml"
-#     output:
-#         env_path = directory(".snakemake/conda/kmers_gwas_py2"),
-#         lib= directory(".snakemake/conda/kmers_gwas_py2/lib")
-#     shell:
-#         """
-#         conda env create --prefix {output.lib} --file {input.env_yaml} 
-#         """
-
 rule merge_kmers:
     input:
         kmc_canon_suf = rules.kmc_canonical.output.kmc_suf,
@@ -138,13 +127,12 @@ rule merge_kmers:
         kmc_all_suf = rules.kmc_non_canonical.output.kmc_suf,
         kmc_all_pre = rules.kmc_non_canonical.output.kmc_pre,
         kmersGWAS_bin = rules.extract_kmersGWAS.output.kmersGWAS_bin,
-        # conda_env= rules.create_kmers_gwas_conda_env.output.env_path
     output:
         "results/kmers_count/{sample}/kmers_with_strand"
     params:
         prefix_kmc_canon = "results/kmers_count/{sample}/output_kmc_canon",
         prefix_kmc_all = "results/kmers_count/{sample}/output_kmc_all",
-        kmer_len= config["params"]["kmc"]["kmer_len"]
+        kmer_len = config["params"]["kmc"]["kmer_len"]
     conda:
         "../envs/kmers_gwas.yaml"
     log:
@@ -154,8 +142,6 @@ rule merge_kmers:
     shell:
         """
         export LD_LIBRARY_PATH=$CONDA_PREFIX/lib
-
-        echo $LD_LIBRARY_PATH
 
         {input.kmersGWAS_bin}/kmers_add_strand_information -c {params.prefix_kmc_canon} -n {params.prefix_kmc_all} -k {params.kmer_len} -o {output} > {log}
         """
@@ -169,24 +155,34 @@ rule kmers_stats:
         expand("logs/kmc/{u.sample_name}/kmc_all.log", u=samples.itertuples()),
         expand("logs/kmc/{u.sample_name}/kmc_canon.log", u=samples.itertuples()),
     output:
+        kmc_canon_joint_plot = report(
+            "results/plots/kmers_count/kmc_canon_total_reads_vs_unique_kmers.joint_plot.pdf",
+            caption="../report/plot_joint_kmc_canon.rst",
+            category="k-mers Count Stats",
+        ),
+        kmc_all_joint_plot = report(
+            "results/plots/kmers_count/kmc_all_total_reads_vs_unique_kmers.joint_plot.pdf",
+            caption="../report/plot_joint_kmc_all.rst",
+            category="k-mers Count Stats",
+        ),
         kmc_canon_plot = report(
-            "results/plots/kmers_count/kmc_canon_total_reads_vs_unique_kmers.joint_plot.png",
-            caption="../report/plot_kmc_stats.rst",
+            "results/plots/kmers_count/kmc_canon_total_reads_vs_unique_kmers.scatter_plot.pdf",
+            caption="../report/plot_scatter_kmc_canon.rst",
             category="k-mers Count Stats",
         ),
         kmc_all_plot = report(
-            "results/plots/kmers_count/kmc_all_total_reads_vs_unique_kmers.joint_plot.png",
-            caption="../report/plot_kmc_stats.rst",
+            "results/plots/kmers_count/kmc_all_total_reads_vs_unique_kmers.scatter_plot.pdf",
+            caption="../report/plot_scatter_kmc_all.rst",
             category="k-mers Count Stats",
         ),
         kmc_canon_stats = report(
             "results/tables/kmers_count/kmc_canon.stats.tsv",
-            caption="../report/kmc_count_stats.rst",
+            caption="../report/kmc_canon_count_stats.rst",
             category="k-mers Count Stats",
         ),
          kmc_all_stats = report(
             "results/tables/kmers_count/kmc_all.stats.tsv",
-            caption="../report/kmc_count_stats.rst",
+            caption="../report/kmc_all_count_stats.rst",
             category="k-mers Count Stats",
         )
     params:
