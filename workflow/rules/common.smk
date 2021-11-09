@@ -95,9 +95,9 @@ def get_reads(wildcards):
         return {"r1": fastqs.fq1}
 
 ## Source: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/blob/40e9aed1e2534ae6d262b6f7a05e8b625f127682/workflow/rules/common.smk#L59-L62
-def is_single_end(sample, library):
-    no_fq2 = pd.isnull(samples.loc[(sample, library), "fq2"])
-    return no_fq2
+# def is_single_end(sample, library):
+#     no_fq2 = pd.isnull(samples.loc[(sample, library), "fq2"])
+#     return no_fq2
 
 def get_input_path_for_generate_input_lists():
     """Get input path of reads to create input lists."""
@@ -116,6 +116,12 @@ def get_generate_input_lists_target():
             "results/reads/{sample}/input_files.txt", sample=sample_names
         )
 
+def get_plink_prefix():
+    plink_path = config["settings"]["kmers_gwas"]["use_snps_kinship"]["snps_plink_file"]
+    plink_prefix = os.path.splitext(plink_path)[0]
+    return plink_prefix
+
+
 # =================================================================================================
 
 def get_target_output(wildcards):
@@ -130,17 +136,34 @@ def get_target_output(wildcards):
             "results/qc/multiqc.html"
         )
     ),
+    # target_output.extend(
+    #     expand(
+    #         "results/kmers_count/{sample}/kmers_with_strand", sample=sample_names
+    #     )
+    # ),
     target_output.extend(
         expand(
-            "results/kmers_count/{sample}/kmers_with_strand", sample=sample_names
+            [
+                "results/plots/kmers_count/kmc_canon_total_reads_vs_unique_kmers.joint_plot.pdf",
+                "results/plots/kmers_count/kmc_all_total_reads_vs_unique_kmers.joint_plot.pdf",
+                "results/plots/kmers_count/kmc_canon_total_reads_vs_unique_kmers.scatter_plot.pdf",
+                "results/plots/kmers_count/kmc_all_total_reads_vs_unique_kmers.scatter_plot.pdf",
+                "results/tables/kmers_count/kmc_canon.stats.tsv",
+                "results/tables/kmers_count/kmc_all.stats.tsv"
+            ]
+        )
+    ),
+    target_output.extend(
+        expand(
+            "results/plots/kmers_list/kmer_allele_counts.pdf"
         )
     ),
     target_output.extend(
         expand(
             [
-                "results/plots/kmers_count/kmc_canon_total_reads_vs_unique_kmers.joint_plot.png",
-                "results/plots/kmers_count/kmc_all_total_reads_vs_unique_kmers.joint_plot.png"
+                "results/kmers_table/kmers_table.table",
+                "results/kmers_table/kmers_table.kinship"
             ]
         )
-    )
+    ),
     return target_output
