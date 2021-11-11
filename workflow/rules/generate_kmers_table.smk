@@ -8,7 +8,7 @@ rule create_kmers_table:
         kmers_to_use = rules.combine_and_filter.output.kmers_to_use,
         kmersGWAS_bin = rules.extract_kmersGWAS.output.kmersGWAS_bin,
     output:
-        protected("results/kmers_table/kmers_table.table")
+        "results/kmers_table/kmers_table.table"
     params:
         prefix = lambda wildcards, output: output[0][:-6],
         kmer_len = config["params"]["kmc"]["kmer_len"],
