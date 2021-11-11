@@ -39,3 +39,5 @@ rule run_kmers_gwas:
         -l {params.kmer_len} -p {threads} \
         --outdir {params.out_prefix} >>{log} 2>&1
         """
+
+# =================================================================================================
