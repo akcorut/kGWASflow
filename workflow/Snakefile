@@ -22,6 +22,9 @@ include: "rules/combine_and_filter_kmers.smk"
 include: "rules/generate_kmers_table.smk"
 include: "rules/generate_kinship_matrix.smk"
 include: "rules/kmers_gwas.smk"
+include: "rules/summarize_results.smk"
+include: "rules/fetch_kmers.smk"
+include: "rules/filter_kmers.smk"
 
 # =================================================================================================
 
