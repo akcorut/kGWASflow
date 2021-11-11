@@ -183,16 +183,18 @@ def get_target_output(wildcards):
     ),
     target_output.extend(
         expand(
-            [
-                "results/kmers_table/kmers_table.table",
-                "results/kmers_table/kmers_table.kinship"
-            ]
-        )
-    ),
-    target_output.extend(
-        expand(
             "results/kmers_gwas/{pheno}/kmers/pass_threshold_5per",
             pheno= pheno_names
+        )
+    ),
+    # target_output.extend(
+    #     expand(
+    #         "results/kmers_gwas_summary/kmers_gwas_results_table_5per.txt"
+    #     )
+    # ),
+    target_output.extend(
+        expand(
+            "results/filter_kmers/filter_kmers.done"
         )
     ),
     return target_output
