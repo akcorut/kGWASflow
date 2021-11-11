@@ -1,6 +1,6 @@
 # Samples Sheets
-samples: ../config/samples.tsv
-phenotypes: ../config/phenos.tsv
+samples: ../config/arabidopsis_samples.tsv
+phenotypes: ../config/arabidopsis_phenos.tsv
 
 # =================================================================================================
 #     Workflow Settings
@@ -133,6 +133,16 @@ params:
 
     ## Min number of data points (samples) allowed 
     # (Default is: 30)
-    min_data_points: 15
+    min_data_points: 30
 
     extra: ""
+
+  results_table:
+    ## Add "--use_10_per" here if you want to 
+    # get summary table from the kmersGWAS results 
+    # with 10 percent threshold
+    extra: ""
+
+  fetch_kmers:
+    threshold: 5
+    
