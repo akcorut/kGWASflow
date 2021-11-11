@@ -9,12 +9,14 @@ rule generate_kmers_kinship_matrix:
     output:
         "results/kmers_table/kmers_table.kinship"
     params:
-        prefix= lambda wildcards, output: output[0][:-8],
-        kmer_len= config["params"]["kmc"]["kmer_len"],
-        mac= config["params"]["kmers_gwas"]["minor_allele_count"],
-        maf= config["params"]["kmers_gwas"]["minor_allele_freq"],
+        prefix = lambda wildcards, output: output[0][:-8],
+        kmer_len = config["params"]["kmc"]["kmer_len"],
+        mac = config["params"]["kmers_gwas"]["minor_allele_count"],
+        maf = config["params"]["kmers_gwas"]["minor_allele_freq"],
     conda:
         "../envs/kmers_gwas.yaml"
+    message:
+        "Calculating the kinship matrix from k-mers..."
     shell:
         """
         export LD_LIBRARY_PATH=$CONDA_PREFIX/lib
@@ -25,13 +27,15 @@ rule generate_kmers_kinship_matrix:
 if not config["settings"]["kmers_gwas"]["use_kmers_kinship"]["activate"]:
     rule generate_snps_kinship_matrix:
         input:
-            snps_plink= config["settings"]["kmers_gwas"]["kinship_matrix"]["use_snps_kinship"]["snps_plink_file"]
+            snps_plink = config["settings"]["kmers_gwas"]["kinship_matrix"]["use_snps_kinship"]["snps_plink_file"]
         output:
             "results/kmers_table/kmers_table.kinship"
         params:
-            prefix= get_plink_prefix(),
+            prefix = get_plink_prefix(),
         conda:
             "../envs/kmers_gwas.yaml"
+        message:
+            "Generating the kinship matrix from SNPs using {input.snps_plink}..."
         shell:
             """
             export LD_LIBRARY_PATH=$CONDA_PREFIX/lib

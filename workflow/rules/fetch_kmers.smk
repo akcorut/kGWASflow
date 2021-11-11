@@ -14,6 +14,8 @@ checkpoint fetch_kmers_from_res_table:
         threshold = config["params"]["fetch_kmers"]["threshold"]
     conda:
         "../envs/kmers_stats.yaml"
+    message:
+        "Fetching significant k-mers for each phenotype from kmersGWAS results table ({input.res_tab})..."
     shell:
         """
         python scripts/fetch_kmers_from_results_table.py -i {input.res_tab} \

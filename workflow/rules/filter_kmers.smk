@@ -13,6 +13,8 @@ rule filter_kmers:
         prefix = lambda w, input: os.path.splitext(input.kmers_table)[0]
     conda:
         "../envs/kmers_gwas.yaml"
+    message:
+        "Filtering k-mers table using {input.lists} and output the results in textual format..."
     shell:
         """
         export LD_LIBRARY_PATH=$CONDA_PREFIX/lib
@@ -29,6 +31,8 @@ rule check_filter_kmers:
         aggregate_input
     output:
         "results/filter_kmers/filter_kmers.done"
+    message:
+        "Checking if filtering k-mers steps is done..."
     shell:
         """
         touch {output}

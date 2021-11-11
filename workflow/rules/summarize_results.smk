@@ -18,6 +18,8 @@ rule generate_results_table:
         extra = config["params"]["results_table"]["extra"]
     conda:
         "../envs/kmers_stats.yaml"
+    message:
+        "Summarizing k-mers GWAS results in a table..."
     shell:
         """
         python scripts/generate_kmers_gwas_results_table.py -dir {params.in_prefix} \

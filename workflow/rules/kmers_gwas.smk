@@ -26,6 +26,8 @@ rule run_kmers_gwas:
         "logs/kmers_gwas/{pheno}/{pheno}_kmers_gwas_run.log"
     conda:
         "../envs/kmers_gwas_py2.yaml"
+    message:
+        "Running k-mers based GWAS on {input.phenotype}..."
     shell:
         """
         export LD_LIBRARY_PATH=$CONDA_PREFIX/lib
