@@ -30,7 +30,7 @@ checkpoint fetch_kmers_from_res_table:
         "../envs/kmers_stats.yaml"
     shell:
         """
-        python scripts/retrieve_kmers_from_results_table.py -i {input.res_tab} \
+        python scripts/fetch_kmers_from_results_table.py -i {input.res_tab} \
         -t {params.threshold} -p {input.phenos_list} -o {output}
         """
 
