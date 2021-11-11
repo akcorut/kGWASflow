@@ -16,7 +16,7 @@ rule filter_kmers:
     shell:
         """
         export LD_LIBRARY_PATH=$CONDA_PREFIX/lib
-        
+
         {input.kmersGWAS_bin}/filter_kmers -t {params.prefix} -k {input.lists} -o {output}
         """
 def aggregate_input(wildcards):
@@ -34,3 +34,4 @@ rule check_filter_kmers:
         touch {output}
         """
 
+# =========================================================================================================
