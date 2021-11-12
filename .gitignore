@@ -22,4 +22,4 @@
 workflow/*.err
 workflow/*.out
 workflow/report.html
-workflow/kGWASflow.sh
+workflow/*.sh
