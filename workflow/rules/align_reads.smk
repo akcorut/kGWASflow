@@ -31,3 +31,20 @@ rule align_reads:
 
         touch {output.done}
         """
+
+def aggregate_input_align_reads(wildcards):
+    checkpoint_output = checkpoints.fetch_kmers_from_res_table.get(**wildcards).output[0]
+    return expand("results/align_reads_with_kmers/{pheno_filt}",
+           phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
+
+rule check_fetch_reads:
+    input:
+        aggregate_input_align_reads
+    output:
+        "results/align_reads_with_kmers/align_reads_with_kmers.done"
+    message:
+        "Checking if aligning reads with significant k-mers is done..."
+    shell:
+        """
+        touch {output}
+        """
