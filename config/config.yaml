@@ -145,4 +145,8 @@ params:
 
   fetch_kmers:
     threshold: 5
+
+  align_reads:
+    threads: 30
+  
     
