@@ -4,16 +4,17 @@
 
 rule align_reads:
     input:
+        index = rules.bowtie2_build.output,
         reads = rules.fetch_source_reads.output,
         done = "results/fetch_reads_with_kmers/fetch_source_reads.done",
     output:
-        dir = directory("results/align_reads_with_kmers/{pheno_filt}"),
-        done = "results/align_reads_with_kmers/{pheno_filt}/align_reads.done"
+        dir = directory("results/align_reads_with_kmers/{phenos_filt}"),
+        done = "results/align_reads_with_kmers/{phenos_filt}/align_reads.done"
     params:
         in_prefix = lambda w, input: os.path.dirname(input.done),
         out_prefix = lambda w, output: os.path.dirname(output.dir),
-        ref_gen = config["ref_gen"]["prefix"],
-        pheno = "{pheno_filt}"
+        pheno = "{phenos_filt}",
+        index = "resources/genome",
     conda:
         "../envs/align_reads.yaml"
     threads: 
@@ -25,7 +26,7 @@ rule align_reads:
         python -u scripts/align_reads_with_kmers.py \
         -i {params.in_prefix} \
         -p {params.pheno} \
-        -x {params.ref_gen} \
+        -x {params.index} \
         -o {params.out_prefix} \
         -t {threads}
 
@@ -34,10 +35,10 @@ rule align_reads:
 
 def aggregate_input_align_reads(wildcards):
     checkpoint_output = checkpoints.fetch_kmers_from_res_table.get(**wildcards).output[0]
-    return expand("results/align_reads_with_kmers/{pheno_filt}",
+    return expand("results/align_reads_with_kmers/{phenos_filt}",
            phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
 
-rule check_fetch_reads:
+rule check_align_reads:
     input:
         aggregate_input_align_reads
     output:
