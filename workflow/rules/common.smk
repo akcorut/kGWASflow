@@ -197,4 +197,9 @@ def get_target_output(wildcards):
             "results/fetch_reads_with_kmers/fetch_source_reads.done"
         )
     ),
+    target_output.extend(
+        expand(
+            "results/align_reads_with_kmers/align_reads_with_kmers.done"
+        )
+    ),
     return target_output
