@@ -23,5 +23,5 @@ source activate kGWASflow
 export LC_ALL=en_SG.utf8
 export LANG=en_SG.utf8
 
-snakemake --reason --use-conda --conda-frontend conda --verbose --cores 30 --rerun-incomplete -s Snakefile
+snakemake -n --reason --use-conda --conda-frontend conda --verbose --cores 30 --rerun-incomplete -s Snakefile
 # snakemake -n --report report.html --reason --use-conda --conda-frontend conda --verbose --cores 30 --rerun-incomplete -s Snakefile
