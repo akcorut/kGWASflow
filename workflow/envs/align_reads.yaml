@@ -1,0 +1,13 @@
+name: align_reads
+channels:
+  - anaconda
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - bowtie2=2.2.5
+  - numpy=1.20.3
+  - pandas=1.2.4
+  - python=3.9.4
+  - samtools=1.12
+  - seqkit=0.16.1
