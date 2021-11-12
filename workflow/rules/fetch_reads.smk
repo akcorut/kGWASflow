@@ -59,14 +59,14 @@ rule fetch_source_reads:
         -path {params.fetch_reads_prefix}
         """
 
-def aggregate_input(wildcards):
+def aggregate_input_fetch_reads(wildcards):
     checkpoint_output = checkpoints.fetch_kmers_from_res_table.get(**wildcards).output[0]
     return expand("results/fetch_reads_with_kmers/{phenos_filt}",
            phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
 
 rule check_fetch_reads:
     input:
-        aggregate_input
+        aggregate_input_fetch_reads
     output:
         "results/fetch_reads_with_kmers/fetch_source_reads.done"
     message:
