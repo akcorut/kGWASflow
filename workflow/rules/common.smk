@@ -192,11 +192,11 @@ def get_target_output(wildcards):
     #         "results/kmers_gwas_summary/kmers_gwas_results_table_5per.txt"
     #     )
     # ),
-    target_output.extend(
-        expand(
-            "results/fetch_reads_with_kmers/fetch_source_reads.done"
-        )
-    ),
+    # target_output.extend(
+    #     expand(
+    #         "results/fetch_reads_with_kmers/fetch_source_reads.done"
+    #     )
+    # ),
     target_output.extend(
         expand(
             "results/align_reads_with_kmers/align_reads_with_kmers.done"
