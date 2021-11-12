@@ -25,6 +25,7 @@ include: "rules/kmers_gwas.smk"
 include: "rules/summarize_results.smk"
 include: "rules/fetch_kmers.smk"
 include: "rules/filter_kmers.smk"
+include: "rules/fetch_reads.smk"
 
 # =================================================================================================
 
