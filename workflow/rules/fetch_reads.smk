@@ -50,7 +50,7 @@ rule fetch_source_reads:
         "Fetching reads that contain significant k-mers find in {input.kmers_list}..."    
     shell:
         """
-        python -u scripts/retrieve_source_reads_of_kmers.py \
+        python -u scripts/fetch_source_reads_of_kmers.py \
         -k {params.kmers_tab_prefix} \
         -l {params.kmers_list_prefix} \
         -p {params.pheno} \
@@ -58,6 +58,10 @@ rule fetch_source_reads:
         -o {params.out_prefix} \
         -path {params.fetch_reads_prefix}
         """
+
+# =========================================================================================================
+#     Check fetch_source_reads 
+# =========================================================================================================
 
 def aggregate_input_fetch_reads(wildcards):
     checkpoint_output = checkpoints.fetch_kmers_from_res_table.get(**wildcards).output[0]
@@ -75,3 +79,5 @@ rule check_fetch_reads:
         """
         touch {output}
         """
+
+# =========================================================================================================
