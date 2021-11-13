@@ -26,12 +26,16 @@ rule align_reads:
         python -u scripts/align_reads_with_kmers.py \
         -i {params.in_prefix} \
         -p {params.pheno} \
-        -x {params.index} \
+        -r {params.index} \
         -o {params.out_prefix} \
         -t {threads}
 
         touch {output.done}
         """
+
+# =========================================================================================================
+#     Check align_reads 
+# =========================================================================================================
 
 def aggregate_input_align_reads(wildcards):
     checkpoint_output = checkpoints.fetch_kmers_from_res_table.get(**wildcards).output[0]
@@ -49,3 +53,5 @@ rule check_align_reads:
         """
         touch {output}
         """
+
+# =========================================================================================================
