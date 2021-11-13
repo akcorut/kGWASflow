@@ -1,3 +1,7 @@
+# =======================================================================================================
+#    Creating a symbolic link for the reference genome fasta
+# =======================================================================================================
+
 rule genome_symlink:
     input:
         reference = config["ref"]["fasta"]
@@ -11,6 +15,10 @@ rule genome_symlink:
         ln -s {input.reference} {output}
         """
 
+# =======================================================================================================
+#    Creating bowtie2 index of the reference genome fasta
+# =======================================================================================================
+
 rule bowtie2_build:
     input:
         reference = rules.genome_symlink.output,
@@ -23,6 +31,11 @@ rule bowtie2_build:
         "logs/bowtie2_build/build.log"
     params:
         extra=""  # optional parameters
-    threads: 8
+    threads: 
+        config["params"]["align_reads"]["threads"]
+    message:
+        "Creating bowtie2 index of the reference genome..."
     wrapper:
         "0.80.0/bio/bowtie2/build"
+
+# =======================================================================================================
