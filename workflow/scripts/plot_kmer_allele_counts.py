@@ -10,8 +10,8 @@ import matplotlib.ticker as ticker
 from matplotlib.pyplot import hist
 
 parser = argparse.ArgumentParser(description='')
-parser.add_argument('-i', '--in_file', help='', type=str, required=True)
-parser.add_argument('-o', '--out_file', help='', type=str, required=True)
+parser.add_argument('-i', '--in_file', help='kmers_to_use.shareness file', type=str, required=True)
+parser.add_argument('-o', '--out_file', help='Output plot name', type=str, required=True)
 
 args = parser.parse_args()
 
@@ -33,9 +33,9 @@ sns_plot = sns.barplot(x=kmers_shareness[0], y=kmers_shareness[1], color="lightg
 sns_plot.set_xlabel("Allele count",fontsize=18, weight='bold')
 sns_plot.set_ylabel("#k-mers",fontsize=18, weight='bold')
 sns_plot.set_yscale("log")
-# sns_plot.set(ylim=(50000, 1000000000))
 sns_plot.xaxis.set_major_formatter(ticker.FormatStrFormatter('%d'))
 sns_plot.xaxis.set_major_locator(ticker.MultipleLocator(base=5))
 fig.tight_layout()
+
 ## Save the plot
 sns_plot.figure.savefig(args.out_file, dpi=600)

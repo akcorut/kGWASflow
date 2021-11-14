@@ -4,9 +4,9 @@ import pandas as pd
 import numpy as np
 
 parser = argparse.ArgumentParser(description='')
-parser.add_argument('-i', '--in_dir', help='', type=str, required=True)
-parser.add_argument('-s', '--samp_tab', help='', type=str, required=True)
-parser.add_argument('-o', '--out_dir', help='', type=str, required=True)
+parser.add_argument('-i', '--in_dir', help='Path for k-mers counts folder', type=str, required=True)
+parser.add_argument('-s', '--samp_tab', help='Path for sampels sheet (samples.tsv)', type=str, required=True)
+parser.add_argument('-o', '--out_dir', help='Output path', type=str, required=True)
 args = parser.parse_args()
 
 dir_names = os.listdir(args.in_dir)

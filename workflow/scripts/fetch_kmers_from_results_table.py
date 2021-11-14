@@ -74,11 +74,3 @@ for pheno in phenos_list["pheno"]:
         #Close the input and output file
         fileInput.close()
         fileOutput.close()
-
-# if not os.path.isfile(args.out_path + "/" + args.pheno + "_kmers_list.fa"):
-#     with open(args.out_path + "/" + args.pheno + "_kmers_list.fa", 'w') as fp:
-#         pass
-
-# if not os.path.isfile(args.out_path + "/" + args.pheno + "_kmers_list.txt"):
-#     with open(args.out_path + "/" + args.pheno + "_kmers_list.txt", 'w') as fp:
-#         pass

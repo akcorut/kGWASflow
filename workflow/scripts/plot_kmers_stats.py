@@ -79,9 +79,11 @@ def plot_kmers_stats(target_df, out_path, plot_name):
 ## Generate stats tables for both canonized and non-canonized k-mers
 kmc_canon_stats= generate_kmers_stats_tab(dir_path=path, file_name="kmc_canon.log", dir_names=dir_names)
 kmc_non_canon_stats= generate_kmers_stats_tab(dir_path=path, file_name="kmc_all.log", dir_names=dir_names)
+
+## Writing out KMC stats as a tsv table
 kmc_canon_stats.to_csv(args.out_table + '/' + "kmc_canon.stats.tsv", index=False, sep="\t")
 kmc_non_canon_stats.to_csv(args.out_table + '/' + "kmc_all.stats.tsv", index=False, sep="\t")
 
-## Plot stats
+## Plot the stats
 plot_kmers_stats(target_df=kmc_canon_stats, out_path=args.out_plot, plot_name="kmc_canon_total_reads_vs_unique_kmers")
 plot_kmers_stats(target_df=kmc_non_canon_stats, out_path=args.out_plot, plot_name="kmc_all_total_reads_vs_unique_kmers")

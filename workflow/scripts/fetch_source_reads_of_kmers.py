@@ -23,10 +23,10 @@ args = parser.parse_args()
 kmers_table = pd.read_csv(args.kmers_tab + "/" + args.pheno + "_kmers_table.txt", 
                         sep="\t")
 
-## Filter out accessions that doesn't have the kmers in them
+## Filter out accessions/samples that doesn't have the kmers in them
 kmers_table_filt = kmers_table.loc[:, (kmers_table != 0).any(axis=0)]
-# print(kmers_table_filt)
 
+## Get accesions with k-mers
 acc_list = list(kmers_table_filt.iloc[: , 1:].columns.values)
 
 print("Phenotype: " + args.pheno)
@@ -39,10 +39,12 @@ print("")
 
 print("######################### Fetching reads with k-mers... #########################")
 
+## Read samples sheet (samples.tsv)
 samples_tab = pd.read_csv(args.samp_tab, 
                                 sep="\t",
                                 dtype='object')
 
+## Filter samples table to get only samples with k-mers
 samples_tab_filt = samples_tab[samples_tab['sample_name'].isin(acc_list)]
 samples_tab_filt = samples_tab_filt.reset_index(drop=True)
 
@@ -52,11 +54,7 @@ kmers_list_fa = args.kmers_list + "/" + args.pheno + "_kmers_list.fa"
 ## Check if output directory is exist. If not create one
 if not os.path.exists(args.out_dir + '/' + args.pheno):
     os.makedirs(args.out_dir + '/' + args.pheno)
-
-# for index, row in samples_tab_filt.iterrows():
-#         print(" fetch_reads {r1} {r2} 31 {acc}_{lib}_reads_with_kmers".format( 
-#                 r1=row["fq1"], r2=row["fq2"], acc=row["accession"], lib=row["library"]))
-        
+  
 ## Filter the reads that have one of the k-mers in them
 for index, row in samples_tab_filt.iterrows():
     if row["sample_name"] == row["library_name"]:

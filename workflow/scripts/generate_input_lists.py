@@ -5,7 +5,7 @@ import numpy as np
 
 # Argument parsers
 parser = argparse.ArgumentParser(description='')
-parser.add_argument('-i', '--dir_path', help='', type=str, required=True)
+parser.add_argument('-i', '--dir_path', help='Directory path of input reads', type=str, required=True)
 args = parser.parse_args()
 
 # Get dir names (each dir name shoud be same as sample names)
