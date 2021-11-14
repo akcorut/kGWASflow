@@ -23,3 +23,4 @@ workflow/*.err
 workflow/*.out
 workflow/report.html
 workflow/*.sh
+!environment.yaml
