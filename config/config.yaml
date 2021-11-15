@@ -1,4 +1,5 @@
-# Samples Sheets
+# Sample and Phenotype Sheets 
+# !!! Required !!!
 samples: ../config/arabidopsis_samples.tsv
 phenotypes: ../config/arabidopsis_phenos.tsv
 
@@ -7,6 +8,7 @@ phenotypes: ../config/arabidopsis_phenos.tsv
 # =================================================================================================
 
 ref:
+  # !!! Reference genome in Fasta format required for the alignment step !!!
   fasta: /scratch/ac32082/kGWASflow/.test/arabidopsis_data/ref/TAIR10_chr_all.fa
   
 
