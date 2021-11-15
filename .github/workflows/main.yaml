@@ -10,19 +10,6 @@ on:
   workflow_dispatch:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  Linting:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Lint workflow
-      uses: snakemake/snakemake-github-action@v1.19.0
-      with:
-        directory: .
-        snakefile: workflow/Snakefile
-        args: "--lint"
-        stagein: |
-          export TMPDIR=/tmp
-          
   Testing:
     runs-on: ubuntu-latest
     steps:
