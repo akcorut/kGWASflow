@@ -6,11 +6,9 @@ checkpoint fetch_kmers_from_res_table:
     input:
         res_tab = rules.generate_results_table.output.res_tab_5per,
         phenos_list= rules.generate_results_table.output.phenos_list_5per,
-        # in_dir = rules.make_dirs_for_fetch_kmers.output
     output:
         directory("results/fetch_kmers")
     params:
-        # out_prefix= lambda w, output: os.path.dirname(output[0]),
         threshold = config["params"]["fetch_kmers"]["threshold"]
     conda:
         "../envs/kmers_stats.yaml"
