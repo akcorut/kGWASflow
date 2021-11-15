@@ -18,12 +18,6 @@ import pathlib
 from os import path
 
 # =================================================================================================
-#     Laod Config File
-# =================================================================================================
-
-# validate(config, schema="../schemas/config.schema.yaml")
-
-# =================================================================================================
 #     Sample and Phenotype Sheets + Wildcard Constraints
 # =================================================================================================
 
@@ -68,7 +62,8 @@ pheno_names=list(set(phenos.index.get_level_values("pheno_name")))
 
 # ==================== Wildcards ===================== #
 
-# Wildcard constraints: Allowing only sample and library names from the samples sheet to be used
+# Wildcard constraints: Allowing only sample and 
+# library names from the samples sheet to be used
 wildcard_constraints:
     sample="|".join(sample_names),
     library="|".join(library_names),
@@ -93,6 +88,7 @@ logger.info("")
 # =================================================================================================
 #     Determine kmersGWAS Version and Path
 #     # Source: https://github.com/voichek/kmersGWAS/
+#     # Reference: https://www.nature.com/articles/s41588-020-0612-7
 # =================================================================================================
 
 KMERSGWAS_DIR = "scripts/external/kmers_gwas"
@@ -122,11 +118,6 @@ def get_phenos(wildcards):
     pheno_names = phenos.loc[(wildcards.pheno), ["pheno_path"]].dropna()
     return {"pheno_path": pheno_names.pheno_path}
 
-## Source: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/blob/40e9aed1e2534ae6d262b6f7a05e8b625f127682/workflow/rules/common.smk#L59-L62
-# def is_single_end(sample, library):
-#     no_fq2 = pd.isnull(samples.loc[(sample, library), "fq2"])
-#     return no_fq2
-
 def get_input_path_for_generate_input_lists():
     """Get input path of reads to create input lists."""
     if config["settings"]["trimming"]["activate"]:
@@ -150,6 +141,8 @@ def get_plink_prefix():
     return plink_prefix
 
 
+# =================================================================================================
+#     Target Ouput Function
 # =================================================================================================
 
 def get_target_output(wildcards):
@@ -189,11 +182,6 @@ def get_target_output(wildcards):
     ),
     # target_output.extend(
     #     expand(
-    #         "results/kmers_gwas_summary/kmers_gwas_results_table_5per.txt"
-    #     )
-    # ),
-    # target_output.extend(
-    #     expand(
     #         "results/fetch_reads_with_kmers/fetch_source_reads.done"
     #     )
     # ),
@@ -203,3 +191,5 @@ def get_target_output(wildcards):
         )
     ),
     return target_output
+
+# =================================================================================================
