@@ -16,12 +16,10 @@ jobs:
   linting:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Checkout submodules
-      uses: textbook/git-checkout-submodule-action@2.0.0
-    - name: Test linting
+    - uses: actions/checkout@v1
+    - name: Linting
       uses: snakemake/snakemake-github-action@v1.22.0
       with:
         directory: .
         snakefile: workflow/Snakefile
-        args: "--lint --cores 1"
+        args: "--lint"
