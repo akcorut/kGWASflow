@@ -8,8 +8,8 @@
 !workflow/rules/*
 !workflow/report
 !workflow/report/*
-!workflow/schema
-!workflow/schema/*
+!workflow/schemas
+!workflow/schemas/*
 !workflow/scripts
 !workflow/scripts/*
 !config
