@@ -18,6 +18,9 @@
 !config/cluster.yaml
 !config/samples.tsv
 !config/phenos.tsv
+!.github
+!.github/workflows
+!.github/workflows/*
 !.gitignore
 !.gitattributes
 !README.md
