@@ -1,6 +1,6 @@
 # =======================================================================================================
 #     Download and compile fetch_reads_with_kmers 
-#     (Source: https://github.com/voichek/fetch_reads_with_kmers)
+#     # Source: https://github.com/voichek/fetch_reads_with_kmers
 # =======================================================================================================
 
 

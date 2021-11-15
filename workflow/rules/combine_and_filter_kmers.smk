@@ -23,6 +23,7 @@ rule generate_kmers_list_paths:
 
 # =================================================================================================
 #     Combine and filter lists of kmers
+#     # Source code of 'list_kmers_found_in_multiple_samples': https://github.com/voichek/kmersGWAS
 # =================================================================================================
 
 rule combine_and_filter:

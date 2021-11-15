@@ -1,5 +1,6 @@
 # =================================================================================================
-#     Generate kinship matrix
+#     Generate kinship matrix (k-mers based)
+#     # Source code of 'emma_kinship_kmers': https://github.com/voichek/kmersGWAS
 # =================================================================================================
 
 rule generate_kmers_kinship_matrix:
@@ -24,6 +25,11 @@ rule generate_kmers_kinship_matrix:
         {input.kmersGWAS_bin}/emma_kinship_kmers -t {params.prefix} -k {params.kmer_len} --maf {params.maf} > {output}
         """
 
+# =================================================================================================
+#     Generate kinship matrix (SNPs based)
+#     # Source code of 'emma_kinship': https://github.com/voichek/kmersGWAS
+# =================================================================================================
+
 if not config["settings"]["kmers_gwas"]["use_kmers_kinship"]["activate"]:
     rule generate_snps_kinship_matrix:
         input:
@@ -42,3 +48,5 @@ if not config["settings"]["kmers_gwas"]["use_kmers_kinship"]["activate"]:
             
             {input.kmersGWAS_bin}/emma_kinship {params.plink_prefix} > {output}
             """
+
+# =================================================================================================

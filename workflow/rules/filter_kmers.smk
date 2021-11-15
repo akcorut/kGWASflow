@@ -1,5 +1,6 @@
 # =========================================================================================================
 #     Filter k-mers (Get the presence/absence patterns for significant k-mers (5per))
+#     # Source code of 'filter_kmers': https://github.com/voichek/kmersGWAS
 # =========================================================================================================
 
 rule filter_kmers:

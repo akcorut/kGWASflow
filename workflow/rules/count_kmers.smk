@@ -118,6 +118,7 @@ rule kmc_non_canonical:
 
 # =================================================================================================
 #     Combine the outputs from the two KMC run
+#     # Source code of 'kmers_add_strand_information': https://github.com/voichek/kmersGWAS
 # =================================================================================================
 
 rule merge_kmers:
