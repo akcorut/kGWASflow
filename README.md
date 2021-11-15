@@ -1,6 +1,9 @@
 # kGWASflow (🚧 Under Development)
 
 [![Snakemake](https://img.shields.io/badge/snakemake-≥6.10-blue.svg)](https://snakemake.github.io) ![License](https://img.shields.io/badge/license-MIT-blue.svg)
+[![Actions Status](https://github.com/akcorut/kGWASflow/workflows/CI/badge.svg)](https://github.com/akcorut/kGWASflow/actions)
+[![Actions Status](https://github.com/akcorut/kGWASflow/workflows/Linting/badge.svg)](https://github.com/akcorut/kGWASflow/actions)
+
 
 ## Summary
 
