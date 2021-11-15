@@ -20,7 +20,7 @@ rule align_reads:
     threads: 
         config["params"]["align_reads"]["threads"]
     message:
-        "Aligning reaads with k-mers to the reference genome... "
+        "Aligning reads with k-mers to the reference genome..."
     shell:
         """
         python -u scripts/align_reads_with_kmers.py \
