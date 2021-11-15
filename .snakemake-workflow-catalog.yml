@@ -1,0 +1,5 @@
+usage:
+  # definition of software deployment method:
+  # at least conda, singularity, or both
+  software-stack-deployment:
+    conda: true
