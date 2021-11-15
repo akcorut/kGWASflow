@@ -58,10 +58,13 @@ if not os.path.exists(args.out_dir + '/' + args.pheno):
 ## Filter the reads that have one of the k-mers in them
 for index, row in samples_tab_filt.iterrows():
     if row["sample_name"] == row["library_name"]:
+        
+        ## Source code: https://github.com/voichek/fetch_reads_with_kmers
         subprocess.run(" {fetch_reads_path}/fetch_reads {r1} {r2} {fa} 31 {out}/{pheno}/{acc}_reads_with_kmers".format(
             fetch_reads_path= args.fetch_reads_path, out=args.out_dir, r1= row["fq1"], r2= row["fq2"],
             acc= row["sample_name"], lib = row["library_name"], fa= kmers_list_fa, pheno= args.pheno), shell=True)
     else:
+        ## Source code: https://github.com/voichek/fetch_reads_with_kmers
         subprocess.run(" {fetch_reads_path}/fetch_reads {r1} {r2} {fa} 31 {out}/{pheno}/{acc}_{lib}_reads_with_kmers".format(
             fetch_reads_path= args.fetch_reads_path, out=args.out_dir, r1= row["fq1"], r2= row["fq2"],
             acc= row["sample_name"], lib = row["library_name"], fa= kmers_list_fa, pheno= args.pheno), shell=True)
