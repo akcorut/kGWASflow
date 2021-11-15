@@ -16,6 +16,8 @@
 # !config/*
 !config/config.yaml
 !config/cluster.yaml
+!config/samples.tsv
+!config/phenos.tsv
 !.gitignore
 !.gitattributes
 !README.md
