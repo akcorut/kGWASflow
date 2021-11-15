@@ -1,0 +1,24 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+## Source: https://github.com/snakemake-workflows
+description: an entry in the sample sheet (samples.tsv)
+type: object
+properties:
+  sample_name:
+    type: string
+    description: sample/accession name/id that has been sequenced
+  library_name:
+    type: string
+    description: sequincing library name for the sample (same samples can have multiple libraries)
+  fq1:
+    type: string
+    description: path to sequencing reads (FASTQ file)
+  fq2:
+    type: string
+    description: path to second FASTQ file (you should leave empty if it the data is single-end)
+  sra:
+    type: string
+    description: SRA id for downloading the sequencing reads automatically (OPTIONAL)
+required:
+  - sample_name
+  - library_name
+  - fq1

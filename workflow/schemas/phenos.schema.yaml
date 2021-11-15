@@ -1,0 +1,14 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+## Source: https://github.com/snakemake-workflows
+description: an entry in the phenotypes sheet (phenos.tsv)
+type: object
+properties:
+  pheno_name:
+    type: string
+    description: name of the phenotype
+  pheno_path:
+    type: string
+    description: path to the phenotype file (*.pheno file)
+required:
+  - pheno_name
+  - pheno_path
