@@ -36,6 +36,9 @@ samples = (
 )
 samples.index.names = ["sample_name", "library_name"]
 
+# Validating the samples sheet
+validate(samples, schema="../schemas/samples.schema.yaml"
+
 # Make sure indeces always str type
 samples.index = samples.index.set_levels([i.astype(str) for i in samples.index.levels])
 
@@ -56,6 +59,9 @@ phenos = (
     .set_index(["pheno_name"], drop=False)
     .sort_index()
 )
+
+# Validating the phenotpyes sheet
+validate(samples, schema="../schemas/phenos.schema.yaml"
 
 # Generate phenotype names list
 pheno_names=list(set(phenos.index.get_level_values("pheno_name")))
