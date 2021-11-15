@@ -61,7 +61,7 @@ phenos = (
 )
 
 # Validating the phenotpyes sheet
-validate(samples, schema="../schemas/phenos.schema.yaml")
+validate(phenos, schema="../schemas/phenos.schema.yaml")
 
 # Generate phenotype names list
 pheno_names=list(set(phenos.index.get_level_values("pheno_name")))
