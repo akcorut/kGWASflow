@@ -80,24 +80,24 @@ wildcard_constraints:
 # =================================================================================================
 
 # Helpful messages
-logger.info("===========================================================================")
-logger.info("")
-logger.info("    kGWASflow: A Snakemake Workflow for k-mers Based GWAS                  ")
-logger.info("")
-logger.info("    Snakefile:          " + (workflow.snakefile))
-logger.info("    Base directory:     " + (workflow.basedir))
-logger.info("    Config files:       " + (", ".join(workflow.configfiles)))
-logger.info("")
-logger.info("    If you use this pipeline please cite: ")
-logger.info("    Voichek, Y., Weigel, D. Identifying genetic variants underlying        ")
-logger.info("    phenotypic variation in plants without complete genomes.")
-logger.info("    Nat Genet 52, 534–540 (2020). https://doi.org/10.1038/s41588-020-0612-7")
-logger.info("")
-logger.info("===========================================================================")
+logger.info("# ============================================================================ #")
+logger.info("#                                                                              #")
+logger.info("#     kGWASflow: A Snakemake Workflow for k-mers Based GWAS                    #")
+logger.info("#                                                                              #")
+logger.info("#     Snakefile:          " + (workflow.snakefile) + "                         #")
+logger.info("#     Base directory:     " + (workflow.basedir) + "                           #")
+logger.info("#     Config files:       " + (", ".join(workflow.configfiles)) + "            #") 
+logger.info("#                                                                              #")
+logger.info("#     If you use this pipeline please cite:                                    #")
+logger.info("#     Voichek, Y., Weigel, D. Identifying genetic variants underlying          #")
+logger.info("#     phenotypic variation in plants without complete genomes.                 #")
+logger.info("#     Nat Genet 52, 534–540 (2020). https://doi.org/10.1038/s41588-020-0612-7  #")
+logger.info("#                                                                              #")
+logger.info("# ============================================================================ #")
 logger.info("")
 
 # =================================================================================================
-#     Determine kmersGWAS Version and Path
+#     Set kmersGWAS Version and Path
 #     # Source: https://github.com/voichek/kmersGWAS/
 #     # Reference: https://www.nature.com/articles/s41588-020-0612-7
 # =================================================================================================
@@ -204,9 +204,15 @@ def get_target_output(wildcards):
     # ),
     target_output.extend(
         expand(
+            "results/align_kmers/align_kmers.done"
+        )
+    ),
+    target_output.extend(
+        expand(
             "results/align_reads_with_kmers/align_reads_with_kmers.done"
         )
     ),
+
     return target_output
 
 # =================================================================================================
