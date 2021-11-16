@@ -43,8 +43,8 @@ validate(samples, schema="../schemas/samples.schema.yaml")
 samples.index = samples.index.set_levels([i.astype(str) for i in samples.index.levels])
 
 # Generate sample and library names lists
-sample_names=list(set(samples.index.get_level_values("sample_name")))
-library_names=list(set(samples.index.get_level_values("library_name")))
+sample_names=samples.index.get_level_values("sample_name")
+library_names=samples.index.get_level_values("library_name")
 
 # ==================== Phenotypes ===================== #
 
@@ -82,11 +82,16 @@ wildcard_constraints:
 # Helpful messages
 logger.info("===========================================================================")
 logger.info("")
-logger.info("    kGWASflow: A Snakemake Workflow for k-mers Based GWAS          ")
+logger.info("    kGWASflow: A Snakemake Workflow for k-mers Based GWAS                  ")
 logger.info("")
 logger.info("    Snakefile:          " + (workflow.snakefile))
 logger.info("    Base directory:     " + (workflow.basedir))
 logger.info("    Config files:       " + (", ".join(workflow.configfiles)))
+logger.info("")
+logger.info("    If you use this pipeline please cite: ")
+logger.info("    Voichek, Y., Weigel, D. Identifying genetic variants underlying        ")
+logger.info("    phenotypic variation in plants without complete genomes.")
+logger.info("    Nat Genet 52, 534–540 (2020). https://doi.org/10.1038/s41588-020-0612-7")
 logger.info("")
 logger.info("===========================================================================")
 logger.info("")
@@ -118,6 +123,12 @@ def get_reads(wildcards):
     else:
         # single end
         return {"r1": fastqs.fq1}
+
+def ends_with_gz(wildcards):
+    fastq1 = samples.loc[(wildcards.sample, wildcards.library), ["fq1"]]
+    if fastq1.fq1.endswith("gz"):
+        return True
+    return False
 
 def get_phenos(wildcards):
     """Get fastq files using samples sheet."""
