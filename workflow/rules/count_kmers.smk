@@ -2,14 +2,24 @@
 #     Create Symlinks
 # =================================================================================================
 
+R1_OUT=""
+R2_OUT=""
+if ends_with_gz:
+    R1_OUT= "results/reads/{sample}/{library}_1.fastq.gz"
+    R2_OUT= "results/reads/{sample}/{library}_2.fastq.gz"
+else:
+    R1_OUT= "results/reads/{sample}/{library}_1.fastq"
+    R2_OUT= "results/reads/{sample}/{library}_2.fastq"
+
+
 if not config["settings"]["trimming"]["activate"]:
     rule create_symlink:
         input:
             r1 = lambda wildcards: samples.loc[(wildcards.sample, wildcards.library), ["fq1"]],
             r2 = lambda wildcards: samples.loc[(wildcards.sample, wildcards.library), ["fq2"]]
         output:
-            r1 = "results/reads/{sample}/{library}_1.fastq",
-            r2 = "results/reads/{sample}/{library}_2.fastq",
+            r1 = R1_OUT,
+            r2 = R2_OUT,
         message:
             "Creating symbolic links for fastq file..."
         threads: 1
@@ -26,10 +36,10 @@ if not config["settings"]["trimming"]["activate"]:
 if not config["settings"]["trimming"]["activate"]:
     rule generate_input_lists:
         input:
-            r1 = expand("results/reads/{sample}/{library}_1.fastq", zip,
+            r1 = expand(R1_OUT, zip,
                         sample=sample_names,
                         library=library_names),
-            r2 = expand("results/reads/{sample}/{library}_2.fastq", zip,
+            r2 = expand(R2_OUT, zip,
                         sample=sample_names,
                         library=library_names)
         output:
