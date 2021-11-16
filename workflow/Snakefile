@@ -10,7 +10,7 @@ min_version("6.10")
 # =========================================================================================================
 
 # Load config file
-configfile: "../config/config.yaml"
+configfile: "../.test/config/maize_config.yaml"
 
 # validate(config, schema="../schemas/config.schema.yaml")
 
@@ -34,6 +34,7 @@ include: "rules/summarize_results.smk"
 include: "rules/fetch_kmers.smk"
 include: "rules/filter_kmers.smk"
 include: "rules/ref.smk"
+include: "rules/align_kmers.smk"
 include: "rules/fetch_reads.smk"
 include: "rules/align_reads.smk"
 
