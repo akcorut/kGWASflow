@@ -18,6 +18,7 @@ samples_tab = pd.read_csv(args.samp_tab,
                                 usecols=["sample_name"],
                                 dtype='object')
 
+samples_tab = samples_tab.drop_duplicates()
 ## Loop through kmers_count results for each
 # accession/sample directory and make a list of 
 # kmers_with_strand file paths for each accession/sample
