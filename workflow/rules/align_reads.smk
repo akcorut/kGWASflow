@@ -9,29 +9,23 @@ rule align_reads:
         done = "results/fetch_reads_with_kmers/fetch_source_reads.done",
     output:
         dir = directory("results/align_reads_with_kmers/{phenos_filt}"),
-        done = "results/align_reads_with_kmers/{phenos_filt}/align_reads.done"
+        done = touch("results/align_reads_with_kmers/{phenos_filt}/align_reads.done")
     params:
         in_prefix = lambda w, input: os.path.dirname(input.done),
         out_prefix = lambda w, output: os.path.dirname(output.dir),
         pheno = "{phenos_filt}",
         index = "resources/genome",
+        bowtie_log = "logs/align_reads/{phenos_filt}"
     conda:
         "../envs/align_reads.yaml"
     threads: 
         config["params"]["align_reads"]["threads"]
+    log:
+        "logs/align_reads/{phenos_filt}/align_reads_with_kmers.log"
     message:
         "Aligning reads with k-mers to the reference genome..."
-    shell:
-        """
-        python -u scripts/align_reads_with_kmers.py \
-        -i {params.in_prefix} \
-        -p {params.pheno} \
-        -r {params.index} \
-        -o {params.out_prefix} \
-        -t {threads}
-
-        touch {output.done}
-        """
+    script:
+        "../scripts/align_reads_with_kmers.py"
 
 # =========================================================================================================
 #     Check align_reads 
