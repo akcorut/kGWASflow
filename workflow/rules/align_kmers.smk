@@ -15,12 +15,14 @@ rule align_kmers:
         "../envs/align_kmers.yaml"
     threads:
         config["params"]["bowtie"]["threads"]
+    log:
+        "logs/align_kmers/{phenos_filt}_kmers_align.bowtie2.log"
     message:
         "Aligning signficant k-mers to the reference genome..."
     shell:
         """
         bowtie -p {threads} -a --best --all --strata -m {params.m} \
-        -x {params.index} -f {input.kmers_list} --sam {output}
+        -x {params.index} -f {input.kmers_list} --sam {output} 2> {log}
         """
 
 # =======================================================================================================
@@ -31,7 +33,7 @@ rule sam_to_bam:
     input:
         "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sam"
     output:
-        "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.bam"
+        temp("results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.bam")
     conda:
         "../envs/align_kmers.yaml"
     threads:
@@ -40,7 +42,7 @@ rule sam_to_bam:
         "Converting SAM files to BAM..."
     shell:
         """
-        samtools view -@ {threads} -S -b {input} > {output}
+        samtools view -@ {threads} -Sbh {input} > {output}
         """
 
 # =======================================================================================================
@@ -49,7 +51,7 @@ rule sam_to_bam:
 
 rule bam_sort:
     input:
-        "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sam"
+        "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.bam"
     output:
         "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sorted.bam"
     conda:
