@@ -126,11 +126,11 @@ def get_reads(wildcards):
         # single end
         return {"r1": fastqs.fq1}
 
-def ends_with_gz(wildcards):
-    fastq1 = samples.loc[(wildcards.sample, wildcards.library), ["fq1"]]
-    if fastq1.fq1.endswith("gz"):
+def ends_with_gz(samp_tab):
+    if samp_tab["fq1"].str.endswith('gz').all():
         return True
-    return False
+    else:
+        return False
 
 def get_phenos(wildcards):
     """Get fastq files using samples sheet."""
