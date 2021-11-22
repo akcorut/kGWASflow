@@ -10,7 +10,7 @@ min_version("6.10")
 # =========================================================================================================
 
 # Load config file
-configfile: "../.test/config/maize_config.yaml"
+configfile: "../.test/config_arabidopsis/config.yaml"
 
 # validate(config, schema="../schemas/config.schema.yaml")
 
@@ -39,9 +39,38 @@ include: "rules/fetch_reads.smk"
 include: "rules/align_reads.smk"
 
 # =========================================================================================================
+#     The `onstart` Checker
+# =========================================================================================================
+
+onstart:
+    try:
+        print("Checking if all required files are provided...")
+        important_files = [ config["samples"],
+                            config["phenotypes"] ]
+        for filename in important_files:
+            if not os.path.exists(filename):
+                raise FileNotFoundError(filename)
+    except FileNotFoundError as e:
+        print("This file is not available or accessible: %s" % e)
+        sys.exit(1)
+    else:
+        print("\tAll required files are present!")
+
+
+# =========================================================================================================
 #     Target Outputs
 # =========================================================================================================
 
 rule all:
     input:
         get_target_output,
+
+# =========================================================================================================
+#     Success and Failure Messages
+# =========================================================================================================
+
+onsuccess:
+	print("Success! The Snakemake workflow is completed.")
+
+onerror:
+	print("Error! The Snakemake workflow aborted.")
