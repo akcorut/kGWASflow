@@ -15,15 +15,13 @@ rule generate_results_table:
     params:
         in_prefix = "results/kmers_gwas",
         out_prefix = lambda w, output: os.path.dirname(output[0]),
-        extra = config["params"]["results_table"]["extra"]
     conda:
         "../envs/kmers_stats.yaml"
+    log:
+        "logs/kmers_gwas_summary/generate_kmers_gwas_results_table.log"
     message:
         "Summarizing k-mers GWAS results in a table..."
-    shell:
-        """
-        python scripts/generate_kmers_gwas_results_table.py -dir {params.in_prefix} \
-        -out {params.out_prefix} {params.extra}
-        """
+    script:
+        "../scripts/generate_kmers_gwas_results_table.py"
 
 # =================================================================================================

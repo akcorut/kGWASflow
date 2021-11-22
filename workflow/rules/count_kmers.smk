@@ -2,9 +2,11 @@
 #     Create Symlinks
 # =================================================================================================
 
+## TODO: Find a better solution here for the optional output (.gz or not .gz) ##
+
 R1_OUT=""
 R2_OUT=""
-if ends_with_gz:
+if ends_with_gz(samples):
     R1_OUT= "results/reads/{sample}/{library}_1.fastq.gz"
     R2_OUT= "results/reads/{sample}/{library}_2.fastq.gz"
 else:
@@ -46,10 +48,12 @@ if not config["settings"]["trimming"]["activate"]:
             "results/reads/{sample}/input_files.txt"
         params:
             prefix = get_input_path_for_generate_input_lists()
+        log:
+            "logs/generate_input_lists/{sample}/{sample}_generate_input_lists.log"
         message:
             "Generating input list files..."
-        shell:
-            "python scripts/generate_input_lists.py -i {params.prefix}"
+        script:
+            "../scripts/generate_input_lists.py"
 else:
     rule generate_input_lists:
         output:
@@ -58,8 +62,8 @@ else:
             prefix = get_input_path_for_generate_input_lists()
         message:
             "Generating input list files..."
-        shell:
-            "python scripts/generate_input_lists.py -i {params.prefix}"
+        script:
+            "../scripts/generate_input_lists.py"
 
 # =================================================================================================
 #     KMC with canonization
@@ -72,7 +76,6 @@ rule kmc_canonical:
         kmc_suf = temp("results/kmers_count/{sample}/output_kmc_canon.kmc_suf"),
         kmc_pre = temp("results/kmers_count/{sample}/output_kmc_canon.kmc_pre")
     params:
-        # outdir_prefix = "results/kmers_count/{sample}/",
         outdir_prefix = lambda wildcards, output: output[0][:-24],
         outfile_prefix = lambda wildcards, output: output[0][:-8],
         kmer_len = config["params"]["kmc"]["kmer_len"],
@@ -105,7 +108,6 @@ rule kmc_non_canonical:
         kmc_suf = temp("results/kmers_count/{sample}/output_kmc_all.kmc_suf"),
         kmc_pre = temp("results/kmers_count/{sample}/output_kmc_all.kmc_pre")
     params:
-        # outdir_prefix = "results/kmers_count/{sample}/",
         outdir_prefix = lambda wildcards, output: output[0][:-22],
         outfile_prefix = lambda wildcards, output: output[0][:-8],
         kmer_len = config["params"]["kmc"]["kmer_len"],
@@ -200,6 +202,8 @@ rule kmers_stats:
         input_path= "logs/kmc",
         out_table_path= lambda w, output: os.path.dirname(output.kmc_all_stats),
         out_plot_path= lambda w, output: os.path.dirname(output.kmc_all_plot)
+    log:
+        "logs/kmers_stats/plot_kmers_stats.log"
     conda:
         "../envs/kmers_stats.yaml"
     message:

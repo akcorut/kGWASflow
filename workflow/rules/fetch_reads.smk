@@ -46,17 +46,13 @@ rule fetch_source_reads:
         fetch_reads_prefix = lambda w, input: os.path.dirname(input.fetch_reads)
     conda:
         "../envs/kmers_stats.yaml"
+    log:
+        "logs/fetch_reads_with_kmers/{phenos_filt}/fetch_source_reads_of_kmers.log"
     message:
         "Fetching reads that contain significant k-mers find in {input.kmers_list}..."    
-    shell:
+    script:
         """
-        python -u scripts/fetch_source_reads_of_kmers.py \
-        -k {params.kmers_tab_prefix} \
-        -l {params.kmers_list_prefix} \
-        -p {params.pheno} \
-        -s {input.samp_tab} \
-        -o {params.out_prefix} \
-        -path {params.fetch_reads_prefix}
+        ../scripts/fetch_source_reads_of_kmers.py
         """
 
 # =========================================================================================================

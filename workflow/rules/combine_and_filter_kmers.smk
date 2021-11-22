@@ -14,12 +14,12 @@ rule generate_kmers_list_paths:
     params:
         input_dir =  "results/kmers_count",
         out_dir = lambda wildcards, output: output[0][:-20]
+    log:
+        "logs/kmers_list/generate_kmers_list_paths.log"
     message:
         "Generating kmers_list_paths.txt..."
-    shell:
-        """
-        python scripts/generate_kmers_list_paths.py -i {params.input_dir} -s {input.samples_tab} -o {params.out_dir}
-        """
+    script:
+        "../scripts/generate_kmers_list_paths.py"
 
 # =================================================================================================
 #     Combine and filter lists of kmers
