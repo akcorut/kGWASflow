@@ -73,6 +73,15 @@ conda activate kGWASflow
 
 ## Authors
 
+kGWASflow was developed by [Adnan Kivanc Corut ](https://www.github.com/akcorut).
+
+## Citation
+
+If you use kGWASflow in your research, please cite using the DOI: [10.5281/zenodo.5790132](https://doi.org/10.5281/zenodo.5790132) and the original method paper by [Voichek et al. (2020)](https://www.nature.com/articles/s41588-020-0612-7):
+
+> Voichek, Y., Weigel, D. Identifying genetic variants underlying phenotypic variation in plants without complete genomes.  
+> Nat Genet 52, 534–540 (2020). https://doi.org/10.1038/s41588-020-0612-7
+
 ## Acknowledgements
 
 ## License
