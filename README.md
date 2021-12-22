@@ -11,6 +11,7 @@ A Snakemake workflow to perform k-mers-based GWAS.
 
 * [Summary](#Summary)
 * [Installation](#installation)
+* [Configuration](#configuration)
 * [Usage](#usage)
 * [Authors](#authors)
 * [Acknowledgements](#acknowledgements)
@@ -26,7 +27,7 @@ A Snakemake workflow to perform k-mers-based GWAS.
 
 **1. Clone this repository to your local machine using below command:**
 
-```
+```bash
 git clone https://github.com/akcorut/kGWASflow.git
 ```
 
@@ -34,7 +35,7 @@ git clone https://github.com/akcorut/kGWASflow.git
 
 **2. Change into the kGWASflow directory:**
 
-```
+```bash
 cd kGWASflow
 ```
 
@@ -46,13 +47,13 @@ In order to use this worklow, you need [`conda`](https://docs.conda.io/projects/
 
 Snakemake recommends `mamba` to be used to install snakemake. More detailed information can be found in the [Snakemake manual](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html). To install `mamba`, you can use the below command:
 
-```
+```bash
 conda install -c conda-forge mamba
 ```
 
 After installing `mamba`, you can use below commands to install and activate snakemake and the other dependencies:
 
-```
+```bash
 mamba env create -f environment.yaml
 conda activate kGWASflow
 ```
@@ -61,11 +62,12 @@ conda activate kGWASflow
 
 You can also install snakemake and the other dependencies without mamba as below:
 
-```
+```bash
 conda env create -f environment.yaml
 conda activate kGWASflow
 ```
 
+## Configuration
 
 ## Usage
 
