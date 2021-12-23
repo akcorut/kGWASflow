@@ -69,6 +69,16 @@ conda activate kGWASflow
 
 ## Configuration
 
+Configure the workflow according to your needs by modifying the files in the `config/` folder.
+
+- `config/config.yaml` is a YAML file containing the workflow configuration.
+
+- `config/samples.tsv` is a TSV file containing the sample information.
+
+- `config/phenos.tsv` is a TSV file contains the phenotype information.
+
+For more information, please click [here](https://github.com/akcorut/kGWASflow/tree/main/config#configuration-settings).
+
 ## Usage
 
 ## Authors
