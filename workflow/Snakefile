@@ -10,7 +10,7 @@ min_version("6.10")
 # =========================================================================================================
 
 # Load config file
-configfile: "../.test/config_arabidopsis/config.yaml"
+configfile: "../config/config.yaml"
 
 # validate(config, schema="../schemas/config.schema.yaml")
 
