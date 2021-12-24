@@ -19,6 +19,7 @@ checkpoint fetch_kmers_from_res_table:
         r"""
         if [ -f {params.check_file} ]; then
             mkdir {output} # Do nothing : Just create empty folder
+            cp {params.check_file} {output}/
         else
             python scripts/fetch_kmers_from_results_table.py -i {input.res_tab} \
             -t {params.threshold} -p {input.phenos_list} -o {output}
