@@ -99,6 +99,12 @@ snakemake -n --use-conda
 snakemake --cores all --use-conda
 ```
 
+If you want to run the workflow with a different `config.yaml` file, you can us the `--configfile` parameter to specify it:
+
+```bash
+snakemake --use-conda --configfile <path/to/config.yaml>
+```
+
 The usage of this workflow is also described in the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog/?usage=akcorut%2FkGWASflow).
 
 ## Authors
