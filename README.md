@@ -67,6 +67,8 @@ conda env create -f environment.yaml
 conda activate kGWASflow
 ```
 
+The other options to deploy this workflow can be found in the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog/?usage=akcorut%2FkGWASflow)
+
 ## Configuration
 
 Configure the workflow according to your needs by modifying the files in the `config/` folder.
@@ -80,6 +82,8 @@ Configure the workflow according to your needs by modifying the files in the `co
 For more information, please click [here](https://github.com/akcorut/kGWASflow/tree/main/config#configuration-settings).
 
 ## Usage
+
+
 
 ## Authors
 
