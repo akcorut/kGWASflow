@@ -81,11 +81,13 @@ params:
     # Set params for single end files
     se:
       adapters: ""
+      # Additional parameters for cutadapt_se
       extra: ""
     # Set params for paired end files
     # https://cutadapt.readthedocs.io/en/stable/guide.html
     pe:
       adapters: ""
+      # Additional parameters for cutadapt_pe
       extra: ""
       
   # ----------------------------------------------------------------------
@@ -93,6 +95,7 @@ params:
   # ----------------------------------------------------------------------
 
   kmc:
+    # Number of threads to use
     threads: 30
     
     # k-mer length (should be between 15-31)
@@ -103,7 +106,7 @@ params:
     # counted. This parameter depends on the coverage, but should be
     # the same for all the individuals.
     count_thresh: 2
-
+    # Additional parameters for kmc
     extra: ""
 
   # ----------------------------------------------------------------------
@@ -143,7 +146,8 @@ params:
     ## Min number of data points (samples) allowed 
     # (Default is: 30)
     min_data_points: 30
-
+    
+    # Additional parameters for kmersGWAS
     extra: ""
 
   # ----------------------------------------------------------------------
@@ -161,6 +165,9 @@ params:
   # ----------------------------------------------------------------------
 
   fetch_kmers:
+    ## Use 5 percent threshold
+    # To use 10 percent threshold 
+    # change this parameter to 10
     threshold: 5
 
   # ----------------------------------------------------------------------
@@ -168,6 +175,7 @@ params:
   # ----------------------------------------------------------------------
   
   align_reads:
+    # Number of threads to use
     threads: 30
 
   # ----------------------------------------------------------------------
@@ -175,6 +183,7 @@ params:
   # ----------------------------------------------------------------------
 
   bowtie2:
+    # Number of threads to use
     threads: 30
   
     
