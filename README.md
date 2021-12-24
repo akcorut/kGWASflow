@@ -87,7 +87,19 @@ For more information, please click [here](https://github.com/akcorut/kGWASflow/t
 
 After [changing into the kGWASflow directory](https://github.com/akcorut/kGWASflow#step-1-obtain-the-latest-release-of-this-workflow) and [activating the conda environment](https://github.com/akcorut/kGWASflow#step-2-install-snakemake-and-the-other-dependencies), you can start using the workflow as below:
 
-Test your configuration by performing a dry-run via
+**1. Test your configuration by performing a dry-run**
+
+```bash
+snakemake -n --use-conda 
+```
+
+**2. Run the workflow and install software dependencies**
+
+```bash
+snakemake --cores all --use-conda
+```
+
+The usage of this workflow is also described in the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog/?usage=akcorut%2FkGWASflow).
 
 ## Authors
 
