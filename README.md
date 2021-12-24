@@ -66,8 +66,10 @@ You can also install snakemake and the other dependencies without mamba as below
 conda env create -f environment.yaml
 conda activate kGWASflow
 ```
+___________
+#### Other Options: 
 
-The other options to deploy this workflow can be found in the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog/?usage=akcorut%2FkGWASflow)
+The other options on how to deploy this workflow can be found in the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog/?usage=akcorut%2FkGWASflow).
 
 ## Configuration
 
@@ -83,7 +85,9 @@ For more information, please click [here](https://github.com/akcorut/kGWASflow/t
 
 ## Usage
 
+After changing into the kGWASflow directory and [activating the conda environment](#installation), you can start using the workflow as below:
 
+Test your configuration by performing a dry-run via
 
 ## Authors
 
