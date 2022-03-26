@@ -170,6 +170,18 @@ params:
     # change this parameter to 10
     threshold: 5
 
+
+  # ----------------------------------------------------------------------
+  #     bowtie Params
+  # ----------------------------------------------------------------------
+
+  bowtie:
+    threads: 30
+    # This parameter tells bowtie not to report 
+    # alignments for reads having more than n number
+    # of reportable alignments
+    max_align_report: 3
+
   # ----------------------------------------------------------------------
   #     align_reads Params
   # ----------------------------------------------------------------------
