@@ -51,9 +51,7 @@ rule fetch_source_reads:
     message:
         "Fetching reads that contain significant k-mers find in {input.kmers_list}..."    
     script:
-        """
-        ../scripts/fetch_source_reads_of_kmers.py
-        """
+        "../scripts/fetch_source_reads_of_kmers.py"
 
 # =========================================================================================================
 #     Check fetch_source_reads 
