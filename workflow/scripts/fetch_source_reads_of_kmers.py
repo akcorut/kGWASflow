@@ -54,8 +54,8 @@ with open(snakemake.log[0], "w") as f:
     kmers_list_fa = kmers_list + "/" + pheno + "_kmers_list.fa"
 
     ## Check if output directory is exist. If not create one
-    if not os.path.exists(args.out_dir + '/' + pheno):
-        os.makedirs(args.out_dir + '/' + pheno)
+    if not os.path.exists(snakemake.params.out_prefix + '/' + pheno):
+        os.makedirs(snakemake.params.out_prefix + '/' + pheno)
     
     ## Filter the reads that have one of the k-mers in them
     for index, row in samples_tab_filt.iterrows():
@@ -63,10 +63,10 @@ with open(snakemake.log[0], "w") as f:
 
             ## Source code: https://github.com/voichek/fetch_reads_with_kmers
             subprocess.run(" {fetch_reads_path}/fetch_reads {r1} {r2} {fa} 31 {out}/{pheno}/{acc}_reads_with_kmers".format(
-                fetch_reads_path= fetch_reads_dir, out=args.out_dir, r1= row["fq1"], r2= row["fq2"],
+                fetch_reads_path= fetch_reads_dir, out=snakemake.params.out_prefix, r1= row["fq1"], r2= row["fq2"],
                 acc= row["sample_name"], lib = row["library_name"], fa= kmers_list_fa, pheno= pheno), shell=True)
         else:
             ## Source code: https://github.com/voichek/fetch_reads_with_kmers
             subprocess.run(" {fetch_reads_path}/fetch_reads {r1} {r2} {fa} 31 {out}/{pheno}/{acc}_{lib}_reads_with_kmers".format(
-                fetch_reads_path= fetch_reads_dir, out=args.out_dir, r1= row["fq1"], r2= row["fq2"],
+                fetch_reads_path= fetch_reads_dir, out=snakemake.params.out_prefix, r1= row["fq1"], r2= row["fq2"],
                 acc= row["sample_name"], lib = row["library_name"], fa= kmers_list_fa, pheno= pheno), shell=True)
