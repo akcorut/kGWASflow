@@ -10,7 +10,7 @@ rule align_kmers:
         "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sam"
     params:
         index = "resources/genome",
-        m = config["params"]["bowtie"]["max_align_repot"]
+        m = config["params"]["bowtie"]["max_align_report"]
     conda:
         "../envs/align_kmers.yaml"
     threads:
