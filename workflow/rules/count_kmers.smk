@@ -56,6 +56,9 @@ if not config["settings"]["trimming"]["activate"]:
             "../scripts/generate_input_lists.py"
 else:
     rule generate_input_lists:
+        input:
+            rules.cutadapt_pe.output.fastq1,
+            rules.cutadapt_pe.output.fastq2,
         output:
             "results/trimmed/{sample}/input_files.txt"
         params:
