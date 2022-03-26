@@ -17,7 +17,7 @@ rule cutadapt_pe:
     threads: 
         config["params"]["cutadapt"]["threads"]
     message: 
-        "Performing trimming using cutadapt on on the following files: {input}"
+        "Performing trimming using cutadapt on the following files: {input}"
     wrapper:
         "0.79.0/bio/cutadapt/pe"
 
@@ -39,7 +39,7 @@ rule cutadapt_se:
     threads: 
         config["params"]["cutadapt"]["threads"]
     message: 
-        "Performing trimming using cutadapt on on the following files: {input}"
+        "Performing trimming using cutadapt on the following files: {input}"
     wrapper:
         "0.79.0/bio/cutadapt/se"
 
