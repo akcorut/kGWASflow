@@ -2,4 +2,4 @@ kGWASflow:  A Snakemake Pipeline for k-mers-based GWAS
 
 This workflow performs k-mers-based GWAS analysis on single- or paired-end whole genome sequencing data. Quality control analysis was done using `FastQC <https://www.bioinformatics.babraham.ac.uk/projects/fastqc/>`_. k-mers-based GWAS analysis was done following `the method of Voichek et al. (2020) <https://github.com/voichek/kmersGWAS/blob/master/manual.pdf>`_. k-mers were counted using `KMC <https://github.com/refresh-bio/KMC>`_. k-mers length was set to k= {{ snakemake.config["params"]["kmc"]["kmer_len"] }}. k-mers were counted twice, once with canonization and once without canonization as described in `Voichek et al. (2020) <https://github.com/voichek/kmersGWAS/blob/master/manual.pdf>`_. After k-mers counting step, the k-mers table that contains the presence absence/pattern of the k-mers was generated and k-mers based GWAS was performed using `kmersGWAS library <https://github.com/voichek/kmersGWAS>`_.
 
-For sample metadata, please see {{ snakemake.config["samples"] }}.
+For sample metadata, please see {{ snakemake.config["samples"] }}_.
