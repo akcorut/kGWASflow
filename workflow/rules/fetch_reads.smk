@@ -35,7 +35,8 @@ rule fetch_source_reads:
         kmers_tab = "results/filter_kmers/{phenos_filt}_kmers_table.txt",
         kmers_list = "results/fetch_kmers/{phenos_filt}_kmers_list.fa",
         fetch_reads = "scripts/external/fetch_reads_with_kmers/fetch_reads",
-        samp_tab = config["samples"]
+        samp_tab = config["samples"],
+        filter_kmers = "results/filter_kmers/filter_kmers.done"
     output:
         directory("results/fetch_reads_with_kmers/{phenos_filt}"),
     params:
@@ -51,7 +52,7 @@ rule fetch_source_reads:
     message:
         "Fetching reads that contain significant k-mers find in {input.kmers_list}..."    
     script:
-        "../scripts/fetch_source_reads_of_kmers.py"
+        "../scripts/fetch_source_reads.py"
 
 # =========================================================================================================
 #     Check fetch_source_reads 
