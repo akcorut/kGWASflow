@@ -43,7 +43,8 @@ if not config["settings"]["trimming"]["activate"]:
                         library=library_names),
             r2 = expand(R2_OUT, zip,
                         sample=sample_names,
-                        library=library_names)
+                        library=library_names),
+            qc= "results/qc/multiqc.html"
         output:
             "results/reads/{sample}/input_files.txt"
         params:
@@ -54,15 +55,23 @@ if not config["settings"]["trimming"]["activate"]:
             "Generating input list files..."
         script:
             "../scripts/generate_input_lists.py"
-else:
+
+if config["settings"]["trimming"]["activate"]:
     rule generate_input_lists:
         input:
-            rules.cutadapt_pe.output.fastq1,
-            rules.cutadapt_pe.output.fastq2,
+            r1 = expand(rules.cutadapt_pe.output.fastq1, zip,
+                        sample=sample_names,
+                        library=library_names),
+            r2 = expand(rules.cutadapt_pe.output.fastq2, zip,
+                        sample=sample_names,
+                        library=library_names),
+            qc= "results/qc/multiqc.html"
         output:
             "results/trimmed/{sample}/input_files.txt"
         params:
             prefix = get_input_path_for_generate_input_lists()
+        log:
+            "logs/generate_input_lists/{sample}/{sample}_generate_input_lists.log"
         message:
             "Generating input list files..."
         script:
