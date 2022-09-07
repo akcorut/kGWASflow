@@ -15,7 +15,7 @@ rule fastqc:
     message: 
         "Performing quality control analysis using FastQC on the following files: {input}"
     wrapper:
-        "0.79.0/bio/fastqc"
+        "v1.12.2/bio/fastqc"
 
 # =================================================================================================
 #     MultiQC
@@ -40,8 +40,6 @@ rule multiqc:
     message: 
         "Performing MultiQC on the FastQC results..."
     wrapper:
-        "0.79.0/bio/multiqc"
+        "v1.12.2/bio/multiqc"
 
 # =================================================================================================
-
-ruleorder: multiqc > download_kmersGWAS
