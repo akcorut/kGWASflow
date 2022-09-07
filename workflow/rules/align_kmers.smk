@@ -29,7 +29,7 @@ rule align_kmers:
 #     Convert SAM outputs to BAM format
 # =======================================================================================================
 
-rule sam_to_bam:
+rule align_kmers_sam_to_bam:
     input:
         "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sam"
     output:
@@ -49,7 +49,7 @@ rule sam_to_bam:
 #     Sort alignment BAM files
 # =======================================================================================================
 
-rule bam_sort:
+rule align_kmers_bam_sort:
     input:
         "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.bam"
     output:
@@ -69,7 +69,7 @@ rule bam_sort:
 #     Index alignment BAM files
 # =======================================================================================================
 
-rule bam_index:
+rule align_kmers_bam_index:
     input:
         "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sorted.bam"
     output:
