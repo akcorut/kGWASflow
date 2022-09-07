@@ -33,7 +33,7 @@ rule generate_kmers_kinship_matrix:
 if not config["settings"]["kmers_gwas"]["use_kmers_kinship"]["activate"]:
     rule generate_snps_kinship_matrix:
         input:
-            snps_plink = config["settings"]["kmers_gwas"]["kinship_matrix"]["use_snps_kinship"]["snps_plink_file"]
+            snps_plink = config["settings"]["kmers_gwas"]["use_snps_kinship"]["snps_plink"]
         output:
             "results/kmers_table/kmers_table.kinship"
         params:
