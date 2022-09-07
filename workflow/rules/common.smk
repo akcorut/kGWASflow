@@ -16,6 +16,7 @@ import re
 from os.path import join, basename, dirname
 import pathlib
 from os import path
+from datetime import datetime
 
 # =================================================================================================
 #     Sample and Phenotype Sheets + Wildcard Constraints
@@ -79,23 +80,37 @@ wildcard_constraints:
 #     Pipeline User Output
 # =================================================================================================
 
+kgwasflow_version = "v0.1.0-beta"
+
 # Helpful messages
-logger.info("# ==================================================================================== #")
-logger.info("#                                                                                      ")
-logger.info("#     kGWASflow: A Snakemake Workflow for k-mers Based GWAS                            ")
-logger.info("#                                                                                      ")
-logger.info("#     Snakefile:          " + (workflow.snakefile))
-logger.info("#     Base directory:     " + (workflow.basedir))
-logger.info("#     Config files:       " + (", ".join(workflow.configfiles)))
-logger.info("#                                                                                      ")
-logger.info("# ==================================================================================== #")
-logger.info("#                                                                                      ")
-logger.info("#     If you use this pipeline please cite:                                            ")
-logger.info("#     Voichek, Y., Weigel, D. Identifying genetic variants underlying                  ")
-logger.info("#     phenotypic variation in plants without complete genomes.                         ")
-logger.info("#     Nat Genet 52, 534–540 (2020). https://doi.org/10.1038/s41588-020-0612-7          ")
-logger.info("#                                                                                      ")
-logger.info("# ==================================================================================== #")
+logger.info("# ================================================================================== #")
+logger.info("      _     _______          __      _____  __ _                 ") 
+logger.info("     | |   / ____\ \        / /\    / ____|/ _| |                ")
+logger.info("     | | _| |  __ \ \  /\  / /  \  | (___ | |_| | _____      __  ")
+logger.info("     | |/ / | |_ | \ \/  \/ / /\ \  \___ \|  _| |/ _ \ \ /\ / /  ")
+logger.info("     |   <| |__| |  \  /\  / ____ \ ____) | | | | (_) \ V  V /   ")
+logger.info("     |_|\_\\_____|   \/  \/_/    \_\_____/|_| |_|\___/ \_/\_/    ")                                      
+logger.info("")
+logger.info("     kGWASflow: A Snakemake Workflow for k-mers Based GWAS                            ")
+logger.info("                                                                                      ")
+logger.info("     Date:               " + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+logger.info("     kGWASflow version:          " + str(kgwasflow_version))
+logger.info("     Snakemake version:          " + str(snakemake.__version__))
+logger.info("     Python version:             " + str(sys.version.split(' ')[0]))
+logger.info("")
+logger.info("     Snakefile:          " + (workflow.snakefile))
+logger.info("     Base directory:     " + (workflow.basedir))
+logger.info("     Working directory:  " + os.getcwd())
+logger.info("     Config files:       " + (", ".join(workflow.configfiles)))
+logger.info("                                                                                      ")
+logger.info("# ================================================================================== #")
+logger.info("")
+logger.info("     If you use kGWASflow, please cite:                                            ")
+logger.info("     Voichek, Y., Weigel, D. Identifying genetic variants underlying                  ")
+logger.info("     phenotypic variation in plants without complete genomes.                         ")
+logger.info("     Nat Genet 52, 534–540 (2020). https://doi.org/10.1038/s41588-020-0612-7          ")
+logger.info("")
+logger.info("# ================================================================================== #")
 logger.info("")
 
 # =================================================================================================
@@ -131,6 +146,27 @@ def ends_with_gz(samp_tab):
         return True
     else:
         return False
+
+def get_multiqc_input(wildcards):
+    multiqc_input = []
+    multiqc_input.extend(
+        expand(
+            [
+                "results/qc/fastqc/{u.sample_name}/{u.library_name}_fastqc.zip",
+            ],
+            u=samples.itertuples()
+        )
+    )
+    if config["settings"]["trimming"]["activate"]:
+        multiqc_input.extend(
+            expand(
+                [
+                    "results/trimmed/{u.sample_name}/{u.library_name}.paired.qc.txt",
+                ],
+                u=samples.itertuples()
+            )
+        )
+    return multiqc_input
 
 def get_phenos(wildcards):
     """Get fastq files using samples sheet."""
@@ -199,21 +235,34 @@ def get_target_output(wildcards):
             pheno= pheno_names
         )
     ),
-    # target_output.extend(
-    #     expand(
-    #         "results/fetch_reads_with_kmers/fetch_source_reads.done"
-    #     )
-    # ),
-    target_output.extend(
-        expand(
-            "results/align_kmers/align_kmers.done"
-        )
-    ),
-    target_output.extend(
-        expand(
-            "results/align_reads_with_kmers/align_reads_with_kmers.done"
-        )
-    ),
+
+    if config["settings"]["align_kmers"]["activate"]:
+        target_output.extend(
+            expand(
+                "results/align_kmers/align_kmers.done"
+            )
+        ),
+    
+    if config["settings"]["align_reads_with_kmers"]["activate"]:
+        target_output.extend(
+            expand(
+                "results/align_reads_with_kmers/align_reads_with_kmers.done"
+            )
+        ),
+
+    if config["settings"]["assemble_reads"]["activate"]:
+        target_output.extend(
+            expand(
+                "results/align_contigs/align_contigs.done"
+            )
+        ),
+
+    if config["settings"]["blast_contigs"]["activate"]:
+        target_output.extend(
+            expand(
+                "results/blast_contigs/blast_contigs.done"
+            )
+        ),
 
     return target_output
 
