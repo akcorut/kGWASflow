@@ -1,0 +1,7 @@
+name: assemble_reads
+channels:
+  - defaults
+  - bioconda
+  - conda-forge
+dependencies:
+  - spades=3.15
