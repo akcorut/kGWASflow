@@ -10,7 +10,7 @@ min_version("7.14")
 # =========================================================================================================
 
 # Load config file
-configfile: "../config/config.yaml"
+configfile: "../.test/config_arabidopsis/config.yaml"
 
 # validate(config, schema="../schemas/config.schema.yaml")
 
@@ -37,6 +37,9 @@ include: "rules/ref.smk"
 include: "rules/align_kmers.smk"
 include: "rules/fetch_reads.smk"
 include: "rules/align_reads.smk"
+include: "rules/assemble_reads.smk"
+include: "rules/align_contigs.smk"
+include: "rules/blast_contigs.smk"
 
 # =========================================================================================================
 #     The `onstart` Checker
