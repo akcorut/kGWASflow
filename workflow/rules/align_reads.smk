@@ -2,6 +2,8 @@
 #     Merge reads with k-mers
 # =========================================================================================================
 
+## TODO: Find a better way to merge reads here. ##
+
 rule merge_reads:
     input:
         dir= rules.fetch_source_reads.output,
@@ -46,7 +48,7 @@ rule align_reads:
         out_sam = "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.sam",
         done = touch("results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.aligning_reads.done")
     params:
-        index = "resources/genome",
+        index = "resources/ref/genome/genome",
     conda:
         "../envs/align_reads.yaml"
     threads: 

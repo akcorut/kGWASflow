@@ -4,9 +4,9 @@
 
 rule blast_makedb_nuc:
     input:
-        fasta= "resources/genome.fasta"
+        fasta= "resources/ref/genome/genome.fasta"
     output:
-        multiext("resources/genome.fasta",
+        multiext("resources/ref/genome/genome.fasta",
             ".ndb",
             ".nhr",
             ".nin",

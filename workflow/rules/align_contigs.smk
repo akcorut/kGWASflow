@@ -5,7 +5,7 @@
 rule align_contigs_minimap:
     input:
         contigs= "results/assemble_reads_with_kmers/{phenos_filt}/assembly/contigs.fasta",
-        ref_gen= "resources/genome.fasta",
+        ref_gen= "resources/ref/genome/genome.fasta",
     output:
         "results/align_contigs/{phenos_filt}/alignment/contigs_aligned.sam"
     conda:
