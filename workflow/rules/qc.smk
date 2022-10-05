@@ -4,7 +4,7 @@
 
 rule fastqc:
     input:
-        unpack(get_reads)
+        get_individual_fastq
     output:
         html="results/qc/fastqc/{sample}/{library}_fastqc.html",
         zip="results/qc/fastqc/{sample}/{library}_fastqc.zip",

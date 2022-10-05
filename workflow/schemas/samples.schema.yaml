@@ -21,4 +21,3 @@ properties:
 required:
   - sample_name
   - library_name
-  - fq1

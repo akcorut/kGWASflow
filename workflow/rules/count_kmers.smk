@@ -13,22 +13,23 @@ else:
     R1_OUT= "results/reads/{sample}/{library}_1.fastq"
     R2_OUT= "results/reads/{sample}/{library}_2.fastq"
 
-
 if not config["settings"]["trimming"]["activate"]:
     rule create_symlink:
         input:
-            r1 = lambda wildcards: samples.loc[(wildcards.sample, wildcards.library), ["fq1"]],
-            r2 = lambda wildcards: samples.loc[(wildcards.sample, wildcards.library), ["fq2"]]
+            fastqs= get_fastqs
         output:
             r1 = R1_OUT,
-            r2 = R2_OUT,
+            r2 = R2_OUT
         message:
-            "Creating symbolic links for fastq file..."
+            "Creating symbolic links for fastq files..."
         threads: 1
         shell:
             """
-            ln -s {input.r1} {output.r1}
-            ln -s {input.r2} {output.r2}
+            echo Working on fastq files: {input.fastqs}
+            echo Symlink -fastq1: {input.fastqs[0]} to {output.r1}
+            ln -rs {input.fastqs[0]} {output.r1}
+            echo Symlink -fastq2: {input.fastqs[1]} to {output.r2}
+            ln -rs {input.fastqs[1]} {output.r2}
             """
 
 # =================================================================================================

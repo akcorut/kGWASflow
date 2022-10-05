@@ -81,6 +81,7 @@ wildcard_constraints:
 # =================================================================================================
 
 kgwasflow_version = "v0.1.0-beta"
+kgwasflow_author = "Adnan Kivanc Corut"
 
 # Helpful messages
 logger.info("# ================================================================================== #")
@@ -94,6 +95,7 @@ logger.info("")
 logger.info("     kGWASflow: A Snakemake Workflow for k-mers Based GWAS                            ")
 logger.info("                                                                                      ")
 logger.info("     Date:               " + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+logger.info("     Author:          " + str(kgwasflow_author))
 logger.info("     kGWASflow version:          " + str(kgwasflow_version))
 logger.info("     Snakemake version:          " + str(snakemake.__version__))
 logger.info("     Python version:             " + str(sys.version.split(' ')[0]))
@@ -131,6 +133,49 @@ KMERSGWAS_BIN_PATH = os.path.join(KMERSGWAS_DIR, "bin/")
 #     Common Helper Functions
 # =================================================================================================
 
+def sra_only(sample, library):
+    return pd.isnull(samples.loc[(sample, library), "fq1"]) and pd.isnull(samples.loc[(sample, library), "fq2"]) \
+           and not pd.isnull(samples.loc[(sample, library), "sra"])
+
+def is_sra_se(sample, library):
+    return sra_only(sample, library) and config["settings"]["single_end"]
+
+def is_sra_pe(sample, library):
+    return sra_only(sample, library) and not config["settings"]["single_end"]
+
+def get_individual_fastq(wildcards):
+    """Get individual raw FASTQ files from library sheet, based on a read (end) wildcard"""
+    fastqs = samples.loc[(wildcards.sample, wildcards.library), ["fq1", "fq2"]].dropna()
+    if ( len(fastqs) == 0 or len(fastqs) == 1 ):
+        if is_sra_se(wildcards.sample, wildcards.library):
+            return expand("resources/ref/sra-se-reads/{accession}.fastq",
+                              accession=samples.loc[ (wildcards.sample, wildcards.library), "sra" ])
+        elif is_sra_pe(wildcards.sample, wildcards.library):
+            return expand("resources/ref/sra-pe-reads/{accession}_1.fastq",
+                              accession=samples.loc[ (wildcards.sample, wildcards.library), "sra" ])
+        else:
+            return samples.loc[ (wildcards.sample, wildcards.library), "fq1" ]
+    elif len(fastqs) == 2:
+        if is_sra_pe(wildcards.sample, wildcards.library):
+            return expand("resources/ref/sra-pe-reads/{accession}_2.fastq",
+                          accession=samples.loc[ (wildcards.sample, wildcards.library), "sra" ])
+        else:
+            return samples.loc[ (wildcards.sample, wildcards.library), "fq2" ]
+
+def get_fastqs(wildcards):
+    """Get raw FASTQ files from library sheet."""
+    if is_sra_se(wildcards.sample, wildcards.library):
+        return expand("resources/ref/sra-se-reads/{accession}.fastq",
+                          accession=samples.loc[ (wildcards.sample, wildcards.library), "sra" ])
+    elif is_sra_pe(wildcards.sample, wildcards.library):
+        return expand(["resources/ref/sra-pe-reads/{accession}_1.fastq", "resources/ref/sra-pe-reads/{accession}_2.fastq"],
+                          accession=samples.loc[ (wildcards.sample, wildcards.library), "sra" ])
+    elif is_single_end(wildcards.sample, wildcards.library):
+        return samples.loc[ (wildcards.sample, wildcards.library), "fq1" ]
+    else:
+        u = samples.loc[ (wildcards.sample, wildcards.library), ["fq1", "fq2"] ].dropna()
+        return [ f"{u.fq1}", f"{u.fq2}" ]
+
 def get_reads(wildcards):
     """Get fastq files using samples sheet."""
     fastqs = samples.loc[(wildcards.sample, wildcards.library), ["fq1", "fq2"]].dropna()
@@ -142,12 +187,14 @@ def get_reads(wildcards):
         return {"r1": fastqs.fq1}
 
 def ends_with_gz(samp_tab):
-    if samp_tab["fq1"].str.endswith('gz').all():
-        return True
-    else:
-        return False
+    if not sra_only:
+        if samp_tab["fq1"].str.endswith('gz').all():
+            return True
+        else:
+            return False
 
 def get_multiqc_input(wildcards):
+    """Get multiqc input."""
     multiqc_input = []
     multiqc_input.extend(
         expand(
@@ -180,17 +227,8 @@ def get_input_path_for_generate_input_lists():
     else:
         return "results/reads"
 
-def get_generate_input_lists_target():
-    if config["settings"]["trimming"]["activate"]:
-        return expand(
-            "results/trimmed/{sample}/input_files.txt", sample=sample_names
-        )
-    else:
-        return expand(
-            "results/reads/{sample}/input_files.txt", sample=sample_names
-        )
-
 def get_plink_prefix():
+    """Get prefix fopr the SNPs plink file."""
     plink_path = config["settings"]["kmers_gwas"]["use_snps_kinship"]["snps_plink_file"]
     plink_prefix = os.path.splitext(plink_path)[0]
     return plink_prefix
@@ -204,6 +242,11 @@ def get_target_output(wildcards):
     """
     Get all requested inputs (target outputs) for rule all.
     """
+
+    align_kmers = config["settings"]["align_kmers"]["activate"]
+    align_reads_with_kmers = config["settings"]["align_reads_with_kmers"]["activate"]
+    assemble_reads_with_kmers = config["settings"]["assemble_reads"]["activate"]
+    blast_assembled_reads = config["settings"]["blast_contigs"]["activate"]
 
     target_output = []
 
@@ -236,28 +279,28 @@ def get_target_output(wildcards):
         )
     ),
 
-    if config["settings"]["align_kmers"]["activate"]:
+    if align_kmers:
         target_output.extend(
             expand(
                 "results/align_kmers/align_kmers.done"
             )
         ),
     
-    if config["settings"]["align_reads_with_kmers"]["activate"]:
+    if align_reads_with_kmers:
         target_output.extend(
             expand(
                 "results/align_reads_with_kmers/align_reads_with_kmers.done"
             )
         ),
 
-    if config["settings"]["assemble_reads"]["activate"]:
+    if assemble_reads_with_kmers:
         target_output.extend(
             expand(
                 "results/align_contigs/align_contigs.done"
             )
         ),
 
-    if config["settings"]["blast_contigs"]["activate"]:
+    if blast_assembled_reads:
         target_output.extend(
             expand(
                 "results/blast_contigs/blast_contigs.done"
