@@ -25,5 +25,5 @@ rule create_kmers_table:
         """
 
 # =================================================================================================
-#     TODO Convert the k-mers table to PLINK binary file
+#     TODO: Convert the k-mers table to PLINK binary file
 # =================================================================================================
