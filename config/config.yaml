@@ -119,8 +119,8 @@ params:
     # Set params for paired end files
     # https://cutadapt.readthedocs.io/en/stable/guide.html
     pe:
-      adapters: "-a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA -A AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"
-      extra: "-q 15,10"
+      adapters: ""
+      extra: ""
       
   # ----------------------------------------------------------------------
   #     KMC Params
