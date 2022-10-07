@@ -34,7 +34,8 @@ if config["settings"]["kmers_gwas"]["use_kmers_kinship"]["activate"]:
 if not config["settings"]["kmers_gwas"]["use_kmers_kinship"]["activate"]:
     rule generate_snps_kinship_matrix:
         input:
-            snps_plink = config["settings"]["kmers_gwas"]["use_snps_kinship"]["snps_plink"]
+            snps_plink = config["settings"]["kmers_gwas"]["use_snps_kinship"]["snps_plink"],
+            kmersGWAS_bin = rules.extract_kmersGWAS.output.kmersGWAS_bin
         output:
             "results/kmers_table/kmers_table.kinship"
         params:
@@ -47,7 +48,7 @@ if not config["settings"]["kmers_gwas"]["use_kmers_kinship"]["activate"]:
             """
             export LD_LIBRARY_PATH=$CONDA_PREFIX/lib
             
-            {input.kmersGWAS_bin}/emma_kinship {params.plink_prefix} > {output}
+            {input.kmersGWAS_bin}/emma_kinship {params.prefix} > {output}
             """
 
 # =================================================================================================
