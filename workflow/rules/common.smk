@@ -229,7 +229,7 @@ def get_input_path_for_generate_input_lists():
 
 def get_plink_prefix():
     """Get prefix fopr the SNPs plink file."""
-    plink_path = config["settings"]["kmers_gwas"]["use_snps_kinship"]["snps_plink_file"]
+    plink_path = config["settings"]["kmers_gwas"]["use_snps_kinship"]["snps_plink"]
     plink_prefix = os.path.splitext(plink_path)[0]
     return plink_prefix
 
