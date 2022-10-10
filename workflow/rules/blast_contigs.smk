@@ -47,7 +47,7 @@ rule filter_contigs:
 rule blast_contigs:
     input:
         query = "results/assemble_reads_with_kmers/{phenos_filt}/filtered_contigs/{phenos_filt}_contigs.filtered.fasta",
-        blastdb=multiext("resources/genome.fasta",
+        blastdb=multiext("resources/ref/genome/genome.fasta",
             ".ndb",
             ".nhr",
             ".nin",
