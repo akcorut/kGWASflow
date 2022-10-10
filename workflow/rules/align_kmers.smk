@@ -9,8 +9,8 @@ rule align_kmers:
     output:
         "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sam"
     params:
-        index = "resources/genome",
-        m = config["params"]["bowtie"]["max_align_report"]
+        index = "resources/ref/genome/genome",
+        extra = config["params"]["bowtie"]["extra"]
     conda:
         "../envs/align_kmers.yaml"
     threads:
@@ -21,7 +21,7 @@ rule align_kmers:
         "Aligning signficant k-mers to the reference genome..."
     shell:
         """
-        bowtie -p {threads} -a --best --all --strata -m {params.m} \
+        bowtie -p {threads} -a --best --all --strata {params.extra} \
         -x {params.index} -f {input.kmers_list} --sam {output} 2> {log}
         """
 
@@ -38,11 +38,13 @@ rule align_kmers_sam_to_bam:
         "../envs/align_kmers.yaml"
     threads:
         config["params"]["samtools"]["threads"]
+    log:
+        "logs/align_kmers/{phenos_filt}_kmers_align.sam_to_bam.log"
     message:
         "Converting SAM files to BAM..."
     shell:
         """
-        samtools view -@ {threads} -Sbh {input} > {output}
+        samtools view -@ {threads} -Sbh {input} > {output} 2> {log}
         """
 
 # =======================================================================================================
@@ -58,11 +60,13 @@ rule align_kmers_bam_sort:
         "../envs/align_kmers.yaml"
     threads:
         config["params"]["samtools"]["threads"]
+    log:
+        "logs/align_kmers/{phenos_filt}_kmers_align.bam_sort.log"
     message:
         "Sorting alignment BAM files..."
     shell:
         """
-        samtools sort -@ {threads} {input} -o {output}
+        samtools sort -@ {threads} {input} -o {output} 2> {log}
         """
 
 # =======================================================================================================
@@ -78,11 +82,13 @@ rule align_kmers_bam_index:
         "../envs/align_kmers.yaml"
     threads:
         config["params"]["samtools"]["threads"]
+    log:
+        "logs/align_kmers/{phenos_filt}_kmers_align.bam_index.log"
     message:
         "Indexing alignment BAM files..."
     shell:
         """
-        samtools index -@ {threads} {input}
+        samtools index -@ {threads} {input} 2> {log}
         """
 
 # =========================================================================================================
