@@ -3,7 +3,6 @@
 #     # Source: https://github.com/voichek/fetch_reads_with_kmers
 # =======================================================================================================
 
-
 rule download_fetch_reads_with_kmers:
     output:
         cpp= "scripts/external/fetch_reads_with_kmers/fetch_reads.cpp",
@@ -30,25 +29,35 @@ rule make_fetch_reads_with_kmers:
 #     Fetch source reads of significant k-mers
 # =======================================================================================================
 
+## TODO: Fix the issue with SRA input. Use fetch_reads directly in the sankemake rule ##
+
 rule fetch_source_reads:
     input:
         kmers_tab = "results/filter_kmers/{phenos_filt}_kmers_table.txt",
         kmers_list = "results/fetch_kmers/{phenos_filt}_kmers_list.fa",
         fetch_reads = "scripts/external/fetch_reads_with_kmers/fetch_reads",
-        samp_tab = config["samples"],
-        filter_kmers = "results/filter_kmers/filter_kmers.done"
+        filter_kmers = "results/filter_kmers/filter_kmers.done",
+        r1 = expand(rules.create_symlink.output.r1, zip,
+                        sample=sample_names,
+                        library=library_names),
+        r2 = expand(rules.create_symlink.output.r2, zip,
+                        sample=sample_names,
+                        library=library_names),
     output:
-        directory("results/fetch_reads_with_kmers/{phenos_filt}"),
+        dir = directory("results/fetch_reads_with_kmers/{phenos_filt}"),
     params:
-        kmers_tab_prefix = lambda w, input: os.path.dirname(input.kmers_tab),
         kmers_list_prefix = lambda w, input: os.path.dirname(input.kmers_list),
+        out_prefix = lambda w, output: os.path.dirname(output[0]),
+        samples= sample_names,
+        library= library_names,
         pheno = "{phenos_filt}",
-        out_prefix = "results/fetch_reads_with_kmers",
-        fetch_reads_prefix = lambda w, input: os.path.dirname(input.fetch_reads)
-    conda:
-        "../envs/kmers_stats.yaml"
+        kmer_len = config["params"]["kmc"]["kmer_len"]
+    # conda:
+    #     "../envs/kmers_stats.yaml"
     log:
         "logs/fetch_reads_with_kmers/{phenos_filt}/fetch_source_reads_of_kmers.log"
+    threads: 
+        config["params"]["fetch_reads"]["threads"]
     message:
         "Fetching reads that contain significant k-mers find in {input.kmers_list}..."    
     script:
