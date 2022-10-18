@@ -9,7 +9,7 @@ rule fastqc:
         html="results/qc/fastqc/{sample}/{library}_fastqc.html",
         zip="results/qc/fastqc/{sample}/{library}_fastqc.zip",
     log:
-        "logs/fastqc/{sample}/{library}.log",
+        "logs/qc/fastqc/{sample}/{library}.log",
     threads:
         config["params"]["fastqc"]["threads"]
     message: 
@@ -34,7 +34,7 @@ rule multiqc:
             category="Quality control",
         ),
     log:
-        "logs/multiqc.log",
+        "logs/qc/multiqc/multiqc.log",
     params:
         "-v -d"
     message: 
