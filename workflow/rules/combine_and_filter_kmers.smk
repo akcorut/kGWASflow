@@ -55,7 +55,7 @@ rule combine_and_filter:
 
 rule plot_kmer_allele_counts:
     input:
-        rules.combine_and_filter.output.shareness
+        shareness = rules.combine_and_filter.output.shareness
     output:
         kmer_allele_counts_plot = report(
             "results/plots/kmers_list/kmer_allele_counts.pdf",
@@ -66,9 +66,9 @@ rule plot_kmer_allele_counts:
         "../envs/kmers_stats.yaml"
     message:
         "Plotting the k-mer allele counts..."
-    shell:
-        """
-        python scripts/plot_kmer_allele_counts.py -i {input} -o {output.kmer_allele_counts_plot}
-        """
+    log:
+        "logs/plots/kmers_list/plot_kmer_allele_counts.log"
+    script:
+        "../scripts/plot_kmer_allele_counts.py"
 
 # =================================================================================================

@@ -213,17 +213,13 @@ rule kmers_stats:
         )
     params:
         input_path= "logs/kmc",
-        out_table_path= lambda w, output: os.path.dirname(output.kmc_all_stats),
-        out_plot_path= lambda w, output: os.path.dirname(output.kmc_all_plot)
     log:
-        "logs/kmers_stats/plot_kmers_stats.log"
+        "logs/plots/kmers_stats/plot_kmers_stats.log"
     conda:
         "../envs/kmers_stats.yaml"
     message:
         "Gathering useful stats from KMC runs and ploting the results..."
-    shell:
-        """
-        python scripts/plot_kmers_stats.py -i {params.input_path} -o1 {params.out_table_path} -o2 {params.out_plot_path}
-        """
+    script:
+        "../scripts/plot_kmers_stats.py"
 
 # =================================================================================================
