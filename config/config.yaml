@@ -70,7 +70,7 @@ settings:
 
   blast_contigs:
   # Set to true in order to BLAST contigs
-    activate: false
+    activate: true
 
 
 # =================================================================================================
@@ -120,7 +120,7 @@ params:
     # https://cutadapt.readthedocs.io/en/stable/guide.html
     pe:
       adapters: ""
-      extra: ""
+      extra: "-q 15,10"
       
   # ----------------------------------------------------------------------
   #     KMC Params
@@ -128,7 +128,7 @@ params:
 
   kmc:
     # Number of threads for kmc
-    threads: 10
+    threads: 8
     
     # k-mer length (should be between 15-31)
     kmer_len: 31
@@ -147,7 +147,7 @@ params:
 
   kmers_gwas:
     # Number of threads to use
-    threads: 10
+    threads: 8
 
     # Minimum percent of appearance in each strand form
     min_percent_app: 0.2
@@ -205,16 +205,6 @@ params:
   fetch_reads:
     # Number of threads to use
     threads: 10
-    # K-mer size
-    kmer_len: 31
-
-  # ----------------------------------------------------------------------
-  #     align_reads Params
-  # ----------------------------------------------------------------------
-  
-  align_reads:
-    # Number of threads to use
-    threads: 10
 
   # ----------------------------------------------------------------------
   #     bowtie2 Params
@@ -222,7 +212,9 @@ params:
 
   bowtie2:
     # Number of threads to use
-    threads: 10
+    threads: 8
+    # Extra bowtie parameters can be given here
+    extra: "--no-unal"
 
   # ----------------------------------------------------------------------
   #     bowtie Params
@@ -230,11 +222,10 @@ params:
   
   bowtie:
     # Number of threads to use
-    threads: 30
-    # This parameter tells bowtie not to report 
-    # alignments for reads having more than n number
-    # of reportable alignments
-    max_align_report: 3
+    threads: 8
+    # Extra bowtie parameters can be given here
+    # e.g "-m 3"
+    extra: "--no-unal"
 
   # ----------------------------------------------------------------------
   #     samtools Params
@@ -242,7 +233,7 @@ params:
   
   samtools:
     # Number of threads to use
-    threads: 30    
+    threads: 8    
 
   # ----------------------------------------------------------------------
   #     filter_alignment Params
@@ -258,7 +249,9 @@ params:
 
   spades:
     # Number of threads to use
-    threads: 30
+    threads: 8
+    # Extra parameters for SPADES
+    extra: ""
 
   # ----------------------------------------------------------------------
   #     minimap2 Params
@@ -266,7 +259,7 @@ params:
 
   minimap2:
     # Number of threads to use
-    threads: 20
+    threads: 8
 
   # ----------------------------------------------------------------------
   #     BLAST Params
@@ -274,7 +267,7 @@ params:
 
   blastn:
     # Number of threads to use
-    threads: 10
+    threads: 8
     # BLAST output format
     format: "6 qseqid qstart qend evalue"
     # Extra parameters if needed
