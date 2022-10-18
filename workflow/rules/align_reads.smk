@@ -12,7 +12,11 @@ rule merge_reads:
         merged_r2 = temp("results/fetch_reads_with_kmers/{phenos_filt}/reads_with_kmers_from_all_acc_R2.fastq")
     shell:
         """
+        echo Merging r1 files:
+        echo "$(ls {input.dir}/*_reads_with_kmers_R1.fastq)"
         cat {input.dir}/*_reads_with_kmers_R1.fastq > {output.merged_r1}
+        echo Merging r2 files:
+        echo "$(ls {input.dir}/*_reads_with_kmers_R2.fastq)"
         cat {input.dir}/*_reads_with_kmers_R2.fastq > {output.merged_r2}
         """
 
@@ -49,17 +53,18 @@ rule align_reads:
         done = touch("results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.aligning_reads.done")
     params:
         index = "resources/ref/genome/genome",
+        extra = config["params"]["bowtie2"]["extra"]
     conda:
         "../envs/align_reads.yaml"
     threads: 
-        config["params"]["align_reads"]["threads"]
+        config["params"]["bowtie2"]["threads"]
     log:
         "logs/align_reads/{phenos_filt}/align_reads_with_kmers.bowtie2.log"
     message:
         "Aligning reads with k-mers to the reference genome..."
     shell:
         """
-        bowtie2 -p {threads} --very-sensitive-local -x {params.index} -1 {input.r1} -2 {input.r2} -S {output.out_sam} 2> {log}
+        bowtie2 -p {threads} --very-sensitive-local {params.extra} -x {params.index} -1 {input.r1} -2 {input.r2} -S {output.out_sam} 2> {log}
         """
 
 # =======================================================================================================
