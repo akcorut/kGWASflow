@@ -15,9 +15,10 @@ rule spades:
         config["params"]["spades"]["threads"]
     params:
         out_dir =  lambda w, output: os.path.dirname(output.contigs),
+        extra = config["params"]["spades"]["extra"]
     shell:
         """
-        spades.py --careful --only-assembler -t {threads} --pe1-1 {input.R1} --pe1-2 {input.R2} -o {params.out_dir}
+        spades.py --careful --only-assembler -t {threads} {params.extra} --pe1-1 {input.R1} --pe1-2 {input.R2} -o {params.out_dir}
         """
 
 # =========================================================================================================
