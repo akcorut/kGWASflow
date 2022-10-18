@@ -1,2 +1,2 @@
 pheno_name	pheno_path
-resistence	/scratch/ac32082/kGWASflow-dev/.test/data/ecoli_phenos/resistence.pheno
+resistence	data/ecoli_phenos/resistence.pheno
