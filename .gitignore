@@ -29,3 +29,11 @@ workflow/*.out
 workflow/report.html
 workflow/*.sh
 !environment.yaml
+!.test
+!.test/config_ecoli
+!.test/config_ecoli/*
+!.test/data
+!.test/data/ecoli_phenos
+!.test/data/ecoli_phenos/*
+!.test/data/ecoli_ref
+!.test/data/ecoli_ref/CP026474.1.fa
