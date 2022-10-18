@@ -17,8 +17,8 @@ jobs:
       - name: Checkout submodules
         uses: textbook/git-checkout-submodule-action@2.0.0
       - name: Test workflow
-        uses: snakemake/snakemake-github-action@v1.19.0
+        uses: snakemake/snakemake-github-action@v1.23.0
         with:
           directory: .
           snakefile: workflow/Snakefile
-          args: "--use-conda --cores 1 --configfile .test/config.yaml"
+          args: "--use-conda --show-failed-logs --cores 2 --conda-cleanup-pkgs cache --all-tem --configfile .test/config_ecoli/config.yaml"
