@@ -1,7 +1,7 @@
 # Sample and Phenotype Sheets 
 # !!! Required !!!
-samples: /scratch/ac32082/kGWASflow-dev/.test/config_ecoli/samples.tsv
-phenotypes: /scratch/ac32082/kGWASflow-dev/.test/config_ecoli/phenos.tsv
+samples: config_ecoli/samples.tsv
+phenotypes: config_ecoli/phenos.tsv
 
 # =================================================================================================
 #     Reference Genome
@@ -9,7 +9,7 @@ phenotypes: /scratch/ac32082/kGWASflow-dev/.test/config_ecoli/phenos.tsv
 
 ref:
   # !!! Reference genome in Fasta format required for the alignment step !!!
-  fasta: /scratch/ac32082/kGWASflow-dev/.test/data/ecoli_ref/CP026474.1.fa
+  fasta: data/ecoli_ref/CP026474.1.fa
   
 # =================================================================================================
 #     Workflow Settings
