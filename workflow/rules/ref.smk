@@ -32,7 +32,7 @@ rule bowtie2_build:
     params:
         extra=""  # optional parameters
     threads: 
-        config["params"]["align_reads"]["threads"]
+        config["params"]["bowtie2"]["threads"]
     message:
         "Creating bowtie2 index of the reference genome..."
     wrapper:
