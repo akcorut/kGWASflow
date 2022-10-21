@@ -21,7 +21,7 @@ rule align_kmers:
         "Aligning signficant k-mers to the reference genome..."
     shell:
         """
-        bowtie -p {threads} -a --best --all --strata {params.extra} \
+        bowtie -p {threads} -a --best --strata {params.extra} \
         -x {params.index} -f {input.kmers_list} --sam {output} 2> {log}
         """
 
@@ -96,7 +96,7 @@ rule align_kmers_bam_index:
 # =========================================================================================================
 
 def aggregate_input_align_kmers(wildcards):
-    checkpoint_output = checkpoints.fetch_kmers_from_res_table.get(**wildcards).output[0]
+    checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
     return expand("results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sorted.bam.bai",
            phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
 

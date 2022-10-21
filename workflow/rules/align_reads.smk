@@ -150,7 +150,7 @@ rule align_reads_bam_index:
 # =========================================================================================================
 
 def aggregate_input_align_reads(wildcards):
-    checkpoint_output = checkpoints.fetch_kmers_from_res_table.get(**wildcards).output[0]
+    checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
     return expand("results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sorted.bam.bai",
            phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
 
