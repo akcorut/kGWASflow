@@ -69,7 +69,7 @@ rule blast_contigs:
         "v1.12.2/bio/blast/blastn"
 
 # =========================================================================================================
-#     Check extract_paired_reads 
+#     Aggregate blast_contigs outputs
 # =========================================================================================================
 
 def aggregate_input_blast_contigs(wildcards):
@@ -78,7 +78,7 @@ def aggregate_input_blast_contigs(wildcards):
            phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
 
 
-rule check_blast_contigs:
+rule aggregate_blast_contigs:
     input:
         aggregate_input_blast_contigs
     output:
@@ -87,3 +87,5 @@ rule check_blast_contigs:
         """
         touch {output}
         """
+
+# =========================================================================================================
