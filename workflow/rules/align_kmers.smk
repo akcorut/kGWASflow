@@ -2,28 +2,54 @@
 #     Align significant k-mers to the reference genome
 # =======================================================================================================
 
-rule align_kmers:
-    input:
-        kmers_list = "results/fetch_kmers/{phenos_filt}_kmers_list.fa",
-        index = rules.bowtie2_build.output
-    output:
-        "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sam"
-    params:
-        index = "resources/ref/genome/genome",
-        extra = config["params"]["bowtie"]["extra"]
-    conda:
-        "../envs/align_kmers.yaml"
-    threads:
-        config["params"]["bowtie"]["threads"]
-    log:
-        "logs/align_kmers/{phenos_filt}_kmers_align.bowtie2.log"
-    message:
-        "Aligning signficant k-mers to the reference genome..."
-    shell:
-        """
-        bowtie -p {threads} -a --best --strata {params.extra} \
-        -x {params.index} -f {input.kmers_list} --sam {output} 2> {log}
-        """
+if config["settings"]["align_kmers"]["use_bowtie"]:
+    rule align_kmers:
+        input:
+            kmers_list = "results/fetch_kmers/{phenos_filt}_kmers_list.fa",
+            index = rules.bowtie_build.output
+        output:
+            "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sam"
+        params:
+            index = "resources/ref/genome/bowtie_index/genome",
+            extra = config["params"]["bowtie"]["extra"]
+        conda:
+            "../envs/align_kmers.yaml"
+        threads:
+            config["params"]["bowtie"]["threads"]
+        log:
+            "logs/align_kmers/{phenos_filt}_kmers_align.bowtie.log"
+        message:
+            "Aligning signficant k-mers to the reference genome..."
+        shell:
+            """
+            bowtie -p {threads} -a --best --strata {params.extra} \
+            -x {params.index} -f {input.kmers_list} --sam {output} 2> {log}
+            """
+
+
+if config["settings"]["align_kmers"]["use_bowtie2"]:
+    rule align_kmers:
+        input:
+            kmers_list = "results/fetch_kmers/{phenos_filt}_kmers_list.fa",
+            index = rules.bowtie2_build.output
+        output:
+            "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sam"
+        params:
+            index = "resources/ref/genome/bowtie2_index/genome",
+            extra = config["params"]["bowtie2"]["extra"]
+        conda:
+            "../envs/align_kmers.yaml"
+        threads:
+            config["params"]["bowtie2"]["threads"]
+        log:
+            "logs/align_kmers/{phenos_filt}_kmers_align.bowtie2.log"
+        message:
+            "Aligning signficant k-mers to the reference genome..."
+        shell:
+            """
+            bowtie2 -p {threads} {params.extra} \
+            -x {params.index} -f {input.kmers_list} -S {output} 2> {log}
+            """
 
 # =======================================================================================================
 #     Convert SAM outputs to BAM format
@@ -91,16 +117,48 @@ rule align_kmers_bam_index:
         samtools index -@ {threads} {input} 2> {log}
         """
 
+# =================================================================================================
+#     Generate Manhattan plots
+# =================================================================================================
+
+rule plot_manhattan:
+    input:
+        "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sam"
+    output:
+        manhattan_plot = report(
+            "results/plots/manhattan/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.manhattan_plot.pdf",
+            caption="../report/plot_manhattan.rst",
+            category="k-mers GWAS Results",
+        )
+    conda:
+        "../envs/plot_manhattan.yaml"
+    threads:
+        config["params"]["plot_manhattan"]["threads"]
+    log:
+        "logs/plots/manhattan/align_kmers/{phenos_filt}_kmers_alignment.plot_manhattan.log"
+    message:
+        "Generating manhattan plot from k-mers alignment results..."
+    script:
+        "../scripts/plot_manhattan.R"
+
 # =========================================================================================================
-#     Check align_kmers
+#     Aggregate align_kmers outputs
 # =========================================================================================================
 
 def aggregate_input_align_kmers(wildcards):
     checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
-    return expand("results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sorted.bam.bai",
-           phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
+    if not config["settings"]["align_kmers"]["plot_manhattan"]:
+        return expand("results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sorted.bam.bai",
+               phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
+    else:
+        return expand(
+                    [
+                        "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sorted.bam.bai",
+                        "results/plots/manhattan/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.manhattan_plot.pdf",
+                    ], phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt
+                    )
 
-rule check_align_kmers:
+rule aggregate_align_kmers:
     input:
         aggregate_input_align_kmers
     output:
