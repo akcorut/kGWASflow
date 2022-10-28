@@ -1,5 +1,7 @@
 # Sample and Phenotype Sheets 
 # !!! Required !!!
+# Paths to the samples.tsv and phenos.tsv
+# For more information: https://github.com/akcorut/kGWASflow/tree/main/config
 samples: ../config/samples.tsv
 phenotypes: ../config/phenos.tsv
 
@@ -9,6 +11,7 @@ phenotypes: ../config/phenos.tsv
 
 ref:
   # !!! Reference genome in Fasta format required for the alignment step !!!
+  # Path to the fasta file of the reference genome
   fasta:
   
 
@@ -22,6 +25,8 @@ settings:
   #     Pre-GWAS Settings
   # ----------------------------------------------------------------------
   
+  ## Set to true in order to use single end reads
+  # TODO Add single-end support
   single_end: false
 
   trimming: 
@@ -35,14 +40,16 @@ settings:
   kmers_gwas:
     # TODO Convert kmers table to PLINK 
     # PLINK-conversion:
-    # # Set to true in order to convert k-mers table to PLINK format (.bed)
+    # Set to true in order to convert k-mers table to PLINK format (.bed)
     #   activate: false
 
     use_kmers_kinship:
+    # Set to true in order to use k-mers based kinship matrix
       activate: true
     # This will be ignored if use_kmers is activated
     use_snps_kinship:
-      # This will be ignored if use_kmers is activated
+    # Set to true in order to use SNP based kinship matrix
+    # This will be ignored if use_kmers is activated
       activate: false
       # If activated, you need to provide a SNP table in PLINKformat (.bed).
       # PLINK .bed format: https://www.cog-genomics.org/plink/1.9/formats#bed
@@ -57,6 +64,15 @@ settings:
   # Set to true in order to align k-mers
   # to the reference genome
     activate: true
+    # Choose an aligner between bowtie and bowtie2
+    # to align significant k-mers to the reference genome
+    ## ! Choose only one aligner !
+    use_bowtie: false # Set to true if you prefer bowtie
+    use_bowtie2: true # Set to true if you prefer bowtie2
+
+    # Set to true in order to generate manhattan plot 
+    # from k-mer alignment results
+    plot_manhattan: true
 
   align_reads_with_kmers:
   # Set to true in order to align reads
@@ -70,7 +86,7 @@ settings:
 
   blast_contigs:
   # Set to true in order to BLAST contigs
-    activate: true
+    activate: false
 
 
 # =================================================================================================
@@ -95,7 +111,7 @@ params:
     extra: ""
 
     # Number of threads for fastqc
-    threads: 6
+    threads: 8
 
   # ----------------------------------------------------------------------
   #     MultiQC Params
@@ -108,7 +124,7 @@ params:
   # ----------------------------------------------------------------------
   cutadapt:
     # Number of threads for cutadapt
-    threads: 10
+    threads: 8
 
     # See cutadapt manual:
     # https://cutadapt.readthedocs.io/en/stable/guide.html
@@ -120,7 +136,7 @@ params:
     # https://cutadapt.readthedocs.io/en/stable/guide.html
     pe:
       adapters: ""
-      extra: "-q 15,10"
+      extra: ""
       
   # ----------------------------------------------------------------------
   #     KMC Params
@@ -140,6 +156,14 @@ params:
     count_thresh: 2
 
     extra: ""
+
+  # ----------------------------------------------------------------------
+  #     merge_kmers
+  # ----------------------------------------------------------------------
+  
+  merge_kmers:
+    # Number of threads for kmc
+    threads: 8
 
   # ----------------------------------------------------------------------
   #     kmersGWAS Params
@@ -204,7 +228,7 @@ params:
   
   fetch_reads:
     # Number of threads to use
-    threads: 10
+    threads: 8
 
   # ----------------------------------------------------------------------
   #     bowtie2 Params
@@ -226,6 +250,14 @@ params:
     # Extra bowtie parameters can be given here
     # e.g "-m 3"
     extra: "--no-unal"
+
+  # ----------------------------------------------------------------------
+  #     plot_manhattan Params
+  # ----------------------------------------------------------------------
+
+  plot_manhattan:
+    # Number of threads to use
+    threads: 8
 
   # ----------------------------------------------------------------------
   #     samtools Params
