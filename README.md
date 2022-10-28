@@ -1,15 +1,16 @@
-# kGWASflow    (🚧🚧  Under Development 🚧🚧)
+
+# kGWASflow    (🚧🚧  Under Development 🚧🚧) <img align="right" width="300" src="https://user-images.githubusercontent.com/42179487/194161153-cc832e57-dd03-481b-8eed-34cb13ba3097.png">
 
 A Snakemake workflow to perform k-mers-based GWAS.
 
 [![DOI](https://zenodo.org/badge/421139649.svg)](https://zenodo.org/badge/latestdoi/421139649)
-[![Snakemake](https://img.shields.io/badge/snakemake-≥6.10-blue.svg)](https://snakemake.github.io) ![License](https://img.shields.io/badge/license-MIT-blue.svg)
+[![Snakemake](https://img.shields.io/badge/snakemake-≥7.14-blue.svg)](https://snakemake.github.io) ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 [![Actions Status](https://github.com/akcorut/kGWASflow/workflows/CI/badge.svg)](https://github.com/akcorut/kGWASflow/actions)
 [![Actions Status](https://github.com/akcorut/kGWASflow/workflows/Linting/badge.svg)](https://github.com/akcorut/kGWASflow/actions)
 
 ## Table of Contents
 
-* [Summary](#Summary)
+* [Summary](#summary)
 * [Installation](#installation)
 * [Configuration](#configuration)
 * [Usage](#usage)
@@ -20,6 +21,8 @@ A Snakemake workflow to perform k-mers-based GWAS.
 ## Summary
 
 **kGWASflow** is a [Snakemake](https://snakemake.github.io) pipeline developed for performing k-mers-based genome-wide association study (GWAS) based on the method developed by [Voichek et al. (2020)](https://www.nature.com/articles/s41588-020-0612-7). It performs several pre-GWAS analysis including read trimming, quality control and k-mer counting. It implements the [kmersGWAS method worfklow](https://github.com/voichek/kmersGWAS/blob/master/manual.pdf) for performing k-mers-based GWAS. The pipeline also contains post-GWAS analysis, such as finding and aligning the source reads for k-mers, aligning kmers and source reads to a reference genome.
+
+![My project-1-3](https://user-images.githubusercontent.com/42179487/198741149-406abb40-5d1c-4ed0-9a2f-1c6fd9ebed3c.png)
 
 ## Installation
 
@@ -114,6 +117,8 @@ kGWASflow was developed by [Adnan Kivanc Corut ](https://www.github.com/akcorut)
 ## Citation
 
 If you use kGWASflow in your research, please cite using the DOI: [10.5281/zenodo.5790132](https://doi.org/10.5281/zenodo.5790132) and the original method paper by [Voichek et al. (2020)](https://www.nature.com/articles/s41588-020-0612-7):
+
+> Kivanc Corut. (2021). akcorut/kGWASflow: Version 0.1.0-beta (Pre-release) (v0.1.0-beta). Zenodo. https://doi.org/10.5281/zenodo.5790132
 
 > Voichek, Y., Weigel, D. Identifying genetic variants underlying phenotypic variation in plants without complete genomes.  
 > Nat Genet 52, 534–540 (2020). https://doi.org/10.1038/s41588-020-0612-7
