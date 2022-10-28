@@ -6,12 +6,13 @@
 
 R1_OUT=""
 R2_OUT=""
-if ends_with_gz(samples):
+if ends_with_gz:
     R1_OUT= "results/reads/{sample}/{library}_1.fastq.gz"
     R2_OUT= "results/reads/{sample}/{library}_2.fastq.gz"
 else:
     R1_OUT= "results/reads/{sample}/{library}_1.fastq"
     R2_OUT= "results/reads/{sample}/{library}_2.fastq"
+
 
 if not config["settings"]["trimming"]["activate"]:
     rule create_symlink:
@@ -100,6 +101,7 @@ rule kmc_canonical:
         "../envs/kmc.yaml"
     threads:
         config["params"]["kmc"]["threads"]
+    retries: 3
     message:
         "Running KMC to count k-mers with canonization..."
     shell:
@@ -131,6 +133,7 @@ rule kmc_non_canonical:
         "../envs/kmc.yaml"
     threads:
         config["params"]["kmc"]["threads"]
+    retries: 3
     message:
         "Running KMC to count k-mers without canonization..."
     shell:
@@ -154,15 +157,18 @@ rule merge_kmers:
         kmc_all_pre = rules.kmc_non_canonical.output.kmc_pre,
         kmersGWAS_bin = rules.extract_kmersGWAS.output.kmersGWAS_bin,
     output:
-        "results/kmers_count/{sample}/kmers_with_strand"
+        temp("results/kmers_count/{sample}/kmers_with_strand")
     params:
         prefix_kmc_canon = "results/kmers_count/{sample}/output_kmc_canon",
         prefix_kmc_all = "results/kmers_count/{sample}/output_kmc_all",
         kmer_len = config["params"]["kmc"]["kmer_len"]
     conda:
         "../envs/kmers_gwas.yaml"
+    threads:
+        config["params"]["merge_kmers"]["threads"]
     log:
         "logs/kmc/{sample}/add_strand.log.out"
+    retries: 3
     message:
         "Merging outputs from two KMC k-mers counting results into one list for each sample/individual..."
     shell:

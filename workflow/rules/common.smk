@@ -108,9 +108,13 @@ logger.info("                                                                   
 logger.info("# ================================================================================== #")
 logger.info("")
 logger.info("     If you use kGWASflow, please cite:                                            ")
-logger.info("     Voichek, Y., Weigel, D. Identifying genetic variants underlying                  ")
+logger.info("")
+logger.info("     * Voichek, Y., Weigel, D. Identifying genetic variants underlying                  ")
 logger.info("     phenotypic variation in plants without complete genomes.                         ")
 logger.info("     Nat Genet 52, 534–540 (2020). https://doi.org/10.1038/s41588-020-0612-7          ")
+logger.info("")
+logger.info("     * Kivanc Corut, 2021. akcorut/kGWASflow: Version 0.1.0-beta (Pre-release).    ")
+logger.info("     https://doi.org/10.5281/zenodo.5790132                                        ")
 logger.info("")
 logger.info("# ================================================================================== #")
 logger.info("")
@@ -164,34 +168,28 @@ def get_individual_fastq(wildcards):
 
 def get_fastqs(wildcards):
     """Get raw FASTQ files from library sheet."""
+    fastqs = samples.loc[(wildcards.sample, wildcards.library), ["fq1", "fq2"]].dropna()
     if is_sra_se(wildcards.sample, wildcards.library):
         return expand("resources/ref/sra-se-reads/{accession}.fastq",
                           accession=samples.loc[ (wildcards.sample, wildcards.library), "sra" ])
     elif is_sra_pe(wildcards.sample, wildcards.library):
         return expand(["resources/ref/sra-pe-reads/{accession}_1.fastq", "resources/ref/sra-pe-reads/{accession}_2.fastq"],
                           accession=samples.loc[ (wildcards.sample, wildcards.library), "sra" ])
-    elif is_single_end(wildcards.sample, wildcards.library):
+    elif len(fastqs) == 1:
         return samples.loc[ (wildcards.sample, wildcards.library), "fq1" ]
     else:
         u = samples.loc[ (wildcards.sample, wildcards.library), ["fq1", "fq2"] ].dropna()
         return [ f"{u.fq1}", f"{u.fq2}" ]
 
-def get_reads(wildcards):
-    """Get fastq files using samples sheet."""
+def ends_with_gz(wildcards):
     fastqs = samples.loc[(wildcards.sample, wildcards.library), ["fq1", "fq2"]].dropna()
-    if len(fastqs) == 2:
-        # paired-end
-        return {"r1": fastqs.fq1, "r2": fastqs.fq2}
-    else:
-        # single end
-        return {"r1": fastqs.fq1}
-
-def ends_with_gz(samp_tab):
     if not sra_only:
-        if samp_tab["fq1"].str.endswith('gz').all():
+        if fastqs["fq1"].str.endswith('gz'):
             return True
         else:
             return False
+    else:
+        return False
 
 def get_multiqc_input(wildcards):
     """Get multiqc input."""
