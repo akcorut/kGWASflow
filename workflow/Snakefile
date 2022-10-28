@@ -10,7 +10,7 @@ min_version("7.14")
 # =========================================================================================================
 
 # Load config file
-configfile: "../.test/config_arabidopsis/config.yaml"
+configfile: "../config/config.yaml"
 
 # validate(config, schema="../schemas/config.schema.yaml")
 
@@ -26,7 +26,7 @@ include: "rules/qc.smk"
 include: "rules/trimming.smk"
 include: "rules/build_kmers_gwas.smk"
 include: "rules/count_kmers.smk"
-include: "rules/combine_and_filter_kmers.smk"
+include: "rules/combine_and_filter.smk"
 include: "rules/generate_kmers_table.smk"
 include: "rules/generate_kinship_matrix.smk"
 include: "rules/kmers_gwas.smk"
