@@ -12,7 +12,7 @@ rule genome_symlink:
     threads: 1
     shell:
         """
-        ln -s {input.reference} {output}
+        ln -rs {input.reference} {output}
         """
 
 # =======================================================================================================
@@ -21,10 +21,10 @@ rule genome_symlink:
 
 rule bowtie2_build:
     input:
-        reference = rules.genome_symlink.output,
+        reference = "resources/ref/genome/genome.fasta",
     output:
         multiext(
-            "resources/ref/genome/genome",
+            "resources/ref/genome/bowtie2_index/genome",
             ".1.bt2", ".2.bt2", ".3.bt2", ".4.bt2", ".rev.1.bt2", ".rev.2.bt2",
         ),
     log:
@@ -37,6 +37,34 @@ rule bowtie2_build:
         "Creating bowtie2 index of the reference genome..."
     wrapper:
         "0.80.0/bio/bowtie2/build"
+
+# =======================================================================================================
+#    Creating bowtie index of the reference genome fasta
+# =======================================================================================================
+
+rule bowtie_build:
+    input:
+        reference = "resources/ref/genome/genome.fasta",
+    output:
+        multiext(
+            "resources/ref/genome/bowtie_index/genome",
+            ".1.ebwt", ".2.ebwt", ".3.ebwt", ".4.ebwt", ".rev.1.ebwt", ".rev.2.ebwt",
+        ),
+    log:
+        "logs/bowtie_build/build.log"
+    params:
+        prefix= lambda w, output: os.path.commonprefix(output).rstrip("."),
+        extra=""  # optional parameters
+    conda:
+        "../envs/align_kmers.yaml"
+    threads: 
+        config["params"]["bowtie"]["threads"]
+    log:
+        "logs/bowtie_build/build.log"
+    message:
+        "Creating bowtie index of the reference genome..."
+    shell:
+        "bowtie-build --threads {threads} {input.reference} {params.prefix} 2> {log}"
 
 # =======================================================================================================
 #    SRA-download
