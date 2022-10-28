@@ -6,6 +6,7 @@
 rule create_kmers_table:
     input:
         list_paths = rules.generate_kmers_list_paths.output,
+        kmers_count =expand("results/kmers_count/{u.sample_name}/kmers_with_strand", u=samples.itertuples()),
         kmers_to_use = rules.combine_and_filter.output.kmers_to_use,
         kmersGWAS_bin = rules.extract_kmersGWAS.output.kmersGWAS_bin,
     output:
