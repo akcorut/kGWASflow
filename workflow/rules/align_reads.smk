@@ -47,12 +47,12 @@ rule align_reads:
     input:
         r1= "results/fetch_reads_with_kmers/{phenos_filt}/reads_with_kmers_from_all_acc_sorted_R1.fastq",
         r2= "results/fetch_reads_with_kmers/{phenos_filt}/reads_with_kmers_from_all_acc_sorted_R2.fastq",
-        done = "results/fetch_reads_with_kmers/fetch_source_reads.done",
+        index = rules.bowtie2_build.output,
+        fetch_source_reads = "results/fetch_reads_with_kmers/fetch_source_reads.done",
     output:
         out_sam = "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.sam",
-        done = touch("results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.aligning_reads.done")
     params:
-        index = "resources/ref/genome/genome",
+        index = "resources/ref/genome/bowtie2_index/genome",
         extra = config["params"]["bowtie2"]["extra"]
     conda:
         "../envs/align_reads.yaml"
@@ -146,7 +146,7 @@ rule align_reads_bam_index:
         """
 
 # =========================================================================================================
-#     Check align_reads 
+#     Aggregate align_reads outputs
 # =========================================================================================================
 
 def aggregate_input_align_reads(wildcards):
@@ -155,7 +155,7 @@ def aggregate_input_align_reads(wildcards):
            phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
 
 
-rule check_align_reads:
+rule aggregate_align_reads:
     input:
         aggregate_input_align_reads
     output:
