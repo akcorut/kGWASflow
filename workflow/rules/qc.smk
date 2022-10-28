@@ -23,10 +23,7 @@ rule fastqc:
 
 rule multiqc:
     input:
-        expand(
-            "results/qc/fastqc/{u.sample_name}/{u.library_name}_fastqc.zip",
-            u=samples.itertuples(),
-        )
+        get_multiqc_input
     output:
         report(
             "results/qc/multiqc.html",
