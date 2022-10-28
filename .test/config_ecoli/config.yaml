@@ -1,7 +1,9 @@
 # Sample and Phenotype Sheets 
 # !!! Required !!!
-samples: config_ecoli/samples.tsv
-phenotypes: config_ecoli/phenos.tsv
+# Paths to the samples.tsv and phenos.tsv
+# For more information: https://github.com/akcorut/kGWASflow/tree/main/config
+samples: ../.test/config_ecoli/samples.tsv
+phenotypes: ../.test/config_ecoli/phenos.tsv
 
 # =================================================================================================
 #     Reference Genome
@@ -9,7 +11,8 @@ phenotypes: config_ecoli/phenos.tsv
 
 ref:
   # !!! Reference genome in Fasta format required for the alignment step !!!
-  fasta: data/ecoli_ref/CP026474.1.fa
+  # Path to the fasta file of the reference genome
+  fasta: ../.test/data/ecoli_ref/CP026474.1.fa
   
 # =================================================================================================
 #     Workflow Settings
@@ -21,6 +24,8 @@ settings:
   #     Pre-GWAS Settings
   # ----------------------------------------------------------------------
   
+  ## Set to true in order to use single end reads
+  # TODO Add single-end support
   single_end: false
 
   trimming: 
@@ -38,10 +43,12 @@ settings:
     #   activate: false
 
     use_kmers_kinship:
+    # Set to true in order to use k-mers based kinship matrix
       activate: true
     # This will be ignored if use_kmers is activated
     use_snps_kinship:
-      # This will be ignored if use_kmers is activated
+    # Set to true in order to use SNP based kinship matrix
+    # This will be ignored if use_kmers is activated
       activate: false
       # If activated, you need to provide a SNP table in PLINKformat (.bed).
       # PLINK .bed format: https://www.cog-genomics.org/plink/1.9/formats#bed
@@ -56,6 +63,15 @@ settings:
   # Set to true in order to align k-mers
   # to the reference genome
     activate: true
+    # Choose an aligner between bowtie and bowtie2
+    # to align significant k-mers to the reference genome
+    ## ! Choose only one aligner !
+    use_bowtie: false # Set to true if you prefer bowtie
+    use_bowtie2: true # Set to true if you prefer bowtie2
+
+    # Set to true in order to generate manhattan plot 
+    # from k-mer alignment results
+    plot_manhattan: true
 
   align_reads_with_kmers:
   # Set to true in order to align reads
@@ -69,7 +85,7 @@ settings:
 
   blast_contigs:
   # Set to true in order to BLAST contigs
-    activate: true
+    activate: false
 
 
 # =================================================================================================
@@ -140,6 +156,14 @@ params:
 
     extra: ""
 
+  # ----------------------------------------------------------------------
+  #     merge_kemrs
+  # ----------------------------------------------------------------------
+  
+  merge_kmers:
+    # Number of threads for kmc
+    threads: 8
+    
   # ----------------------------------------------------------------------
   #     kmersGWAS Params
   # ----------------------------------------------------------------------
@@ -225,6 +249,14 @@ params:
     # Extra bowtie parameters can be given here
     # e.g "-m 3"
     extra: "--no-unal"
+
+  # ----------------------------------------------------------------------
+  #     plot_manhattan Params
+  # ----------------------------------------------------------------------
+
+  plot_manhattan:
+    # Number of threads to use
+    threads: 8
 
   # ----------------------------------------------------------------------
   #     samtools Params
