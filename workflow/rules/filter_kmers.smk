@@ -24,7 +24,7 @@ rule filter_kmers:
         """
 
 # =========================================================================================================
-#     Check filter_kmers 
+#     Aggregate filter_kmers outputs 
 # =========================================================================================================
 
 def aggregate_input_filter_kmers(wildcards):
@@ -32,7 +32,7 @@ def aggregate_input_filter_kmers(wildcards):
     return expand("results/filter_kmers/{phenos_filt}_kmers_table.txt",
            phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
 
-rule check_filter_kmers:
+rule aggregate_filter_kmers:
     input:        
         aggregate_input_filter_kmers
     output:
