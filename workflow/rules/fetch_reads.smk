@@ -29,42 +29,71 @@ rule make_fetch_reads_with_kmers:
 #     Fetch source reads of significant k-mers
 # =======================================================================================================
 
-## TODO: Fix the issue with SRA input. Use fetch_reads directly in the sankemake rule ##
+if not config["settings"]["trimming"]["activate"]:
+    rule fetch_source_reads:
+        input:
+            kmers_tab = "results/filter_kmers/{phenos_filt}_kmers_table.txt",
+            kmers_list = "results/fetch_kmers/{phenos_filt}_kmers_list.fa",
+            fetch_reads = "scripts/external/fetch_reads_with_kmers/fetch_reads",
+            filter_kmers = "results/filter_kmers/filter_kmers.done",
+            r1 = expand(rules.create_symlink.output.r1, zip,
+                            sample=sample_names,
+                            library=library_names),
+            r2 = expand(rules.create_symlink.output.r2, zip,
+                            sample=sample_names,
+                            library=library_names),
+        output:
+            dir = directory("results/fetch_reads_with_kmers/{phenos_filt}"),
+        params:
+            kmers_list_prefix = lambda w, input: os.path.dirname(input.kmers_list),
+            out_prefix = lambda w, output: os.path.dirname(output[0]),
+            samples= sample_names,
+            library= library_names,
+            pheno = "{phenos_filt}",
+            kmer_len = config["params"]["kmc"]["kmer_len"]
+        log:
+            "logs/fetch_reads_with_kmers/{phenos_filt}/fetch_source_reads_of_kmers.log"
+        threads: 
+            config["params"]["fetch_reads"]["threads"]
+        message:
+            "Fetching reads that contain significant k-mers find in {input.kmers_list}..."    
+        script:
+            "../scripts/fetch_source_reads.py"
 
-rule fetch_source_reads:
-    input:
-        kmers_tab = "results/filter_kmers/{phenos_filt}_kmers_table.txt",
-        kmers_list = "results/fetch_kmers/{phenos_filt}_kmers_list.fa",
-        fetch_reads = "scripts/external/fetch_reads_with_kmers/fetch_reads",
-        filter_kmers = "results/filter_kmers/filter_kmers.done",
-        r1 = expand(rules.create_symlink.output.r1, zip,
-                        sample=sample_names,
-                        library=library_names),
-        r2 = expand(rules.create_symlink.output.r2, zip,
-                        sample=sample_names,
-                        library=library_names),
-    output:
-        dir = directory("results/fetch_reads_with_kmers/{phenos_filt}"),
-    params:
-        kmers_list_prefix = lambda w, input: os.path.dirname(input.kmers_list),
-        out_prefix = lambda w, output: os.path.dirname(output[0]),
-        samples= sample_names,
-        library= library_names,
-        pheno = "{phenos_filt}",
-        kmer_len = config["params"]["kmc"]["kmer_len"]
-    # conda:
-    #     "../envs/kmers_stats.yaml"
-    log:
-        "logs/fetch_reads_with_kmers/{phenos_filt}/fetch_source_reads_of_kmers.log"
-    threads: 
-        config["params"]["fetch_reads"]["threads"]
-    message:
-        "Fetching reads that contain significant k-mers find in {input.kmers_list}..."    
-    script:
-        "../scripts/fetch_source_reads.py"
+if config["settings"]["trimming"]["activate"]:
+    rule fetch_source_reads:
+        input:
+            kmers_tab = "results/filter_kmers/{phenos_filt}_kmers_table.txt",
+            kmers_list = "results/fetch_kmers/{phenos_filt}_kmers_list.fa",
+            fetch_reads = "scripts/external/fetch_reads_with_kmers/fetch_reads",
+            filter_kmers = "results/filter_kmers/filter_kmers.done",
+            r1 = expand(rules.cutadapt_pe.output.fastq1, zip,
+                            sample=sample_names,
+                            library=library_names),
+            r2 = expand(rules.cutadapt_pe.output.fastq2, zip,
+                            sample=sample_names,
+                            library=library_names),
+        output:
+            dir = directory("results/fetch_reads_with_kmers/{phenos_filt}"),
+        params:
+            kmers_list_prefix = lambda w, input: os.path.dirname(input.kmers_list),
+            out_prefix = lambda w, output: os.path.dirname(output[0]),
+            samples= sample_names,
+            library= library_names,
+            pheno = "{phenos_filt}",
+            kmer_len = config["params"]["kmc"]["kmer_len"]
+        log:
+            "logs/fetch_reads_with_kmers/{phenos_filt}/fetch_source_reads_of_kmers.log"
+        threads: 
+            config["params"]["fetch_reads"]["threads"]
+        message:
+            "Fetching reads that contain significant k-mers find in {input.kmers_list}..."    
+        script:
+            "../scripts/fetch_source_reads.py"
+
 
 # =========================================================================================================
-#     Check fetch_source_reads 
+#     Aggregate fetch_source_reads outputs
 # =========================================================================================================
 
 def aggregate_input_fetch_reads(wildcards):
@@ -72,7 +101,7 @@ def aggregate_input_fetch_reads(wildcards):
     return expand("results/fetch_reads_with_kmers/{phenos_filt}",
            phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
 
-rule check_fetch_reads:
+rule aggregate_fetch_reads:
     input:
         aggregate_input_fetch_reads
     output:
