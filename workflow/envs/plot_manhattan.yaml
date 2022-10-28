@@ -1,0 +1,7 @@
+name: plot_manhattan
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - r-qqman =0.1.8
+  - r-tidyverse =1.3
