@@ -45,7 +45,7 @@ rule align_contigs_sam_to_bam:
     output:
         temp("results/align_contigs/{phenos_filt}/alignment/{phenos_filt}_contigs_aligned.filter.bam")
     conda:
-        "../envs/align_reads.yaml"
+        "../envs/align_contigs.yaml"
     threads:
         config["params"]["samtools"]["threads"]
     message:
@@ -65,7 +65,7 @@ rule align_contigs_bam_sort:
     output:
         "results/align_contigs/{phenos_filt}/alignment/{phenos_filt}_contigs_aligned.filter.sorted.bam"
     conda:
-        "../envs/align_reads.yaml"
+        "../envs/align_contigs.yaml"
     threads:
         config["params"]["samtools"]["threads"]
     message:
@@ -85,7 +85,7 @@ rule align_contigs_bam_index:
     output:
         "results/align_contigs/{phenos_filt}/alignment/{phenos_filt}_contigs_aligned.filter.sorted.bam.bai"
     conda:
-        "../envs/align_reads.yaml"
+        "../envs/align_contigs.yaml"
     threads:
         config["params"]["samtools"]["threads"]
     message:
@@ -96,7 +96,7 @@ rule align_contigs_bam_index:
         """
 
 # =========================================================================================================
-#     Check extract_paired_reads 
+#     Aggregate align_contigs outputs
 # =========================================================================================================
 
 def aggregate_input_align_contigs(wildcards):
@@ -104,7 +104,7 @@ def aggregate_input_align_contigs(wildcards):
     return expand("results/align_contigs/{phenos_filt}/alignment/{phenos_filt}_contigs_aligned.filter.sorted.bam.bai",
            phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
 
-rule check_align_contigs:
+rule aggregate_align_contigs:
     input:
         aggregate_input_align_contigs
     output:
@@ -113,3 +113,5 @@ rule check_align_contigs:
         """
         touch {output}
         """
+
+# =========================================================================================================
