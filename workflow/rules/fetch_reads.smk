@@ -96,11 +96,6 @@ if config["settings"]["trimming"]["activate"]:
 #     Aggregate fetch_source_reads outputs
 # =========================================================================================================
 
-def aggregate_input_fetch_reads(wildcards):
-    checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
-    return expand("results/fetch_reads_with_kmers/{phenos_filt}",
-           phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
-
 rule aggregate_fetch_reads:
     input:
         aggregate_input_fetch_reads

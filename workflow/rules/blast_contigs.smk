@@ -72,12 +72,6 @@ rule blast_contigs:
 #     Aggregate blast_contigs outputs
 # =========================================================================================================
 
-def aggregate_input_blast_contigs(wildcards):
-    checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
-    return expand("results/blast_contigs/{phenos_filt}/{phenos_filt}_contigs.blast.txt",
-           phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
-
-
 rule aggregate_blast_contigs:
     input:
         aggregate_input_blast_contigs

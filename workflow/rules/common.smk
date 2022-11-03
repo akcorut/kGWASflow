@@ -240,6 +240,45 @@ def get_plink_prefix():
     plink_prefix = os.path.splitext(plink_path)[0]
     return plink_prefix
 
+# ================= Checkpoint Fucntions ================= #
+
+def aggregate_input_filter_kmers(wildcards):
+    checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
+    return expand("results/filter_kmers/{phenos_filt}_kmers_table.txt",
+           phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
+
+def aggregate_input_fetch_reads(wildcards):
+    checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
+    return expand("results/fetch_reads_with_kmers/{phenos_filt}",
+           phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
+
+def aggregate_input_align_contigs(wildcards):
+    checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
+    return expand("results/align_contigs/{phenos_filt}/alignment/{phenos_filt}_contigs_aligned.filter.sorted.bam.bai",
+           phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
+
+def aggregate_input_align_kmers(wildcards):
+    checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
+    if not config["settings"]["align_kmers"]["plot_manhattan"]:
+        return expand("results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sorted.bam.bai",
+               phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
+    else:
+        return expand(
+                   [
+                        "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sorted.bam.bai",
+                        "results/plots/manhattan/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.manhattan_plot.pdf",
+                   ], phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt
+                    )
+
+def aggregate_input_align_reads(wildcards):
+    checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
+    return expand("results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sorted.bam.bai",
+           phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
+
+def aggregate_input_blast_contigs(wildcards):
+    checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
+    return expand("results/blast_contigs/{phenos_filt}/{phenos_filt}_contigs.blast.txt",
+           phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
 
 # =================================================================================================
 #     Target Ouput Function

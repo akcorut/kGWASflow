@@ -27,11 +27,6 @@ rule filter_kmers:
 #     Aggregate filter_kmers outputs 
 # =========================================================================================================
 
-def aggregate_input_filter_kmers(wildcards):
-    checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
-    return expand("results/filter_kmers/{phenos_filt}_kmers_table.txt",
-           phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
-
 rule aggregate_filter_kmers:
     input:        
         aggregate_input_filter_kmers

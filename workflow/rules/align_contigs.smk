@@ -99,11 +99,6 @@ rule align_contigs_bam_index:
 #     Aggregate align_contigs outputs
 # =========================================================================================================
 
-def aggregate_input_align_contigs(wildcards):
-    checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
-    return expand("results/align_contigs/{phenos_filt}/alignment/{phenos_filt}_contigs_aligned.filter.sorted.bam.bai",
-           phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
-
 rule aggregate_align_contigs:
     input:
         aggregate_input_align_contigs

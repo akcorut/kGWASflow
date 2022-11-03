@@ -145,19 +145,6 @@ rule plot_manhattan:
 #     Aggregate align_kmers outputs
 # =========================================================================================================
 
-def aggregate_input_align_kmers(wildcards):
-    checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
-    if not config["settings"]["align_kmers"]["plot_manhattan"]:
-        return expand("results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sorted.bam.bai",
-               phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
-    else:
-        return expand(
-                    [
-                        "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sorted.bam.bai",
-                        "results/plots/manhattan/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.manhattan_plot.pdf",
-                    ], phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt
-                    )
-
 rule aggregate_align_kmers:
     input:
         aggregate_input_align_kmers
