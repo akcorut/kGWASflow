@@ -82,6 +82,13 @@ wildcard_constraints:
 
 kgwasflow_version = "v0.1.0-beta"
 kgwasflow_author = "Adnan Kivanc Corut"
+date_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+snake_version = snakemake.__version__
+py_version= sys.version.split(' ')[0]
+snakefile_path= workflow.snakefile
+base_dir= workflow.basedir
+work_dir= os.getcwd()
+config_file= ", ".join(workflow.configfiles)
 
 # Helpful messages
 logger.info("# ================================================================================== #")
@@ -94,16 +101,16 @@ logger.info("     |_|\_\\_____|   \/  \/_/    \_\_____/|_| |_|\___/ \_/\_/    ")
 logger.info("")
 logger.info("     kGWASflow: A Snakemake Workflow for k-mers Based GWAS                            ")
 logger.info("                                                                                      ")
-logger.info("     Date:               " + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-logger.info("     Author:          " + str(kgwasflow_author))
-logger.info("     kGWASflow version:          " + str(kgwasflow_version))
-logger.info("     Snakemake version:          " + str(snakemake.__version__))
-logger.info("     Python version:             " + str(sys.version.split(' ')[0]))
+logger.info(f"     Date:            {date_time}")
+logger.info(f"     Author:          {kgwasflow_author}")
+logger.info(f"     kGWASflow version:          {kgwasflow_version}")
+logger.info(f"     Snakemake version:          {snake_version}")
+logger.info(f"     Python version:             {py_version}")
 logger.info("")
-logger.info("     Snakefile:          " + (workflow.snakefile))
-logger.info("     Base directory:     " + (workflow.basedir))
-logger.info("     Working directory:  " + os.getcwd())
-logger.info("     Config files:       " + (", ".join(workflow.configfiles)))
+logger.info(f"     Snakefile:          {snakefile_path}")
+logger.info(f"     Base directory:     {base_dir}")
+logger.info(f"     Working directory:  {work_dir}")
+logger.info(f"     Config files:       {config_file}")
 logger.info("                                                                                      ")
 logger.info("# ================================================================================== #")
 logger.info("")
@@ -148,7 +155,8 @@ def is_sra_pe(sample, library):
     return sra_only(sample, library) and not config["settings"]["single_end"]
 
 def get_individual_fastq(wildcards):
-    """Get individual raw FASTQ files from library sheet, based on a read (end) wildcard"""
+# Adapted from: https://github.com/snakemake-workflows/chipseq
+    """Get individual raw FASTQ files from samples sheet."""
     fastqs = samples.loc[(wildcards.sample, wildcards.library), ["fq1", "fq2"]].dropna()
     if ( len(fastqs) == 0 or len(fastqs) == 1 ):
         if is_sra_se(wildcards.sample, wildcards.library):
@@ -167,7 +175,8 @@ def get_individual_fastq(wildcards):
             return samples.loc[ (wildcards.sample, wildcards.library), "fq2" ]
 
 def get_fastqs(wildcards):
-    """Get raw FASTQ files from library sheet."""
+# Adapted from: https://github.com/snakemake-workflows/chipseq
+    """Get raw FASTQ files from samples sheet."""
     fastqs = samples.loc[(wildcards.sample, wildcards.library), ["fq1", "fq2"]].dropna()
     if is_sra_se(wildcards.sample, wildcards.library):
         return expand("resources/ref/sra-se-reads/{accession}.fastq",
