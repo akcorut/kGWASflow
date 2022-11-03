@@ -18,9 +18,9 @@ jobs:
     - name: Lint workflow
       uses: snakemake/snakemake-github-action@v1.24.0
       with:
-        directory: .
+        directory: .test
         snakefile: workflow/Snakefile
-        args: "--lint"
+        args: "--configfile .test/config_ecoli/config.yaml --lint"
 
   Testing:
     runs-on: ubuntu-latest
