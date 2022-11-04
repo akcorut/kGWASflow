@@ -1,12 +1,11 @@
 
 # kGWASflow    (🚧🚧  Under Development 🚧🚧) <img align="right" width="300" src="https://user-images.githubusercontent.com/42179487/194161153-cc832e57-dd03-481b-8eed-34cb13ba3097.png">
 
-A Snakemake workflow to perform k-mers-based GWAS.
+A modular, flexible and reproducible Snakemake workflow to perform k-mers-based GWAS.
 
-[![DOI](https://zenodo.org/badge/421139649.svg)](https://zenodo.org/badge/latestdoi/421139649)
 [![Snakemake](https://img.shields.io/badge/snakemake-≥7.14-blue.svg)](https://snakemake.github.io) ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-[![Actions Status](https://github.com/akcorut/kGWASflow/workflows/CI/badge.svg)](https://github.com/akcorut/kGWASflow/actions)
-[![Actions Status](https://github.com/akcorut/kGWASflow/workflows/Linting/badge.svg)](https://github.com/akcorut/kGWASflow/actions)
+[![GitHub actions status](https://github.com/akcorut/kGWASflow/workflows/Tests/badge.svg?branch=main)](https://github.com/akcorut/kGWASflow/actions)
+[![DOI](https://zenodo.org/badge/421139649.svg)](https://zenodo.org/badge/latestdoi/421139649)
 
 ## Table of Contents
 
@@ -15,14 +14,15 @@ A Snakemake workflow to perform k-mers-based GWAS.
 * [Configuration](#configuration)
 * [Usage](#usage)
 * [Authors](#authors)
-* [Acknowledgements](#acknowledgements)
 * [License](#license)
 
 ## Summary
 
-**kGWASflow** is a [Snakemake](https://snakemake.github.io) pipeline developed for performing k-mers-based genome-wide association study (GWAS) based on the method developed by [Voichek et al. (2020)](https://www.nature.com/articles/s41588-020-0612-7). It performs several pre-GWAS analysis including read trimming, quality control and k-mer counting. It implements the [kmersGWAS method worfklow](https://github.com/voichek/kmersGWAS/blob/master/manual.pdf) for performing k-mers-based GWAS. The pipeline also contains post-GWAS analysis, such as finding and aligning the source reads for k-mers, aligning kmers and source reads to a reference genome.
+**kGWASflow** is a [Snakemake](https://snakemake.github.io) pipeline developed for performing k-mers-based genome-wide association study (GWAS) based on the method developed by [Voichek et al. (2020)](https://www.nature.com/articles/s41588-020-0612-7). It performs several pre-GWAS analysis including read trimming, quality control and k-mer counting. It implements the [kmersGWAS method worfklow](https://github.com/voichek/kmersGWAS/blob/master/manual.pdf) for performing k-mers-based GWAS. The pipeline also contains post-GWAS analysis, such as mapping k-mers to a reference genome, finding and mapping the source reads for k-mers, assembling source reads of k-mers into contigs and mapping them to a reference genome. kGWASflow is also highly customizable and offers users multiple options to choose from depends on their needs.
 
 ![My project-1-3](https://user-images.githubusercontent.com/42179487/198741149-406abb40-5d1c-4ed0-9a2f-1c6fd9ebed3c.png)
+
+___________
 
 ## Installation
 
@@ -63,16 +63,19 @@ conda activate kGWASflow
 
 **1a. Alternative installation without `mamba`** 
 
-You can also install snakemake and the other dependencies without mamba as below:
+You can also install snakemake and the other dependencies without `mamba` and just using `conda` as below:
 
 ```bash
+# This assumes conda is installed in your local machine or computing environment
 conda env create -f environment.yaml
 conda activate kGWASflow
 ```
-___________
-#### Other Options: 
+
+### Other Options: 
 
 The other options on how to deploy this workflow can be found in the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog/?usage=akcorut%2FkGWASflow).
+
+___________
 
 ## Configuration
 
@@ -86,9 +89,11 @@ Configure the workflow according to your needs by modifying the files in the `co
 
 For more information, please click [here](https://github.com/akcorut/kGWASflow/tree/main/config#configuration-settings).
 
+___________
+
 ## Usage
 
-After [changing into the kGWASflow directory](https://github.com/akcorut/kGWASflow#step-1-obtain-the-latest-release-of-this-workflow) and [activating the conda environment](https://github.com/akcorut/kGWASflow#step-2-install-snakemake-and-the-other-dependencies), you can start using the workflow as below:
+After [changing into the kGWASflow directory](https://github.com/akcorut/kGWASflow#step-1-obtain-the-latest-release-of-this-workflow) and [activating the kGWASflow conda environment](https://github.com/akcorut/kGWASflow#step-2-install-snakemake-and-the-other-dependencies), you can start using the workflow as below:
 
 **1. Test your configuration by performing a dry-run**
 
@@ -110,9 +115,13 @@ snakemake --use-conda --configfile <path/to/config.yaml>
 
 The usage of this workflow is also described in the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog/?usage=akcorut%2FkGWASflow).
 
+___________
+
 ## Authors
 
 kGWASflow was developed by [Adnan Kivanc Corut ](https://www.github.com/akcorut).
+
+___________
 
 ## Citation
 
@@ -122,8 +131,6 @@ If you use kGWASflow in your research, please cite using the DOI: [10.5281/zenod
 
 > Voichek, Y., Weigel, D. Identifying genetic variants underlying phenotypic variation in plants without complete genomes.  
 > Nat Genet 52, 534–540 (2020). https://doi.org/10.1038/s41588-020-0612-7
-
-## Acknowledgements
 
 ## License
 kGWASflow is licensed under the [MIT](LICENSE.md) license.
