@@ -1,5 +1,5 @@
 
-# kGWASflow    (🚧🚧  Under Development 🚧🚧) <img align="right" width="300" src="https://user-images.githubusercontent.com/42179487/194161153-cc832e57-dd03-481b-8eed-34cb13ba3097.png">
+# kGWASflow <img align="right" width="420" src="https://user-images.githubusercontent.com/42179487/194161153-cc832e57-dd03-481b-8eed-34cb13ba3097.png">
 
 A modular, flexible and reproducible Snakemake workflow to perform k-mers-based GWAS.
 
