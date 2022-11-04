@@ -101,6 +101,7 @@ rule kmc_canonical:
         "../envs/kmc.yaml"
     threads:
         config["params"]["kmc"]["threads"]
+    priority: 50
     retries: 3
     message:
         "Running KMC to count k-mers with canonization..."
@@ -133,6 +134,7 @@ rule kmc_non_canonical:
         "../envs/kmc.yaml"
     threads:
         config["params"]["kmc"]["threads"]
+    priority: 50
     retries: 3
     message:
         "Running KMC to count k-mers without canonization..."
