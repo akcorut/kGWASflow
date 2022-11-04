@@ -19,7 +19,7 @@ rule cutadapt_pe:
     message: 
         "Performing trimming using cutadapt on the following files: {input}"
     wrapper:
-        "v1.12.2/bio/cutadapt/pe"
+        "v1.18.3/bio/cutadapt/pe"
 
 # TODO Add single end support
 
@@ -43,6 +43,6 @@ rule cutadapt_pe:
 #     message: 
 #         "Performing trimming using cutadapt on the following files: {input}"
 #     wrapper:
-#         "v1.12.2/bio/cutadapt/se"
+#         "v1.18.3/bio/cutadapt/se"
 
 # =================================================================================================
