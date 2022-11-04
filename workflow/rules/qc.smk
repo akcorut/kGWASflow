@@ -33,7 +33,7 @@ rule multiqc:
     log:
         "logs/qc/multiqc/multiqc.log",
     params:
-        "-v -d"
+        "-v -d --interactive"
     message: 
         "Performing MultiQC on the FastQC results..."
     wrapper:
