@@ -86,7 +86,7 @@ with open(snakemake.log[0], "w") as f:
                 fa= kmers_list_fa, pheno= pheno, kmer_len= kmer_len), shell=True)
         else:
             ## Source code: https://github.com/voichek/fetch_reads_with_kmers
-            subprocess.run(" {fetch_reads}/fetch_reads {r1} {r2} {fa} {kmer_len} {out}/{pheno}/{acc}_{lib}_reads_with_kmers".format(
+            subprocess.run(" {fetch_reads} {r1} {r2} {fa} {kmer_len} {out}/{pheno}/{acc}_{lib}_reads_with_kmers".format(
                 fetch_reads= fetch_reads, out=out_dir, 
                 r1= row["fq1"], r2= row["fq2"],
                 acc= row["sample_name"], lib = row["library_name"], 
