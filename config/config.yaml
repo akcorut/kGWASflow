@@ -14,7 +14,6 @@ ref:
   # Path to the fasta file of the reference genome
   fasta:
   
-
 # =================================================================================================
 #     Workflow Settings
 # =================================================================================================
@@ -258,6 +257,8 @@ params:
   plot_manhattan:
     # Number of threads to use
     threads: 8
+    # Manhattan plot point size
+    point_size: 20
 
   # ----------------------------------------------------------------------
   #     samtools Params
