@@ -130,6 +130,9 @@ rule plot_manhattan:
             caption="../report/plot_manhattan.rst",
             category="k-mers GWAS Results",
         )
+    params:
+        pheno= "{phenos_filt}",
+        point_size= config["params"]["plot_manhattan"]["point_size"]
     conda:
         "../envs/plot_manhattan.yaml"
     threads:
@@ -139,7 +142,7 @@ rule plot_manhattan:
     message:
         "Generating manhattan plot from k-mers alignment results..."
     script:
-        "../scripts/plot_manhattan.R"
+        "../scripts/plot_manhattan.py"
 
 # =========================================================================================================
 #     Aggregate align_kmers outputs
