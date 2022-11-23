@@ -12,9 +12,13 @@ rule align_contigs_minimap:
         "../envs/align_contigs.yaml"
     threads: 
         config["params"]["minimap2"]["threads"]
+    log:
+        "logs/align_contigs/{phenos_filt}/align_contigs.minimap2.log"
+    message:
+        "Aligning assembled contigs of reads with associated k-mers to the reference genome..."
     shell:
         """
-        minimap2 -t {threads} -a {input.ref_gen} {input.contigs} > {output}
+        minimap2 -t {threads} -a {input.ref_gen} {input.contigs} > {output} 2> {log}
         """
 
 # =======================================================================================================
@@ -28,11 +32,13 @@ rule filter_alignment_contigs:
         "results/align_contigs/{phenos_filt}/alignment/{phenos_filt}_contigs_aligned.filter.sam",
     params:
         min_mapping_score= config["params"]["filter_alignment"]["min_map_score"]
+    log:
+        "logs/align_contigs/{phenos_filt}/align_contigs.filter_alignment.log"
     message:
         "Filtering alignment results based on mapping quality..."
     shell:
         """
-        awk -v s={params.min_mapping_score} '$5 > s || $1 ~ /^@/' {input} > {output}
+        awk -v s={params.min_mapping_score} '$5 > s || $1 ~ /^@/' {input} > {output} 2> {log}
         """
 
 # =======================================================================================================
@@ -48,11 +54,13 @@ rule align_contigs_sam_to_bam:
         "../envs/align_contigs.yaml"
     threads:
         config["params"]["samtools"]["threads"]
+    log:
+        "logs/align_contigs/{phenos_filt}/align_contigs.sam_to_bam.log"
     message:
         "Converting SAM files to BAM..."
     shell:
         """
-        samtools view -@ {threads} -Sbh {input} > {output}
+        samtools view -@ {threads} -Sbh {input} > {output} 2> {log}
         """
 
 # =======================================================================================================
@@ -68,11 +76,13 @@ rule align_contigs_bam_sort:
         "../envs/align_contigs.yaml"
     threads:
         config["params"]["samtools"]["threads"]
+    log:
+        "logs/align_contigs/{phenos_filt}/align_contigs.bam_sort.log"
     message:
         "Sorting alignment BAM files..."
     shell:
         """
-        samtools sort -@ {threads} {input} -o {output}
+        samtools sort -@ {threads} {input} -o {output} 2> {log}
         """
 
 # =======================================================================================================
@@ -88,11 +98,13 @@ rule align_contigs_bam_index:
         "../envs/align_contigs.yaml"
     threads:
         config["params"]["samtools"]["threads"]
+    log:
+        "logs/align_contigs/{phenos_filt}/align_contigs.bam_index.log"
     message:
         "Indexing alignment BAM files..."
     shell:
         """
-        samtools index -@ {threads} {input}
+        samtools index -@ {threads} {input} 2> {log}
         """
 
 # =========================================================================================================
@@ -104,9 +116,13 @@ rule aggregate_align_contigs:
         aggregate_input_align_contigs
     output:
         "results/align_contigs/align_contigs.done"
+    log:
+        "logs/align_contigs/aggregate_align_contigs.log"
+    message:
+        "Checking if aligning contigs is done..."
     shell:
         """
-        touch {output}
+        touch {output} 2> {log}
         """
 
 # =========================================================================================================
