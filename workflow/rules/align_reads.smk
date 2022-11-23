@@ -10,14 +10,16 @@ rule merge_reads:
     output:
         merged_r1 = temp("results/fetch_reads_with_kmers/{phenos_filt}/reads_with_kmers_from_all_acc_R1.fastq"),
         merged_r2 = temp("results/fetch_reads_with_kmers/{phenos_filt}/reads_with_kmers_from_all_acc_R2.fastq")
+    log:
+        "logs/align_reads/{phenos_filt}/merge_reads.log"
     shell:
         """
         echo Merging r1 files:
         echo "$(ls {input.dir}/*_reads_with_kmers_R1.fastq)"
-        cat {input.dir}/*_reads_with_kmers_R1.fastq > {output.merged_r1}
+        cat {input.dir}/*_reads_with_kmers_R1.fastq > {output.merged_r1} 2> {log}
         echo Merging r2 files:
         echo "$(ls {input.dir}/*_reads_with_kmers_R2.fastq)"
-        cat {input.dir}/*_reads_with_kmers_R2.fastq > {output.merged_r2}
+        cat {input.dir}/*_reads_with_kmers_R2.fastq > {output.merged_r2} 2> {log}
         """
 
 # =========================================================================================================
