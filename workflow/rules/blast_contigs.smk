@@ -77,6 +77,8 @@ rule aggregate_blast_contigs:
         aggregate_input_blast_contigs
     output:
         "results/blast_contigs/blast_contigs.done"
+    log:
+        "logs/blast_contigs/aggregate_blast_contigs.log"
     shell:
         """
         touch {output}
