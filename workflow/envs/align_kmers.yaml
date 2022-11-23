@@ -1,8 +1,7 @@
 name: align_kmers
 channels:
-  - anaconda
-  - bioconda
   - conda-forge
+  - bioconda
   - defaults
 dependencies:
   - bowtie=1.3.1

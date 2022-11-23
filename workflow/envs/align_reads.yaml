@@ -1,10 +1,8 @@
 name: align_reads
 channels:
-  - anaconda
-  - bioconda
   - conda-forge
+  - bioconda
   - defaults
-  - conda-forge::ncurses
 dependencies:
   - bowtie2=2.4.5
   - samtools=1.16.1
