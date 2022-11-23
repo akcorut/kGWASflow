@@ -33,10 +33,14 @@ rule sort_reads:
         sorted_r2 = "results/fetch_reads_with_kmers/{phenos_filt}/reads_with_kmers_from_all_acc_sorted_R2.fastq"
     conda:
         "../envs/align_reads.yaml"
+    log:
+        "logs/align_reads/{phenos_filt}/sort_reads.seqkit.log"
+    message:
+        "Sorting reads..."
     shell:
         """
-        seqkit sort -n {input.r1} > {output.sorted_r1}
-        seqkit sort -n {input.r2} > {output.sorted_r2}
+        seqkit sort -n {input.r1} > {output.sorted_r1} 2> {log}
+        seqkit sort -n {input.r2} > {output.sorted_r2} 2> {log}
         """
 
 # =======================================================================================================
@@ -52,7 +56,7 @@ rule align_reads:
     output:
         out_sam = "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.sam",
     params:
-        index = "resources/ref/genome/bowtie2_index/genome",
+        index = lambda w, input: os.path.splitext(input.index[0])[0].split('.')[0],
         extra = config["params"]["bowtie2"]["extra"]
     conda:
         "../envs/align_reads.yaml"
@@ -78,11 +82,13 @@ rule filter_alignment:
         "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sam",
     params:
         min_mapping_score= config["params"]["filter_alignment"]["min_map_score"]
+    log:
+        "logs/align_reads/{phenos_filt}/filter_alignment.log"
     message:
         "Filtering alignment results based on mapping quality..."
     shell:
         """
-        awk -v s={params.min_mapping_score} '$5 > s || $1 ~ /^@/' {input} > {output}
+        awk -v s={params.min_mapping_score} '$5 > s || $1 ~ /^@/' {input} > {output} 2> {log}
         """
 
 # =======================================================================================================
@@ -98,11 +104,13 @@ rule align_reads_sam_to_bam:
         "../envs/align_reads.yaml"
     threads:
         config["params"]["samtools"]["threads"]
+    log:
+        "logs/align_reads/{phenos_filt}/align_reads.sam_to_bam.log"
     message:
         "Converting SAM files to BAM..."
     shell:
         """
-        samtools view -@ {threads} -Sbh {input} > {output}
+        samtools view -@ {threads} -Sbh {input} > {output} 2> {log}
         """
 
 # =======================================================================================================
@@ -118,11 +126,13 @@ rule align_reads_bam_sort:
         "../envs/align_reads.yaml"
     threads:
         config["params"]["samtools"]["threads"]
+    log:
+        "logs/align_reads/{phenos_filt}/align_reads.bam_sort.log"
     message:
         "Sorting alignment BAM files..."
     shell:
         """
-        samtools sort -@ {threads} {input} -o {output}
+        samtools sort -@ {threads} {input} -o {output} 2> {log}
         """
 
 # =======================================================================================================
@@ -138,11 +148,13 @@ rule align_reads_bam_index:
         "../envs/align_reads.yaml"
     threads:
         config["params"]["samtools"]["threads"]
+    log:
+        "logs/align_reads/{phenos_filt}/align_reads.bam_index.log"
     message:
         "Indexing alignment BAM files..."
     shell:
         """
-        samtools index -@ {threads} {input}
+        samtools index -@ {threads} {input} 2> {log}
         """
 
 # =========================================================================================================
@@ -154,11 +166,13 @@ rule aggregate_align_reads:
         aggregate_input_align_reads
     output:
         "results/align_reads_with_kmers/align_reads_with_kmers.done"
+    log:
+        "logs/align_reads/aggregate_align_reads.log"
     message:
         "Checking if aligning reads with significant k-mers is done..."
     shell:
         """
-        touch {output}
+        touch {output} 2> {log}
         """
 
 # =========================================================================================================

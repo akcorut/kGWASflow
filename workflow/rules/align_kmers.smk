@@ -10,14 +10,14 @@ if config["settings"]["align_kmers"]["use_bowtie"]:
         output:
             "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sam"
         params:
-            index = "resources/ref/genome/bowtie_index/genome",
+            index = lambda w, input: os.path.splitext(input.index[0])[0].split('.')[0],
             extra = config["params"]["bowtie"]["extra"]
         conda:
             "../envs/align_kmers.yaml"
         threads:
             config["params"]["bowtie"]["threads"]
         log:
-            "logs/align_kmers/{phenos_filt}_kmers_align.bowtie.log"
+            "logs/align_kmers/{phenos_filt}/kmers_align.bowtie.log"
         message:
             "Aligning signficant k-mers to the reference genome..."
         shell:
@@ -35,14 +35,14 @@ if config["settings"]["align_kmers"]["use_bowtie2"]:
         output:
             "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sam"
         params:
-            index = "resources/ref/genome/bowtie2_index/genome",
+            index =  lambda w, input: os.path.splitext(input.index[0])[0].split('.')[0],
             extra = config["params"]["bowtie2"]["extra"]
         conda:
             "../envs/align_kmers.yaml"
         threads:
             config["params"]["bowtie2"]["threads"]
         log:
-            "logs/align_kmers/{phenos_filt}_kmers_align.bowtie2.log"
+            "logs/align_kmers/{phenos_filt}/kmers_align.bowtie2.log"
         message:
             "Aligning signficant k-mers to the reference genome..."
         shell:
@@ -65,7 +65,7 @@ rule align_kmers_sam_to_bam:
     threads:
         config["params"]["samtools"]["threads"]
     log:
-        "logs/align_kmers/{phenos_filt}_kmers_align.sam_to_bam.log"
+        "logs/align_kmers/{phenos_filt}/kmers_align.sam_to_bam.log"
     message:
         "Converting SAM files to BAM..."
     shell:
@@ -87,7 +87,7 @@ rule align_kmers_bam_sort:
     threads:
         config["params"]["samtools"]["threads"]
     log:
-        "logs/align_kmers/{phenos_filt}_kmers_align.bam_sort.log"
+        "logs/align_kmers/{phenos_filt}/kmers_align.bam_sort.log"
     message:
         "Sorting alignment BAM files..."
     shell:
@@ -109,7 +109,7 @@ rule align_kmers_bam_index:
     threads:
         config["params"]["samtools"]["threads"]
     log:
-        "logs/align_kmers/{phenos_filt}_kmers_align.bam_index.log"
+        "logs/align_kmers/{phenos_filt}/kmers_align.bam_index.log"
     message:
         "Indexing alignment BAM files..."
     shell:
@@ -138,7 +138,7 @@ rule plot_manhattan:
     threads:
         config["params"]["plot_manhattan"]["threads"]
     log:
-        "logs/plots/manhattan/align_kmers/{phenos_filt}_kmers_alignment.plot_manhattan.log"
+        "logs/plots/manhattan/align_kmers/{phenos_filt}/kmers_alignment.plot_manhattan.log"
     message:
         "Generating manhattan plot from k-mers alignment results..."
     script:
@@ -153,11 +153,13 @@ rule aggregate_align_kmers:
         aggregate_input_align_kmers
     output:
         "results/align_kmers/align_kmers.done"
+    log:
+        "logs/align_kmers/aggregate_align_kmers.log"
     message:
         "Checking if aligning k-mers is done..."
     shell:
         """
-        touch {output}
+        touch {output} 2> {log}
         """
 
 # =========================================================================================================
