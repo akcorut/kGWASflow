@@ -6,7 +6,7 @@
 
 R1_OUT=""
 R2_OUT=""
-if ends_with_gz:
+if ends_with_gz(samples):
     R1_OUT= "results/reads/{sample}/{library}_1.fastq.gz"
     R2_OUT= "results/reads/{sample}/{library}_2.fastq.gz"
 else:

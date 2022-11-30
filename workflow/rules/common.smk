@@ -190,10 +190,10 @@ def get_fastqs(wildcards):
         u = samples.loc[ (wildcards.sample, wildcards.library), ["fq1", "fq2"] ].dropna()
         return [ f"{u.fq1}", f"{u.fq2}" ]
 
-def ends_with_gz(wildcards):
-    fastqs = samples.loc[(wildcards.sample, wildcards.library), ["fq1", "fq2"]].dropna()
-    if not sra_only:
-        if fastqs["fq1"].str.endswith('gz'):
+def ends_with_gz(samp_tab):
+    fqs = samp_tab.loc[:, ['fq1']]
+    if not pd.isnull(fqs.fq1).all():
+        if samp_tab["fq1"].str.endswith('gz').all():
             return True
         else:
             return False
