@@ -12,17 +12,20 @@ rule create_kmers_table:
     output:
         "results/kmers_table/kmers_table.table"
     params:
-        prefix = lambda wildcards, output: output[0][:-6],
+        prefix = lambda w, output: os.path.splitext(output[0])[0],
         kmer_len = config["params"]["kmc"]["kmer_len"],
     conda:
         "../envs/kmers_gwas.yaml"
+    log:
+        "logs/create_kmers_table/build_kmers_table.log"
     message:
         "Creating the k-mers table that contains the presence absence/pattern of the k-mers..."
     shell:
         """
         export LD_LIBRARY_PATH=$CONDA_PREFIX/lib
         
-        {input.kmersGWAS_bin}/build_kmers_table -l {input.list_paths} -k {params.kmer_len} -a {input.kmers_to_use} -o {params.prefix}
+        {input.kmersGWAS_bin}/build_kmers_table -l {input.list_paths} -k {params.kmer_len} \
+        -a {input.kmers_to_use} -o {params.prefix} 2> {log}
         """
 
 # =================================================================================================
