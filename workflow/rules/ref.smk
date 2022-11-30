@@ -7,12 +7,14 @@ rule genome_symlink:
         reference = config["ref"]["fasta"]
     output:
         "resources/ref/genome/genome.fasta",
+    log:
+        "logs/ref/genome_symlink/genome_symlink.log"
     message:
         "Creating symbolic link for reference genome fasta..."
     threads: 1
     shell:
         """
-        ln -rs {input.reference} {output}
+        ln -rs {input.reference} {output} 2> {log}
         """
 
 # =======================================================================================================
@@ -28,7 +30,7 @@ rule bowtie2_build:
             ".1.bt2", ".2.bt2", ".3.bt2", ".4.bt2", ".rev.1.bt2", ".rev.2.bt2",
         ),
     log:
-        "logs/bowtie2_build/build.log"
+        "logs/ref/bowtie2_build/build.log"
     params:
         extra=""  # optional parameters
     threads: 
@@ -60,7 +62,7 @@ rule bowtie_build:
     threads: 
         config["params"]["bowtie"]["threads"]
     log:
-        "logs/bowtie_build/build.log"
+        "logs/ref/bowtie_build/build.log"
     message:
         "Creating bowtie index of the reference genome..."
     shell:
