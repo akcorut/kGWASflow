@@ -12,10 +12,10 @@ rule generate_kmers_list_paths:
     output:
         "results/kmers_list/kmers_list_paths.txt"
     params:
-        input_dir =  "results/kmers_count",
-        out_dir = lambda wildcards, output: output[0][:-20]
+        input_dir =  lambda w, input: os.path.dirname(os.path.dirname(input.kmers_with_strand[0])),
+        out_dir = lambda wildcards, output: os.path.dirname(output[0])
     log:
-        "logs/kmers_list/generate_kmers_list_paths.log"
+        "logs/combine_and_filter/generate_kmers_list_paths.log"
     message:
         "Generating kmers_list_paths.txt..."
     script:
@@ -40,13 +40,16 @@ rule combine_and_filter:
         min_app = config["params"]["kmers_gwas"]["min_percent_app"]
     conda:
         "../envs/kmers_gwas.yaml"
+    log:
+        "logs/combine_and_filter/combine_and_filter.log"
     message:
         "Combining the k-mers from each acession/sample into one list and filter the k-mers..."
     shell:
         """
         export LD_LIBRARY_PATH=$CONDA_PREFIX/lib
 
-        {input.kmersGWAS_bin}/list_kmers_found_in_multiple_samples -l {input.kmers_list} -k {params.kmer_len} --mac {params.mac} -p {params.min_app} -o {output}
+        {input.kmersGWAS_bin}/list_kmers_found_in_multiple_samples -l {input.kmers_list} -k {params.kmer_len} \
+        --mac {params.mac} -p {params.min_app} -o {output} 2> {log}
         """
 
 # =================================================================================================
