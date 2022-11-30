@@ -6,10 +6,13 @@
 rule download_fetch_reads_with_kmers:
     output:
         cpp= "scripts/external/fetch_reads_with_kmers/fetch_reads.cpp",
+    log:
+        log1 = "logs/fetch_reads/clone_fetch_reads_with_kmers.log",
+        log2 = "logs/fetch_reads/move_fetch_reads_with_kmers.log"
     shell:
         """
-        git clone --recurse-submodules https://github.com/voichek/fetch_reads_with_kmers.git
-        mv fetch_reads_with_kmers scripts/external
+        git clone --recurse-submodules https://github.com/voichek/fetch_reads_with_kmers.git 2> {log.log1}
+        mv fetch_reads_with_kmers scripts/external 2> {log.log2}
         """
 
 rule make_fetch_reads_with_kmers:
@@ -19,6 +22,8 @@ rule make_fetch_reads_with_kmers:
         "scripts/external/fetch_reads_with_kmers/fetch_reads"
     params:
         prefix= lambda w, output: os.path.dirname(output[0])
+    log:
+        log1 = "logs/fetch_reads/make_fetch_reads_with_kmers.log",
     shell:
         """
         cd {params.prefix}
@@ -52,7 +57,7 @@ if not config["settings"]["trimming"]["activate"]:
             pheno = "{phenos_filt}",
             kmer_len = config["params"]["kmc"]["kmer_len"]
         log:
-            "logs/fetch_reads_with_kmers/{phenos_filt}/fetch_source_reads_of_kmers.log"
+            "logs/fetch_reads/{phenos_filt}/fetch_source_reads_of_kmers.log"
         threads: 
             config["params"]["fetch_reads"]["threads"]
         message:
@@ -83,7 +88,7 @@ if config["settings"]["trimming"]["activate"]:
             pheno = "{phenos_filt}",
             kmer_len = config["params"]["kmc"]["kmer_len"]
         log:
-            "logs/fetch_reads_with_kmers/{phenos_filt}/fetch_source_reads_of_kmers.log"
+            "logs/fetch_reads/{phenos_filt}/fetch_source_reads_of_kmers.log"
         threads: 
             config["params"]["fetch_reads"]["threads"]
         message:
@@ -101,11 +106,13 @@ rule aggregate_fetch_reads:
         aggregate_input_fetch_reads
     output:
         "results/fetch_reads_with_kmers/fetch_source_reads.done"
+    log:
+        "logs/fetch_reads/aggregate_fetch_reads.log"
     message:
         "Checking if fetching source reads of k-mers is done..."
     shell:
         """
-        touch {output}
+        touch {output} 2> {log}
         """
 
 # =========================================================================================================
