@@ -17,6 +17,8 @@ configfile: "config/config.yaml"
 # Description of the workflow can be found in the final report
 report: "report/workflow.rst"
 
+container: "docker://continuumio/miniconda3"
+
 # =========================================================================================================
 #     Load Rules
 # =========================================================================================================
