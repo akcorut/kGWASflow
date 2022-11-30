@@ -21,6 +21,9 @@ if not config["settings"]["trimming"]["activate"]:
         output:
             r1 = R1_OUT,
             r2 = R2_OUT
+        log:
+            log1="logs/count_kmers/create_symlink/{sample}/{sample}_{library}_1.fastq.create_symlink.log",
+            log2="logs/count_kmers/create_symlink/{sample}/{sample}_{library}_2.fastq.create_symlink.log",
         message:
             "Creating symbolic links for fastq files..."
         threads: 1
@@ -28,9 +31,9 @@ if not config["settings"]["trimming"]["activate"]:
             """
             echo Working on fastq files: {input.fastqs}
             echo Symlink -fastq1: {input.fastqs[0]} to {output.r1}
-            ln -rs {input.fastqs[0]} {output.r1}
+            ln -rs {input.fastqs[0]} {output.r1} 2> {log.log1}
             echo Symlink -fastq2: {input.fastqs[1]} to {output.r2}
-            ln -rs {input.fastqs[1]} {output.r2}
+            ln -rs {input.fastqs[1]} {output.r2} 2> {log.log2}
             """
 
 # =================================================================================================
@@ -50,9 +53,9 @@ if not config["settings"]["trimming"]["activate"]:
         output:
             "results/reads/{sample}/input_files.txt"
         params:
-            prefix = get_input_path_for_generate_input_lists()
+            prefix = lambda w, output: os.path.dirname(os.path.dirname(output[0]))
         log:
-            "logs/generate_input_lists/{sample}/{sample}_generate_input_lists.log"
+            "logs/count_kmers/generate_input_lists/{sample}/{sample}_generate_input_lists.log"
         message:
             "Generating input list files..."
         script:
@@ -71,9 +74,9 @@ if config["settings"]["trimming"]["activate"]:
         output:
             "results/trimmed/{sample}/input_files.txt"
         params:
-            prefix = get_input_path_for_generate_input_lists()
+            prefix = lambda w, output: os.path.dirname(os.path.dirname(output[0]))
         log:
-            "logs/generate_input_lists/{sample}/{sample}_generate_input_lists.log"
+            "logs/count_kmers/generate_input_lists/{sample}/{sample}_generate_input_lists.log"
         message:
             "Generating input list files..."
         script:
@@ -90,13 +93,13 @@ rule kmc_canonical:
         kmc_suf = temp("results/kmers_count/{sample}/output_kmc_canon.kmc_suf"),
         kmc_pre = temp("results/kmers_count/{sample}/output_kmc_canon.kmc_pre")
     params:
-        outdir_prefix = lambda wildcards, output: output[0][:-24],
-        outfile_prefix = lambda wildcards, output: output[0][:-8],
+        outdir_prefix = lambda w, output: os.path.dirname(output.kmc_suf),
+        outfile_prefix = lambda w, output: os.path.splitext(output.kmc_suf)[0],
         kmer_len = config["params"]["kmc"]["kmer_len"],
         count_threshold = config["params"]["kmc"]["count_thresh"],
         extra = config["params"]["kmc"]["extra"]
     log:
-        "logs/kmc/{sample}/kmc_canon.log"
+        "logs/count_kmers/kmc/{sample}/kmc_canon.log"
     conda:
         "../envs/kmc.yaml"
     threads:
@@ -109,7 +112,7 @@ rule kmc_canonical:
         """
         kmc -t{threads} {params.extra} -v -k{params.kmer_len} -ci{params.count_threshold} \
         @{input} {params.outfile_prefix} {params.outdir_prefix} \
-        1> {params.outdir_prefix}kmc_canon.1 2> {params.outdir_prefix}kmc_canon.2 \
+        1> {params.outdir_prefix}/kmc_canon.1 2> {params.outdir_prefix}/kmc_canon.2 \
         > {log}
         """
 
@@ -124,12 +127,12 @@ rule kmc_non_canonical:
         kmc_suf = temp("results/kmers_count/{sample}/output_kmc_all.kmc_suf"),
         kmc_pre = temp("results/kmers_count/{sample}/output_kmc_all.kmc_pre")
     params:
-        outdir_prefix = lambda wildcards, output: output[0][:-22],
-        outfile_prefix = lambda wildcards, output: output[0][:-8],
+        outdir_prefix = lambda w, output: os.path.dirname(output.kmc_suf),
+        outfile_prefix = lambda w, output: os.path.splitext(output.kmc_suf)[0],
         kmer_len = config["params"]["kmc"]["kmer_len"],
         extra = config["params"]["kmc"]["extra"]
     log:
-        "logs/kmc/{sample}/kmc_all.log"
+        "logs/count_kmers/kmc/{sample}/kmc_all.log"
     conda:
         "../envs/kmc.yaml"
     threads:
@@ -142,7 +145,7 @@ rule kmc_non_canonical:
         """
         kmc -t{threads} -v -k{params.kmer_len} -ci0 -b \
         @{input} {params.outfile_prefix} {params.outdir_prefix} \
-        1> {params.outdir_prefix}kmc_all.1 2> {params.outdir_prefix}kmc_all.2 \
+        1> {params.outdir_prefix}/kmc_all.1 2> {params.outdir_prefix}/kmc_all.2 \
         > {log}
         """
 
@@ -161,15 +164,15 @@ rule merge_kmers:
     output:
         temp("results/kmers_count/{sample}/kmers_with_strand")
     params:
-        prefix_kmc_canon = "results/kmers_count/{sample}/output_kmc_canon",
-        prefix_kmc_all = "results/kmers_count/{sample}/output_kmc_all",
+        prefix_kmc_canon = lambda w, input: os.path.splitext(input.kmc_canon_suf)[0],
+        prefix_kmc_all = lambda w, input: os.path.splitext(input.kmc_all_suf)[0],
         kmer_len = config["params"]["kmc"]["kmer_len"]
     conda:
         "../envs/kmers_gwas.yaml"
     threads:
         config["params"]["merge_kmers"]["threads"]
     log:
-        "logs/kmc/{sample}/add_strand.log.out"
+        "logs/count_kmers/kmc/{sample}/add_strand.log.out"
     retries: 3
     message:
         "Merging outputs from two KMC k-mers counting results into one list for each sample/individual..."
@@ -186,8 +189,8 @@ rule merge_kmers:
 
 rule kmers_stats:
     input:
-        expand("logs/kmc/{u.sample_name}/kmc_all.log", u=samples.itertuples()),
-        expand("logs/kmc/{u.sample_name}/kmc_canon.log", u=samples.itertuples()),
+        kmc_all = expand("logs/count_kmers/kmc/{u.sample_name}/kmc_all.log", u=samples.itertuples()),
+        kmc_canon = expand("logs/count_kmers/kmc/{u.sample_name}/kmc_canon.log", u=samples.itertuples()),
     output:
         kmc_canon_joint_plot = report(
             "results/plots/kmers_count/kmc_canon_total_reads_vs_unique_kmers.joint_plot.pdf",
@@ -220,7 +223,7 @@ rule kmers_stats:
             category="k-mers Count Stats",
         )
     params:
-        input_path= "logs/kmc",
+        input_path= lambda w, input: os.path.dirname(os.path.dirname(input.kmc_canon[0]))
     log:
         "logs/plots/kmers_stats/plot_kmers_stats.log"
     conda:
