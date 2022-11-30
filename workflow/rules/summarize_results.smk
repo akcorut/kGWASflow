@@ -4,7 +4,7 @@
 
 rule generate_results_table:
     input:
-        expand(rules.run_kmers_gwas.output, pheno= pheno_names)
+        kmers_gwas_res = expand(rules.run_kmers_gwas.output, pheno= pheno_names)
     output:
         res_tab_5per = report(
             "results/kmers_gwas_summary/kmers_gwas_results_table_5per.txt",
@@ -13,7 +13,7 @@ rule generate_results_table:
         ),
         phenos_list_5per= "results/kmers_gwas_summary/phenos_with_sig_kmers_list_5per.txt",
     params:
-        in_prefix = "results/kmers_gwas",
+        in_prefix = lambda w, input: os.path.dirname(os.path.dirname(os.path.dirname(input.kmers_gwas_res[0]))),
         out_prefix = lambda w, output: os.path.dirname(output[0]),
     conda:
         "../envs/kmers_stats.yaml"
