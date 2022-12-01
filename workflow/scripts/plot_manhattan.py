@@ -38,26 +38,54 @@ if __name__ == "__main__":
       y_max = align_kmers_sam_sorted['minuslog10pvalue'].max()
       y_min = align_kmers_sam_sorted['minuslog10pvalue'].min()
 
+      ## Check if only one chromosome is provided for the manhattan plot
+      num_of_chrs = len(pd.unique(align_kmers_sam_sorted['chr']))
+      
       # Plotting the manhattan plot
       print("Plotting...")
-      f, ax = plt.subplots(figsize=(18, 9), facecolor='w', edgecolor='k')
-      manhattanplot(data=align_kmers_sam_sorted,
-                    snp="kmer_id",
-                    chrom="chr",
-                    color=colors,
-                    pos="bp",
-                    pv="p_value",
-                    suggestiveline=None,  # Turn off suggestiveline
-                    genomewideline=None,  # Turn off genomewideline
-                    xticklabel_kws={"rotation": "vertical"},
-                    ax=ax,
-                    s = snakemake.params["point_size"],
-                    clip_on=False)
-      ax.set_ylim([y_min-5, y_max+5]) # Set y axis limits
-      f.suptitle('k-mer Based GWAS Manhattan Plot for ' + snakemake.params["pheno"], fontsize=22)
-      plt.xlabel('Chromosome', fontsize=18)
-      plt.ylabel(r"$-log_{10}{(P)}$", fontsize=18) 
-      plt.tight_layout()
+      
+      ## If only one chromosome is provided, plot the k-mer's position on
+      ## that chromosome on the x axis
+      if num_of_chrs == 1:
+        f, ax = plt.subplots(figsize=(18, 9), facecolor='w', edgecolor='k')
+        manhattanplot(data=align_kmers_sam_sorted,
+                      snp="kmer_id",
+                      chrom="chr",
+                      CHR= pd.unique(align_kmers_sam_sorted['chr']),
+                      pos="bp",
+                      pv="p_value",
+                      suggestiveline=None,  # Turn off suggestiveline
+                      genomewideline=None,  # Turn off genomewideline
+                      xticklabel_kws={"rotation": "vertical"},
+                      ax=ax,
+                      s = snakemake.params["point_size"],
+                      clip_on=False)
+        ax.set_ylim([y_min-5, y_max+5]) # Set y axis limits
+        f.suptitle('k-mer Based GWAS Manhattan Plot for ' + snakemake.params["pheno"], fontsize=22)
+        plt.xlabel('Chromosome: ' + pd.unique(align_kmers_sam_sorted['chr'])[0], fontsize=18)
+        plt.ylabel(r"$-log_{10}{(P)}$", fontsize=18) 
+        plt.tight_layout()
+      
+      ## If more than one chromosome is provided, use all chromosomes
+      if num_of_chrs > 1:
+        f, ax = plt.subplots(figsize=(18, 9), facecolor='w', edgecolor='k')
+        manhattanplot(data=align_kmers_sam_sorted,
+                      snp="kmer_id",
+                      chrom="chr",
+                      color=colors,
+                      pos="bp",
+                      pv="p_value",
+                      suggestiveline=None,  # Turn off suggestiveline
+                      genomewideline=None,  # Turn off genomewideline
+                      xticklabel_kws={"rotation": "vertical"},
+                      ax=ax,
+                      s = snakemake.params["point_size"],
+                      clip_on=False)
+        ax.set_ylim([y_min-5, y_max+5]) # Set y axis limits
+        f.suptitle('k-mer Based GWAS Manhattan Plot for ' + snakemake.params["pheno"], fontsize=22)
+        plt.xlabel('Chromosome', fontsize=18)
+        plt.ylabel(r"$-log_{10}{(P)}$", fontsize=18) 
+        plt.tight_layout()
       
       ## Saving the plot as pdf
       print("Plotting is done. Saving the plot...")
