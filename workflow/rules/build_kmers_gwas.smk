@@ -28,7 +28,7 @@ rule extract_kmersGWAS:
         kmersGWAS_py = KMERSGWAS_PY_PATH,
         kmersGWAS_bin = directory(KMERSGWAS_BIN_PATH)
     params:
-        dir= KMERSGWAS_DIR
+        dir= lambda w, input: os.path.dirname(input[0])
     conda:
         "../envs/build_kmers_gwas.yaml"
     log:
