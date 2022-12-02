@@ -133,8 +133,8 @@ logger.info("")
 # =================================================================================================
 
 KMERSGWAS_DIR = "scripts/external/kmers_gwas"
-KMERSGWAS_VERSION = "v0.2-beta"
-KMERSGWAS_ZIP_PREFIX = "v0_2_beta"
+KMERSGWAS_VERSION = "v0.3-beta"
+KMERSGWAS_ZIP_PREFIX = "v0_3_beta"
 KMERSGWAS_ZIP_NAME = f"{KMERSGWAS_VERSION}.zip"
 KMERSGWAS_ZIP_PATH = os.path.join(KMERSGWAS_DIR, KMERSGWAS_ZIP_NAME)
 KMERSGWAS_PY_PATH = os.path.join(KMERSGWAS_DIR, "kmers_gwas.py")
