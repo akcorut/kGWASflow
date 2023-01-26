@@ -1,7 +1,8 @@
 name: plot_manhattan
 channels:
-  - bioconda
   - conda-forge
+  - bioconda
+  - defaults
 dependencies:
   - matplotlib=3.6.2
   - numpy=1.23.3
