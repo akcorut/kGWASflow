@@ -36,9 +36,12 @@ rule run_kmers_gwas:
         
         rm -r {params.out_prefix}
 
-        python2 {input.kmers_gwas_py} {params.extra} --min_data_points {params.min_data_points} \
-        --pheno {input.phenotype} --kmers_table {params.kmers_tab_prefix} \
-        --kmers_number {params.kmers_number} --permutations {params.n_permutations} \
+        python2 {input.kmers_gwas_py} {params.extra} \
+        --min_data_points {params.min_data_points} \
+        --pheno {input.phenotype} \
+        --kmers_table {params.kmers_tab_prefix} \
+        --kmers_number {params.kmers_number} \
+        --permutations {params.n_permutations} \
         --maf {params.maf} --mac {params.mac} \
         -l {params.kmer_len} -p {threads} \
         --outdir {params.out_prefix} >>{log} 2>&1
