@@ -14,7 +14,7 @@ rule spades:
     threads: 
         config["params"]["spades"]["threads"]
     params:
-        out_dir =  lambda w, output: os.path.dirname(output.contigs),
+        out_dir = lambda w, output: os.path.dirname(output.contigs),
         extra = config["params"]["spades"]["extra"]
     log:
         "logs/assemble_reads/{phenos_filt}/assemble_reads.spades.log"
