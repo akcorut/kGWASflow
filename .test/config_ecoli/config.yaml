@@ -258,7 +258,7 @@ params:
     # Number of threads to use
     threads: 8
     # Manhattan plot point size
-    point_size: 20
+    point_size: 200
 
   # ----------------------------------------------------------------------
   #     samtools Params
