@@ -54,6 +54,7 @@ if not config["settings"]["trimming"]["activate"]:
             "results/reads/{sample}/input_files.txt"
         params:
             prefix = lambda w, output: os.path.dirname(os.path.dirname(output[0]))
+        priority: 60
         log:
             "logs/count_kmers/generate_input_lists/{sample}/{sample}_generate_input_lists.log"
         message:
@@ -75,6 +76,7 @@ if config["settings"]["trimming"]["activate"]:
             "results/trimmed/{sample}/input_files.txt"
         params:
             prefix = lambda w, output: os.path.dirname(os.path.dirname(output[0]))
+        priority: 60
         log:
             "logs/count_kmers/generate_input_lists/{sample}/{sample}_generate_input_lists.log"
         message:
@@ -91,7 +93,8 @@ rule kmc_canonical:
         rules.generate_input_lists.output
     output:
         kmc_suf = temp("results/kmers_count/{sample}/output_kmc_canon.kmc_suf"),
-        kmc_pre = temp("results/kmers_count/{sample}/output_kmc_canon.kmc_pre")
+        kmc_pre = temp("results/kmers_count/{sample}/output_kmc_canon.kmc_pre"),
+        done= touch("results/kmers_count/{sample}/kmc_canonical.done")
     params:
         outdir_prefix = lambda w, output: os.path.dirname(output.kmc_suf),
         outfile_prefix = lambda w, output: os.path.splitext(output.kmc_suf)[0],
@@ -125,7 +128,8 @@ rule kmc_non_canonical:
         rules.generate_input_lists.output
     output:
         kmc_suf = temp("results/kmers_count/{sample}/output_kmc_all.kmc_suf"),
-        kmc_pre = temp("results/kmers_count/{sample}/output_kmc_all.kmc_pre")
+        kmc_pre = temp("results/kmers_count/{sample}/output_kmc_all.kmc_pre"),
+        done= touch("results/kmers_count/{sample}/kmc_non-canonical.done")
     params:
         outdir_prefix = lambda w, output: os.path.dirname(output.kmc_suf),
         outfile_prefix = lambda w, output: os.path.splitext(output.kmc_suf)[0],
@@ -137,7 +141,7 @@ rule kmc_non_canonical:
         "../envs/kmc.yaml"
     threads:
         config["params"]["kmc"]["threads"]
-    priority: 50
+    priority: 40
     retries: 3
     message:
         "Running KMC to count k-mers without canonization..."
@@ -160,9 +164,12 @@ rule merge_kmers:
         kmc_canon_pre = rules.kmc_canonical.output.kmc_pre,
         kmc_all_suf = rules.kmc_non_canonical.output.kmc_suf,
         kmc_all_pre = rules.kmc_non_canonical.output.kmc_pre,
+        kmc_canon_done = rules.kmc_canonical.output.done,
+        kmc_all_done = rules.kmc_non_canonical.output.done,
         kmersGWAS_bin = rules.extract_kmersGWAS.output.kmersGWAS_bin,
     output:
-        temp("results/kmers_count/{sample}/kmers_with_strand")
+        strand= temp("results/kmers_count/{sample}/kmers_with_strand"),
+        done= touch("results/kmers_count/{sample}/kmers_add_strand_information.done")
     params:
         prefix_kmc_canon = lambda w, input: os.path.splitext(input.kmc_canon_suf)[0],
         prefix_kmc_all = lambda w, input: os.path.splitext(input.kmc_all_suf)[0],
@@ -180,7 +187,7 @@ rule merge_kmers:
         """
         export LD_LIBRARY_PATH=$CONDA_PREFIX/lib
 
-        {input.kmersGWAS_bin}/kmers_add_strand_information -c {params.prefix_kmc_canon} -n {params.prefix_kmc_all} -k {params.kmer_len} -o {output} > {log}
+        {input.kmersGWAS_bin}/kmers_add_strand_information -c {params.prefix_kmc_canon} -n {params.prefix_kmc_all} -k {params.kmer_len} -o {output.strand} > {log}
         """
 
 # =================================================================================================
