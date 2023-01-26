@@ -1,12 +1,11 @@
 name: kmers_gwas_py2
 channels:
-  - anaconda
-  - bioconda
   - conda-forge
+  - bioconda
   - defaults
 dependencies:
-  - libgcc=5.2.0
-  - libiconv=1.16
+  - libiconv=1.17
+  - libgcc=7.2.0
   - python=2.7.15
   - r=3.5.1
   - r-base=3.5.1
