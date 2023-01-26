@@ -4,7 +4,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - snakemake=7.14.0
+  - snakemake=7.18.2
   - numpy=1.23.1
   - pandas=1.4.3
   
