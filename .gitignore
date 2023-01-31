@@ -23,6 +23,7 @@
 !.github/workflows/*
 !.gitignore
 !.gitattributes
+!Dockerfile
 !README.md
 workflow/*.err
 workflow/*.out
