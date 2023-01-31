@@ -4,4 +4,4 @@ channels:
   - bioconda
   - defaults
 dependencies:
-  - kmc=3.1.1
+  - kmc=3.2.1
