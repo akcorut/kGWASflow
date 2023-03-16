@@ -78,20 +78,22 @@ rule sra_get_fastq_pe:
         "resources/ref/sra-pe-reads/{accession}_1.fastq",
         "resources/ref/sra-pe-reads/{accession}_2.fastq"
     params:
-        extra="--skip-technical --progress --temp resources/ref/sra-pe-reads"
-    threads: 6
+        extra= config["params"]["fasterq_dump"]["extra"]
+    threads: 
+        config["params"]["fasterq_dump"]["threads"]
     log:
         "logs/ref/sra-pe-reads/{accession}.log"
     wrapper:
-        "v1.12.2/bio/sra-tools/fasterq-dump"
+        "v1.23.5/bio/sra-tools/fasterq-dump"
 
 rule sra_get_fastq_se:
     output:
         "resources/ref/sra-se-reads/{accession}.fastq"
     params:
-        extra="--skip-technical --progress --temp resources/ref/sra-pe-reads"
-    threads: 6
+        extra= config["params"]["fasterq_dump"]["extra"]
+    threads: 
+        config["params"]["fasterq_dump"]["threads"]
     log:
         "logs/ref/sra-pe-reads/{accession}.log"
     wrapper:
-        "v1.12.2/bio/sra-tools/fasterq-dump"
+        "v1.23.5/bio/sra-tools/fasterq-dump"

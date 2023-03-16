@@ -102,6 +102,16 @@ resources:
 params:
 
   # ----------------------------------------------------------------------
+  #     fasterq-dump Params
+  # ----------------------------------------------------------------------
+
+  fasterq_dump:
+    # Number of threads for fasterq-dump
+    threads: 6
+    # Additional parameters for fasterq-dump
+    extra: "--skip-technical"
+
+  # ----------------------------------------------------------------------
   #     FastQC Params
   # ----------------------------------------------------------------------
 
