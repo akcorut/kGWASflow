@@ -144,17 +144,21 @@ KMERSGWAS_BIN_PATH = os.path.join(KMERSGWAS_DIR, "bin/")
 #     Common Helper Functions
 # =================================================================================================
 
-def sra_only(sample, library):
+# Check if the sample is SRA only
+def sra_only(sample, library): 
     return pd.isnull(samples.loc[(sample, library), "fq1"]) and pd.isnull(samples.loc[(sample, library), "fq2"]) \
            and not pd.isnull(samples.loc[(sample, library), "sra"])
 
-def is_sra_se(sample, library):
+# Check if the sample is SRA only and single-end
+def is_sra_se(sample, library): 
     return sra_only(sample, library) and config["settings"]["single_end"]
 
-def is_sra_pe(sample, library):
+# Check if the sample is SRA only and paired-end
+def is_sra_pe(sample, library): 
     return sra_only(sample, library) and not config["settings"]["single_end"]
 
-def get_individual_fastq(wildcards):
+# Get individual FASTQ files
+def get_individual_fastq(wildcards): 
 # Adapted from: https://github.com/snakemake-workflows/chipseq
     """Get individual raw FASTQ files from samples sheet."""
     fastqs = samples.loc[(wildcards.sample, wildcards.library), ["fq1", "fq2"]].dropna()
@@ -174,7 +178,8 @@ def get_individual_fastq(wildcards):
         else:
             return samples.loc[ (wildcards.sample, wildcards.library), "fq2" ]
 
-def get_fastqs(wildcards):
+# Get FASTQ files
+def get_fastqs(wildcards): 
 # Adapted from: https://github.com/snakemake-workflows/chipseq
     """Get raw FASTQ files from samples sheet."""
     fastqs = samples.loc[(wildcards.sample, wildcards.library), ["fq1", "fq2"]].dropna()
@@ -190,6 +195,7 @@ def get_fastqs(wildcards):
         u = samples.loc[ (wildcards.sample, wildcards.library), ["fq1", "fq2"] ].dropna()
         return [ f"{u.fq1}", f"{u.fq2}" ]
 
+# Check if FASTQ files are gzipped
 def ends_with_gz(samp_tab):
     fqs = samp_tab.loc[:, ['fq1']]
     if not pd.isnull(fqs.fq1).all():
@@ -200,7 +206,8 @@ def ends_with_gz(samp_tab):
     else:
         return False
 
-def get_multiqc_input(wildcards):
+# Get MultiQC input
+def get_multiqc_input(wildcards): 
     """Get multiqc input."""
     multiqc_input = []
     multiqc_input.extend(
@@ -222,17 +229,11 @@ def get_multiqc_input(wildcards):
         )
     return multiqc_input
 
-def get_phenos(wildcards):
+# Get phenotypes
+def get_phenos(wildcards): 
     """Get fastq files using samples sheet."""
     pheno_names = phenos.loc[(wildcards.pheno), ["pheno_path"]].dropna()
     return {"pheno_path": pheno_names.pheno_path}
-
-def get_input_path_for_generate_input_lists():
-    """Get input path of reads to create input lists."""
-    if config["settings"]["trimming"]["activate"]:
-        return "results/trimmed"
-    else:
-        return "results/reads"
 
 def get_plink_prefix():
     """Get prefix fopr the SNPs plink file."""
@@ -289,18 +290,25 @@ def get_target_output(wildcards):
     Get all requested inputs (target outputs) for rule all.
     """
 
-    align_kmers = config["settings"]["align_kmers"]["activate"]
-    align_reads_with_kmers = config["settings"]["align_reads_with_kmers"]["activate"]
-    assemble_reads_with_kmers = config["settings"]["assemble_reads"]["activate"]
-    blast_assembled_reads = config["settings"]["blast_contigs"]["activate"]
+    # Activate/Deactivate rules
+    align_kmers = config["settings"]["align_kmers"]["activate"] # Activate align kmers
+    align_reads_with_kmers = config["settings"]["align_reads_with_kmers"]["activate"] # Activate align reads with kmers
+    assemble_reads_with_kmers = config["settings"]["assemble_reads"]["activate"] # Activate assemble reads with kmers
+    blast_assembled_reads = config["settings"]["blast_contigs"]["activate"] # Activate BLAST assembled reads
+    convert_kmers_table_to_plink = config["settings"]["kmers_gwas"]["kmers_table_to_bed"]["activate"] # Activate convert kmers table to plink
 
-    target_output = []
+    target_output = [] # List of target outputs
 
+    ### Add target outputs for rule all ###
+    
+    # MultiQC
     target_output.extend(
         expand(
             "results/qc/multiqc.html"
         )
     ),
+
+    # KMC, k-mers stats
     target_output.extend(
         expand(
             [
@@ -313,11 +321,25 @@ def get_target_output(wildcards):
             ]
         )
     ),
+
+    # Combine and filter k-mers
     target_output.extend(
         expand(
             "results/plots/kmers_list/kmer_allele_counts.pdf"
         )
     ),
+
+    #  Convert the k-mers table to PLINK
+    if convert_kmers_table_to_plink: 
+        # If convert_kmers_table_to_plink is activated
+        target_output.extend(
+            expand(
+               "results/kmers_table/plink/pheno_{pheno}/convert_kmers_table_to_plink.done",
+                pheno= config["params"]["kmers_table_to_bed"]["phenos"]
+            )
+        ),
+
+    # kmersGWAS
     target_output.extend(
         expand(
             "results/kmers_gwas/{pheno}/kmers/pass_threshold_5per",
@@ -325,6 +347,7 @@ def get_target_output(wildcards):
         )
     ),
 
+    # Align k-mers
     if align_kmers:
         target_output.extend(
             expand(
@@ -332,6 +355,7 @@ def get_target_output(wildcards):
             )
         ),
     
+    # Align reads with k-mers
     if align_reads_with_kmers:
         target_output.extend(
             expand(
@@ -339,6 +363,7 @@ def get_target_output(wildcards):
             )
         ),
 
+    # Assemble reads with k-mers
     if assemble_reads_with_kmers:
         target_output.extend(
             expand(
@@ -346,6 +371,7 @@ def get_target_output(wildcards):
             )
         ),
 
+    # BLAST assembled reads
     if blast_assembled_reads:
         target_output.extend(
             expand(
@@ -353,6 +379,7 @@ def get_target_output(wildcards):
             )
         ),
 
+    # Return target outputs
     return target_output
 
 # =================================================================================================

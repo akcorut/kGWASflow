@@ -29,5 +29,44 @@ rule create_kmers_table:
         """
 
 # =================================================================================================
-#     TODO: Convert the k-mers table to PLINK binary file
+#     Convert the k-mers table to PLINK binary file
+# =================================================================================================
+
+rule convert_kmers_table_to_plink:
+    input:
+        kmers_table = "results/kmers_table/kmers_table.table",
+        phenotype = lambda wildcards: phenos.loc[(wildcards.pheno), ["pheno_path"]],
+        kmersGWAS_bin = rules.extract_kmersGWAS.output.kmersGWAS_bin,
+    output:
+        bed = "results/kmers_table/plink/pheno_{pheno}/kmers_table.presence_absence.0.bed",
+        done = touch("results/kmers_table/plink/pheno_{pheno}/convert_kmers_table_to_plink.done"),
+    params:
+        input_prefix = lambda w, input: os.path.splitext(input.kmers_table)[0],
+        output_prefix = lambda w, output: os.path.splitext(output.bed)[0].rsplit(".", 1)[0],
+        kmer_len = config["params"]["kmers_table_to_bed"]["kmer_len"],
+        max_num_var = config["params"]["kmers_table_to_bed"]["max_num_var"],
+        mac = config["params"]["kmers_table_to_bed"]["minor_allele_count"],
+        maf = config["params"]["kmers_table_to_bed"]["minor_allele_freq"],
+        only_unique = "-u" if config["params"]["kmers_table_to_bed"]["only_unique"] else "",
+    conda:
+        "../envs/kmers_gwas.yaml"
+    log:
+        "logs/create_kmers_table/convert_kmers_table_to_plink.pheno_{pheno}.log"
+    message:
+        "Converting the k-mers table to PLINK binary file..."
+    shell:
+        """
+        export LD_LIBRARY_PATH=$CONDA_PREFIX/lib
+        
+        {input.kmersGWAS_bin}/kmers_table_to_bed \
+        -t {params.input_prefix} \
+        -p {input.phenotype} \
+        -o {params.output_prefix} \
+        -k {params.kmer_len} \
+        --maf {params.maf} --mac {params.mac} \
+        -b {params.max_num_var} \
+        {params.only_unique} \
+        >>{log} 2>&1
+        """
+
 # =================================================================================================

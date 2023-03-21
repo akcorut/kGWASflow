@@ -37,10 +37,10 @@ settings:
   # ----------------------------------------------------------------------
 
   kmers_gwas:
-    # TODO Convert kmers table to PLINK 
-    # PLINK-conversion:
+    # Convert kmers table to PLINK .bed format
+    kmers_table_to_bed:
     # Set to true in order to convert k-mers table to PLINK format (.bed)
-    #   activate: false
+      activate: false
 
     use_kmers_kinship:
     # Set to true in order to use k-mers based kinship matrix
@@ -163,16 +163,42 @@ params:
     # counted. This parameter depends on the coverage, but should be
     # the same for all the individuals.
     count_thresh: 2
-
+    # Additional parameters for kmc
     extra: ""
 
   # ----------------------------------------------------------------------
-  #     merge_kmers
+  #     merge_kmers Params
   # ----------------------------------------------------------------------
   
   merge_kmers:
     # Number of threads for kmc
     threads: 8
+  
+  # ----------------------------------------------------------------------
+  #     convert_kmers_table_to_plink Params
+  # ----------------------------------------------------------------------
+
+  kmers_table_to_bed:
+    # Phenotypes to use (based on the phenos.tsv file)
+    # Only the individuals that exist in the given 
+    # phenotype file will be used
+    phenos: ["resistence"]
+    # Number of threads for kmers_table_to_bed
+    threads: 32
+    # k-mer length (should be between 15-31)
+    kmer_len: 31
+    # Minor allele count
+    # (Default is: 5)
+    minor_allele_count: 5
+    # Minor allele frequency 
+    # (Default is: 0.05)
+    minor_allele_freq: 0.05
+    # Maximal number of variants in each PLINK bed file
+    # Set by -b option
+    # Use a very large number if you want to avoid splitting
+    max_num_var: 10000000
+    # Set to true in order to keep only unique presence/absence patterns
+    only_unique: true 
 
   # ----------------------------------------------------------------------
   #     kmersGWAS Params
@@ -192,9 +218,6 @@ params:
     # Minor allele frequency 
     # (Default is: 0.05)
     minor_allele_freq: 0.05
-    
-    # Maximal number of variants in each PLINK bed file
-    max_num_var: 10000000
 
     # Number of k-mers to filter from first step 
     # (Default is: 10001)
