@@ -194,50 +194,68 @@ rule merge_kmers:
 #     Plot Useful Stats from k-mers Count
 # =================================================================================================
 
-rule kmers_stats:
+rule kmer_stats:
     input:
         kmc_all = expand("logs/count_kmers/kmc/{u.sample_name}/kmc_all.log", u=samples.itertuples()),
         kmc_canon = expand("logs/count_kmers/kmc/{u.sample_name}/kmc_canon.log", u=samples.itertuples()),
     output:
         kmc_canon_joint_plot = report(
-            "results/plots/kmers_count/kmc_canon_total_reads_vs_unique_kmers.joint_plot.pdf",
+            "results/plots/kmer_stats/kmc_canon.total_reads_vs_unique_kmers.joint_plot.pdf",
             caption="../report/plot_joint_kmc_canon.rst",
-            category="k-mers Count Stats",
+            category="k-mer Counts - Summary Statistics",
+            subcategory="Total Reads vs. Unique k-mers",
         ),
         kmc_all_joint_plot = report(
-            "results/plots/kmers_count/kmc_all_total_reads_vs_unique_kmers.joint_plot.pdf",
+            "results/plots/kmer_stats/kmc_all.total_reads_vs_unique_kmers.joint_plot.pdf",
             caption="../report/plot_joint_kmc_all.rst",
-            category="k-mers Count Stats",
+            category="k-mer Counts - Summary Statistics",
+            subcategory="Total Reads vs. Unique k-mers",
         ),
         kmc_canon_plot = report(
-            "results/plots/kmers_count/kmc_canon_total_reads_vs_unique_kmers.scatter_plot.pdf",
+            "results/plots/kmer_stats/kmc_canon.total_reads_vs_unique_kmers.scatter_plot.pdf",
             caption="../report/plot_scatter_kmc_canon.rst",
-            category="k-mers Count Stats",
+            category="k-mer Counts - Summary Statistics",
+            subcategory="Total Reads vs. Unique k-mers",
         ),
         kmc_all_plot = report(
-            "results/plots/kmers_count/kmc_all_total_reads_vs_unique_kmers.scatter_plot.pdf",
+            "results/plots/kmer_stats/kmc_all.total_reads_vs_unique_kmers.scatter_plot.pdf",
             caption="../report/plot_scatter_kmc_all.rst",
-            category="k-mers Count Stats",
+            category="k-mer Counts - Summary Statistics",
+            subcategory="Total Reads vs. Unique k-mers",
+        ),
+        kmc_all_kmer_dist_plot = report(
+            "results/plots/kmer_dist/kmc_all.kmer_dist_hist.pdf",
+            caption="../report/plot_kmer_dist_hist.rst",
+            category="k-mer Counts - Summary Statistics",
+            subcategory="k-mer Counts Distribution",
+        ),
+        kmc_canon_kmer_dist_plot = report(
+            "results/plots/kmer_dist/kmc_canon.kmer_dist_hist.pdf",
+            caption="../report/plot_kmer_dist_hist.rst",
+            category="k-mer Counts - Summary Statistics",
+            subcategory="k-mer Counts Distribution",
         ),
         kmc_canon_stats = report(
-            "results/tables/kmers_count/kmc_canon.stats.tsv",
+            "results/tables/kmer_stats/kmc_canon.kmer_stats.tsv",
             caption="../report/kmc_canon_count_stats.rst",
-            category="k-mers Count Stats",
+            category="k-mer Counts - Summary Statistics",
+            subcategory="Total Reads vs. Unique k-mers",
         ),
          kmc_all_stats = report(
-            "results/tables/kmers_count/kmc_all.stats.tsv",
+            "results/tables/kmer_stats/kmc_all.kmer_stats.tsv",
             caption="../report/kmc_all_count_stats.rst",
-            category="k-mers Count Stats",
+            category="k-mer Counts - Summary Statistics",
+            subcategory="Total Reads vs. Unique k-mers",
         )
     params:
         input_path= lambda w, input: os.path.dirname(os.path.dirname(input.kmc_canon[0]))
     log:
-        "logs/plots/kmers_stats/plot_kmers_stats.log"
+        "logs/plots/kmer_stats/plot_kmer_stats.log"
     conda:
-        "../envs/kmers_stats.yaml"
+        "../envs/kmer_stats.yaml"
     message:
         "Gathering useful stats from KMC runs and ploting the results..."
     script:
-        "../scripts/plot_kmers_stats.py"
+        "../scripts/plot_kmer_stats.py"
 
 # =================================================================================================
