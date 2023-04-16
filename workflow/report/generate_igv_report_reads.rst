@@ -1,0 +1,4 @@
+IGV report of the mapping results of source reads of associated k-mers. Source reads of trait-associated k-mers were mapped to the reference genome using bowtie2_. Mapping results were filtered based minimum mapping quality score of {{ snakemake.config["params"]["filter_alignment"]["min_map_score"] }}. Alignment BAM files were converted to BED format using `bedtools <https://bedtools.readthedocs.io/en/latest/>`_. BED files then merged using `bedtools merge <https://bedtools.readthedocs.io/en/latest/content/tools/merge.html>`_ with the parameters `-s -c 6 -o distinct`. IGV HTML report was generated using `igv-reports <https://github.com/igvteam/igv-reports>`_. IGV report consists of alignment BAM and BED files, the reference genome FASTA and the reference gene annotations in GTF/GFF3.
+
+.. _bowtie: https://bowtie-bio.sourceforge.net/index.shtml
+.. _bowtie2: https://bowtie-bio.sourceforge.net/bowtie2/index.shtml
