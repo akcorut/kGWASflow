@@ -4,11 +4,12 @@
 
 rule spades:
     input: 
-        R1= "results/fetch_reads_with_kmers/{phenos_filt}/reads_with_kmers_from_all_acc_sorted_R1.fastq",
-        R2= "results/fetch_reads_with_kmers/{phenos_filt}/reads_with_kmers_from_all_acc_sorted_R2.fastq"
+        R1= "results/fetch_reads_with_kmers/{phenos_filt}/merged_reads/{phenos_filt}_reads_with_kmers.merged.sorted.R1.fastq",
+        R2= "results/fetch_reads_with_kmers/{phenos_filt}/merged_reads/{phenos_filt}_reads_with_kmers.merged.sorted.R2.fastq"
     output:
         contigs= "results/assemble_reads_with_kmers/{phenos_filt}/assembly/contigs.fasta",
         graph= "results/assemble_reads_with_kmers/{phenos_filt}/assembly/assembly_graph_with_scaffolds.gfa",
+        done= touch("results/assemble_reads_with_kmers/{phenos_filt}/assembling_source_reads.done")
     conda:
         "../envs/assemble_reads.yaml"
     threads: 
