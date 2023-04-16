@@ -1,0 +1,11 @@
+name: kmers_stats
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - matplotlib=3.6.2
+  - numpy=1.23.3
+  - scipy=1.9.3
+  - pandas=1.4.4
+  - seaborn=0.12.1
