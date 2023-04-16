@@ -12,7 +12,9 @@ phenotypes: ../config/phenos.tsv
 ref:
   # !!! Reference genome in Fasta format required for the alignment step !!!
   # Path to the fasta file of the reference genome
-  fasta:
+  fasta: ""
+  # Path to the annotation file of the reference genome
+  annotation: ""
   
 # =================================================================================================
 #     Workflow Settings
@@ -62,7 +64,7 @@ settings:
   align_kmers:
   # Set to true in order to align k-mers
   # to the reference genome
-    activate: true
+    activate: false
     # Choose an aligner between bowtie and bowtie2
     # to align significant k-mers to the reference genome
     ## ! Choose only one aligner !
@@ -77,16 +79,19 @@ settings:
   # Set to true in order to align reads
   # with k-mers to the reference genome
     activate: true
+    # Set to true in order to generate IGV report
+    igv_report: true 
 
   assemble_reads:
   # Set to true in order to assemble and
   # align reads with k-mers to the reference genome
     activate: true
+    # Set to true in order to generate IGV report
+    igv_report: true
 
   blast_contigs:
   # Set to true in order to BLAST contigs
     activate: false
-
 
 # =================================================================================================
 #     Resoruces
@@ -181,10 +186,11 @@ params:
   kmers_table_to_bed:
     # Phenotypes to use (based on the phenos.tsv file)
     # Only the individuals that exist in the given 
+    
     # phenotype file will be used
-    phenos: ["resistence"]
+    phenos: [""]
     # Number of threads for kmers_table_to_bed
-    threads: 32
+    threads: 8
     # k-mer length (should be between 15-31)
     kmer_len: 31
     # Minor allele count
@@ -302,6 +308,14 @@ params:
     threads: 8    
 
   # ----------------------------------------------------------------------
+  #     bedtools Params
+  # ----------------------------------------------------------------------
+  
+  bedtools:
+    # Number of threads to use
+    threads: 8  
+
+  # ----------------------------------------------------------------------
   #     filter_alignment Params
   # ----------------------------------------------------------------------
 
@@ -328,6 +342,16 @@ params:
     threads: 8
 
   # ----------------------------------------------------------------------
+  #     igv_report Params
+  # ----------------------------------------------------------------------
+
+  igv_report:
+    # Number of threads to use
+    threads: 8
+    # Extra parameters for IGV-report
+    extra: ""
+
+  # ----------------------------------------------------------------------
   #     BLAST Params
   # ----------------------------------------------------------------------
 
@@ -338,5 +362,3 @@ params:
     format: "6 qseqid qstart qend evalue"
     # Extra parameters if needed
     extra: ""
-  
-    
