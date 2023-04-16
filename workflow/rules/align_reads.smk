@@ -6,10 +6,11 @@
 
 rule merge_reads:
     input:
-        dir= rules.fetch_source_reads.output,
+        dir= "results/fetch_reads_with_kmers/{phenos_filt}/individual_reads",
     output:
-        merged_r1 = temp("results/fetch_reads_with_kmers/{phenos_filt}/reads_with_kmers_from_all_acc_R1.fastq"),
-        merged_r2 = temp("results/fetch_reads_with_kmers/{phenos_filt}/reads_with_kmers_from_all_acc_R2.fastq")
+        merged_r1 = temp("results/fetch_reads_with_kmers/{phenos_filt}/merged_reads/{phenos_filt}_reads_with_kmers.merged.R1.fastq"),
+        merged_r2 = temp("results/fetch_reads_with_kmers/{phenos_filt}/merged_reads/{phenos_filt}_reads_with_kmers.merged.R2.fastq"),
+        done= touch("results/fetch_reads_with_kmers/{phenos_filt}/merged_reads/{phenos_filt}.merging_source_reads.done")
     log:
         "logs/align_reads/{phenos_filt}/merge_reads.log"
     shell:
@@ -28,11 +29,12 @@ rule merge_reads:
 
 rule sort_reads:
     input:
-        r1 = "results/fetch_reads_with_kmers/{phenos_filt}/reads_with_kmers_from_all_acc_R1.fastq",
-        r2 = "results/fetch_reads_with_kmers/{phenos_filt}/reads_with_kmers_from_all_acc_R2.fastq"
+        r1 = "results/fetch_reads_with_kmers/{phenos_filt}/merged_reads/{phenos_filt}_reads_with_kmers.merged.R1.fastq",
+        r2 = "results/fetch_reads_with_kmers/{phenos_filt}/merged_reads/{phenos_filt}_reads_with_kmers.merged.R2.fastq"
     output:
-        sorted_r1 = "results/fetch_reads_with_kmers/{phenos_filt}/reads_with_kmers_from_all_acc_sorted_R1.fastq",
-        sorted_r2 = "results/fetch_reads_with_kmers/{phenos_filt}/reads_with_kmers_from_all_acc_sorted_R2.fastq"
+        sorted_r1 = "results/fetch_reads_with_kmers/{phenos_filt}/merged_reads/{phenos_filt}_reads_with_kmers.merged.sorted.R1.fastq",
+        sorted_r2 = "results/fetch_reads_with_kmers/{phenos_filt}/merged_reads/{phenos_filt}_reads_with_kmers.merged.sorted.R2.fastq",
+        done = touch("results/fetch_reads_with_kmers/{phenos_filt}/merged_reads/{phenos_filt}.sorting_merged_source_reads.done")
     conda:
         "../envs/align_reads.yaml"
     log:
@@ -51,8 +53,8 @@ rule sort_reads:
 
 rule align_reads:
     input:
-        r1= "results/fetch_reads_with_kmers/{phenos_filt}/reads_with_kmers_from_all_acc_sorted_R1.fastq",
-        r2= "results/fetch_reads_with_kmers/{phenos_filt}/reads_with_kmers_from_all_acc_sorted_R2.fastq",
+        r1= "results/fetch_reads_with_kmers/{phenos_filt}/merged_reads/{phenos_filt}_reads_with_kmers.merged.sorted.R1.fastq",
+        r2= "results/fetch_reads_with_kmers/{phenos_filt}/merged_reads/{phenos_filt}_reads_with_kmers.merged.sorted.R2.fastq",
         index = rules.bowtie2_build.output,
         fetch_source_reads = "results/fetch_reads_with_kmers/fetch_source_reads.done",
     output:
@@ -79,9 +81,9 @@ rule align_reads:
 
 rule filter_alignment:
     input:
-        sam= "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.sam",
+        sam = "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.sam",
     output:
-        "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sam",
+        filtered_sam = "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sam",
     params:
         min_mapping_score= config["params"]["filter_alignment"]["min_map_score"]
     log:
@@ -90,7 +92,7 @@ rule filter_alignment:
         "Filtering alignment results based on mapping quality..."
     shell:
         """
-        awk -v s={params.min_mapping_score} '$5 > s || $1 ~ /^@/' {input} > {output} 2> {log}
+        awk -v s={params.min_mapping_score} '$5 > s || $1 ~ /^@/' {input.sam} > {output.filtered_sam} 2> {log}
         """
 
 # =======================================================================================================
@@ -99,9 +101,9 @@ rule filter_alignment:
 
 rule align_reads_sam_to_bam:
     input:
-        "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sam"
+        sam = "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sam"
     output:
-        temp("results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.bam")
+        bam = temp("results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.bam")
     conda:
         "../envs/align_reads.yaml"
     threads:
@@ -112,7 +114,7 @@ rule align_reads_sam_to_bam:
         "Converting SAM files to BAM..."
     shell:
         """
-        samtools view -@ {threads} -Sbh {input} > {output} 2> {log}
+        samtools view -@ {threads} -Sbh {input.sam} > {output.bam} 2> {log}
         """
 
 # =======================================================================================================
@@ -121,9 +123,10 @@ rule align_reads_sam_to_bam:
 
 rule align_reads_bam_sort:
     input:
-        "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.bam"
+        bam = "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.bam"
     output:
-        "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sorted.bam"
+        sorted_bam = "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sorted.bam",
+        bam_sort_done = touch("results/align_reads_with_kmers/{phenos_filt}/bam_sort.done")
     conda:
         "../envs/align_reads.yaml"
     threads:
@@ -134,7 +137,7 @@ rule align_reads_bam_sort:
         "Sorting alignment BAM files..."
     shell:
         """
-        samtools sort -@ {threads} {input} -o {output} 2> {log}
+        samtools sort -@ {threads} {input.bam} -o {output.sorted_bam} 2> {log}
         """
 
 # =======================================================================================================
@@ -143,9 +146,11 @@ rule align_reads_bam_sort:
 
 rule align_reads_bam_index:
     input:
-        "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sorted.bam"
+        bam = "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sorted.bam",
+        bam_sort_done = "results/align_reads_with_kmers/{phenos_filt}/bam_sort.done"
     output:
-        "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sorted.bam.bai"
+        bai = "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sorted.bam.bai",
+        bam_index_done = touch("results/align_reads_with_kmers/{phenos_filt}/bam_index.done")
     conda:
         "../envs/align_reads.yaml"
     threads:
@@ -156,7 +161,77 @@ rule align_reads_bam_index:
         "Indexing alignment BAM files..."
     shell:
         """
-        samtools index -@ {threads} {input} 2> {log}
+        samtools index -@ {threads} {input.bam} 2> {log}
+        """
+
+# =======================================================================================================
+#     Convert alignment BAM files to BED format
+# =======================================================================================================
+
+rule align_reads_bam_to_bed:
+    input:
+        bam = "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sorted.bam",
+        bai = "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sorted.bam.bai",
+        bam_index_done = "results/align_reads_with_kmers/{phenos_filt}/bam_index.done"
+    output:
+        bed = "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sorted.bed",
+        bam_to_bed_done = touch("results/align_reads_with_kmers/{phenos_filt}/bam_to_bed.done")
+    conda:
+        "../envs/bedtools.yaml"
+    threads:
+        config["params"]["samtools"]["threads"]
+    log:
+        "logs/align_reads/{phenos_filt}/align_reads.bam_to_bed.log"
+    message:
+        "Converting alignment BAM files to BED format..."
+    shell:
+        """
+        bedtools bamtobed -i {input.bam} > {output.bed} 2> {log}
+        """
+
+# =======================================================================================================
+#     Merge overlapping features in alignment BED files
+# =======================================================================================================
+
+rule merge_align_reads_bed:
+    input:
+        bed = "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sorted.bed",
+        bam_to_bed_done = "results/align_reads_with_kmers/{phenos_filt}/bam_to_bed.done"
+    output:
+        merged_bed = "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sorted.merged.bed",
+        merge_bed_done = touch("results/align_reads_with_kmers/{phenos_filt}/merge_bed.done")
+    conda:
+        "../envs/bedtools.yaml"
+    log:
+        "logs/align_reads/{phenos_filt}/align_reads.merge_bed.log"
+    message:
+        "Merging alignment BED files..."
+    shell:
+        """
+        bedtools merge -i {input.bed} -s -c 6 -o distinct > {output.merged_bed} 2> {log}
+        """
+
+# =======================================================================================================
+#     tabix BED files
+# =======================================================================================================
+
+rule tabix_align_reads_bed:
+    input:
+        bed = "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sorted.merged.bed",
+        merge_bed_done = "results/align_reads_with_kmers/{phenos_filt}/merge_bed.done"
+    output:
+        tbi = "results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sorted.merged.bed.gz.tbi",
+        tabix_bed_done = touch("results/align_reads_with_kmers/{phenos_filt}/tabix_bed.done")
+    conda:
+        "../envs/align_reads.yaml"
+    log:
+        "logs/align_reads/{phenos_filt}/align_reads.tabix_bed.log"
+    message:
+        "tabix BED files..."
+    shell:
+        """
+        sort -k1,1 -k2,2n {input.bed} | bgzip > {input.bed}.gz 2> {log}
+        tabix -p bed {input.bed}.gz 2> {log}
         """
 
 # =========================================================================================================
