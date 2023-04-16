@@ -4,14 +4,13 @@
 
 checkpoint fetch_significant_kmers:
     input:
-        kmers_gwas_res = expand(rules.run_kmers_gwas.output, pheno= pheno_names),
-        res_tab = rules.generate_results_table.output.res_tab_5per,
+        kmers_gwas_res = expand("results/kmers_gwas/{pheno}/kmers/pass_threshold_5per", pheno = pheno_names),
+        res_sum = expand("results/tables/kmers_gwas_summary/{pheno}/generate_results_summary.done", pheno = pheno_names),
     output:
-        directory("results/fetch_kmers/")
+        dir = directory("results/fetch_kmers"),
     params:
-        in_prefix = lambda w, input: os.path.dirname(os.path.dirname(os.path.dirname(input.kmers_gwas_res[0]))), 
+        in_prefix = lambda w, input: os.path.dirname(os.path.dirname(input.kmers_gwas_res[0])), 
         threshold = config["params"]["fetch_kmers"]["threshold"],
-        check_file_prefix = lambda w, input: os.path.dirname(input.res_tab)
     log:
         "logs/fetch_kmers/fetch_significant_kmers.log"
     message:
