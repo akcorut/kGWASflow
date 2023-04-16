@@ -107,6 +107,29 @@ rule align_contigs_bam_index:
         samtools index -@ {threads} {input} 2> {log}
         """
 
+# =======================================================================================================
+#     Convert alignment BAM files to BED format
+# =======================================================================================================
+
+rule align_contigs_bam_to_bed:
+    input:
+        bam="results/align_contigs/{phenos_filt}/alignment/{phenos_filt}_contigs_aligned.filter.sorted.bam",
+        bai="results/align_contigs/{phenos_filt}/alignment/{phenos_filt}_contigs_aligned.filter.sorted.bam.bai"
+    output:
+        "results/align_contigs/{phenos_filt}/alignment/{phenos_filt}_contigs_aligned.filter.sorted.bed"
+    conda:
+        "../envs/bedtools.yaml"
+    threads:
+        config["params"]["bedtools"]["threads"]
+    log:
+        "logs/align_contigs/{phenos_filt}/align_contigs.bam_to_bed.log"
+    message:
+        "Converting alignment BAM files to BED..."
+    shell:
+        """
+        bedtools bamtobed -i {input.bam} > {output} 2> {log}
+        """
+
 # =========================================================================================================
 #     Aggregate align_contigs outputs
 # =========================================================================================================
