@@ -1,12 +1,16 @@
 # import pandas and qmplot functions
 import csv
 import os, glob, shutil
+import re
+import sys
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from qmplot import manhattanplot
 import natsort
+from natsort import natsorted
 import seaborn as sns
+import pysam
 
 if __name__ == "__main__":
 
@@ -37,9 +41,38 @@ if __name__ == "__main__":
       ## Get min & max minus log10 p-values for y axis limits
       y_max = align_kmers_sam_sorted['minuslog10pvalue'].max()
       y_min = align_kmers_sam_sorted['minuslog10pvalue'].min()
-
+      print("y_max: " + str(y_max))
+      print("y_min: " + str(y_min))
       ## Check if only one chromosome is provided for the manhattan plot
       num_of_chrs = len(pd.unique(align_kmers_sam_sorted['chr']))
+      
+      # Define a function to extract chromosome names and lengths from a SAM file header
+      def extract_chromosome_info(sam_file):
+        """
+        Extract chromosome names and lengths from a SAM file header and return as a Pandas DataFrame with columns "chr" and "bp".
+        """
+        chromosome_info = {} # dictionary to store chromosome names and lengths
+        pattern = re.compile(r'^([Cc][Hh][Rr])?\d*[XYM]?$') # chromosome names pattern
+        
+        with pysam.AlignmentFile(sam_file, "r") as sam: # open SAM file
+            for header_line in sam.header["SQ"]: # iterate over SQ header lines
+                chromosome_name = header_line["SN"] # get chromosome name
+                length = header_line["LN"] # get chromosome length
+                if chromosome_name.startswith("chr"): # if chromosome name starts with "chr"
+                    name = chromosome_name # use name as is
+                else: # if chromosome name does not start with "chr"
+                    match = pattern.match(chromosome_name) # 
+                    if match: # if chromosome name matches pattern
+                        # Convert name to "chrX" format
+                        name = "chr" + match.group(1)
+                    else: # if chromosome name does not match pattern
+                        continue # skip chromosome
+                chromosome_info[name] = length # add chromosome name and length to dictionary
+                    
+        # Convert dictionary to DataFrame
+        df = pd.DataFrame(chromosome_info.items(), columns=["chr", "bp"])
+        
+        return df # return the DataFrame
       
       # Plotting the manhattan plot
       print("Plotting...")
@@ -68,8 +101,25 @@ if __name__ == "__main__":
       
       ## If more than one chromosome is provided, use all chromosomes
       if num_of_chrs > 1:
+
+        # Extract chromosome names and lengths from the SAM file header
+        chrom_info_tab = extract_chromosome_info(snakemake.input[0])
+        chrom_names = natsorted(chrom_info_tab['chr'].tolist())
+
+        # Add extra chromosome names and lengths to the data frame
+        align_kmers_sam_with_all_chrom = pd.concat([align_kmers_sam, chrom_info_tab], ignore_index=True)
+        align_kmers_sam_with_all_chrom = align_kmers_sam_with_all_chrom[align_kmers_sam_with_all_chrom['chr'].isin(chrom_names)]
+        
+        # Sort the data by chromosome and chromosome position
+        align_kmers_sam_with_all_chrom_sorted = align_kmers_sam_with_all_chrom.sort_values(by=["chr", "bp"], key=natsort.natsort_keygen()) 
+        # Fill NaN values with 1
+        align_kmers_sam_with_all_chrom_sorted['p_value'] = align_kmers_sam_with_all_chrom_sorted['p_value'].fillna(1) 
+
+        # Plot the dots of chromosome length rows wiht the lowest opacity 
+        extra_rows = align_kmers_sam_with_all_chrom_sorted[align_kmers_sam_with_all_chrom_sorted['p_value'] == 1]
+
         f, ax = plt.subplots(figsize=(18, 9), facecolor='w', edgecolor='k')
-        manhattanplot(data=align_kmers_sam_sorted,
+        manhattanplot(data=align_kmers_sam_with_all_chrom_sorted,
                       snp="kmer_id",
                       chrom="chr",
                       color=colors,
@@ -80,12 +130,30 @@ if __name__ == "__main__":
                       xticklabel_kws={"rotation": "vertical"},
                       ax=ax,
                       s = snakemake.params["point_size"],
-                      clip_on=False)
-        ax.set_ylim([y_min-5, y_max+5]) # Set y axis limits
-        f.suptitle('k-mer Based GWAS Manhattan Plot for ' + snakemake.params["pheno"], fontsize=22)
-        plt.xlabel('Chromosome', fontsize=18)
-        plt.ylabel(r"$-log_{10}{(P)}$", fontsize=18) 
-        plt.tight_layout()
+                      clip_on=True)
+        ax.set_ylim([y_min-3, y_max+1]) # Set y axis limits
+        plt.scatter(extra_rows['bp'], -np.log10(extra_rows['p_value']), alpha=0)
+        
+        # Calculate the cumulative distances from the start of each chromosome and store them in a list
+        chrom_ends = chrom_info_tab['bp'].cumsum().tolist()
+
+        # Plot the vertical lines for the end of each chromosome
+        for end_position in chrom_ends:
+          plt.axvline(x=end_position, color='grey', linestyle='--', alpha=0.2)
+          
+        # Add a caption to the right bottom corner of the outside of the plot
+        caption = '*Vertical dashed lines indicate chromosome boundaries.'
+        ax.text(1.0, -0.1, caption, transform=ax.transAxes, ha='right', va='bottom')
+        
+        # Set the title of the plot
+        f.suptitle('k-mer Based GWAS Manhattan Plot for ' + snakemake.params["pheno"], fontsize=22) 
+        
+        # Set the x and y axis labels
+        plt.xlabel('Chromosome', fontsize=18) # Set the x axis label
+        plt.ylabel(r"$-log_{10}{(P)}$", fontsize=18) # Set the y axis label
+        
+        # Adjust the plot layout
+        plt.tight_layout() 
       
       ## Saving the plot as pdf
       print("Plotting is done. Saving the plot...")
