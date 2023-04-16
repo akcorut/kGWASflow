@@ -237,9 +237,32 @@ def get_phenos(wildcards):
 
 def get_plink_prefix():
     """Get prefix fopr the SNPs plink file."""
-    plink_path = config["settings"]["kmers_gwas"]["use_snps_kinship"]["snps_plink"]
-    plink_prefix = os.path.splitext(plink_path)[0]
-    return plink_prefix
+    # if plink file is not provided exit and print error message
+    if config["settings"]["kmers_gwas"]["use_snps_kinship"]["snps_plink"] == "":
+        print("Please provide a PLINK file in the config file.")
+        sys.exit(1)
+    else:
+        plink_path = config["settings"]["kmers_gwas"]["use_snps_kinship"]["snps_plink"]
+        plink_prefix = os.path.splitext(plink_path)[0]
+        return plink_prefix
+
+def get_referece_genome():
+    """Get reference genome."""
+    # if reference genome is not provided exit and print error message
+    if config["ref"]["fasta"] == "":
+        print("Please provide a reference genome FASTA file in the config file.")
+        sys.exit(1)
+    else:
+        return config["ref"]["fasta"]
+
+def get_genome_annotation():
+    """Get genome annotation."""
+    # if genome annotation is not provided exit and print error message
+    if config["ref"]["annotation"] == "":
+        print("Please provide a genome annotation GTF/GFF file in the config file.")
+        sys.exit(1)
+    else:
+        return config["ref"]["annotation"]
 
 # ================= Checkpoint Fucntions ================= #
 
@@ -250,35 +273,40 @@ def aggregate_input_filter_kmers(wildcards):
 
 def aggregate_input_fetch_reads(wildcards):
     checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
-    return expand("results/fetch_reads_with_kmers/{phenos_filt}",
-           phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
-
-def aggregate_input_align_contigs(wildcards):
-    checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
-    return expand("results/align_contigs/{phenos_filt}/alignment/{phenos_filt}_contigs_aligned.filter.sorted.bam.bai",
+    return expand("results/fetch_reads_with_kmers/{phenos_filt}/individual_reads",
            phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
 
 def aggregate_input_align_kmers(wildcards):
     checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
-    if not config["settings"]["align_kmers"]["plot_manhattan"]:
-        return expand("results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sorted.bam.bai",
-               phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
-    else:
-        return expand(
-                   [
-                        "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sorted.bam.bai",
-                        "results/plots/manhattan/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.manhattan_plot.pdf",
-                   ], phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt
-                    )
+    return expand([
+        "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sorted.bam.bai",
+        "results/plots/manhattan/align_kmers/{phenos_filt}/{phenos_filt}.kmers_alignment.manhattan_plot.pdf",
+    ], phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
 
 def aggregate_input_align_reads(wildcards):
     checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
-    return expand("results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sorted.bam.bai",
+    return expand("results/align_reads_with_kmers/{phenos_filt}/{phenos_filt}.align_reads_with_kmers.filter.sorted.merged.bed",
            phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
+
+def aggregate_input_align_contigs(wildcards):
+    checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
+    return expand([
+        "results/align_contigs/{phenos_filt}/alignment/{phenos_filt}_contigs_aligned.filter.sorted.bed",
+    ], phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
 
 def aggregate_input_blast_contigs(wildcards):
     checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
     return expand("results/blast_contigs/{phenos_filt}/{phenos_filt}_contigs.blast.txt",
+           phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
+
+def aggregate_input_align_contigs_igv_report(wildcards):
+    checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
+    return expand("results/igv_reports/align_contigs/{phenos_filt}/{phenos_filt}_contigs_aligned.igv-report.html",
+           phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
+
+def aggregate_input_align_reads_igv_report(wildcards):
+    checkpoint_output = checkpoints.fetch_significant_kmers.get(**wildcards).output[0]
+    return expand("results/igv_reports/align_reads/{phenos_filt}/{phenos_filt}_reads_aligned.igv-report.html",
            phenos_filt=glob_wildcards(os.path.join(checkpoint_output, "{phenos_filt}_kmers_list.txt")).phenos_filt)
 
 # =================================================================================================
@@ -296,6 +324,8 @@ def get_target_output(wildcards):
     assemble_reads_with_kmers = config["settings"]["assemble_reads"]["activate"] # Activate assemble reads with kmers
     blast_assembled_reads = config["settings"]["blast_contigs"]["activate"] # Activate BLAST assembled reads
     convert_kmers_table_to_plink = config["settings"]["kmers_gwas"]["kmers_table_to_bed"]["activate"] # Activate convert kmers table to plink
+    align_contigs_igv_report = config["settings"]["assemble_reads"]["igv_report"] # Activate align contigs IGV report
+    align_reads_igv_report = config["settings"]["align_reads_with_kmers"]["igv_report"] # Activate align reads IGV report
 
     target_output = [] # List of target outputs
 
@@ -312,12 +342,14 @@ def get_target_output(wildcards):
     target_output.extend(
         expand(
             [
-                "results/plots/kmers_count/kmc_canon_total_reads_vs_unique_kmers.joint_plot.pdf",
-                "results/plots/kmers_count/kmc_all_total_reads_vs_unique_kmers.joint_plot.pdf",
-                "results/plots/kmers_count/kmc_canon_total_reads_vs_unique_kmers.scatter_plot.pdf",
-                "results/plots/kmers_count/kmc_all_total_reads_vs_unique_kmers.scatter_plot.pdf",
-                "results/tables/kmers_count/kmc_canon.stats.tsv",
-                "results/tables/kmers_count/kmc_all.stats.tsv"
+                "results/plots/kmer_stats/kmc_canon.total_reads_vs_unique_kmers.joint_plot.pdf",
+                "results/plots/kmer_stats/kmc_all.total_reads_vs_unique_kmers.joint_plot.pdf",
+                "results/plots/kmer_stats/kmc_canon.total_reads_vs_unique_kmers.scatter_plot.pdf",
+                "results/plots/kmer_stats/kmc_all.total_reads_vs_unique_kmers.scatter_plot.pdf",
+                "results/plots/kmer_dist/kmc_canon.kmer_dist_hist.pdf",
+                "results/plots/kmer_dist/kmc_all.kmer_dist_hist.pdf",
+                "results/tables/kmer_stats/kmc_canon.kmer_stats.tsv",
+                "results/tables/kmer_stats/kmc_all.kmer_stats.tsv"
             ]
         )
     ),
@@ -325,7 +357,7 @@ def get_target_output(wildcards):
     # Combine and filter k-mers
     target_output.extend(
         expand(
-            "results/plots/kmers_list/kmer_allele_counts.pdf"
+            "results/plots/kmer_allele_counts/kmer_allele_counts.barplot.pdf",
         )
     ),
 
@@ -347,6 +379,14 @@ def get_target_output(wildcards):
         )
     ),
 
+    # kmersGWAS results summary
+    target_output.extend(
+        expand(
+            "results/tables/kmers_gwas_summary/{pheno}/generate_results_summary.done",
+            pheno= pheno_names
+        )
+    ),
+
     # Align k-mers
     if align_kmers:
         target_output.extend(
@@ -354,7 +394,7 @@ def get_target_output(wildcards):
                 "results/align_kmers/align_kmers.done"
             )
         ),
-    
+        
     # Align reads with k-mers
     if align_reads_with_kmers:
         target_output.extend(
@@ -363,11 +403,27 @@ def get_target_output(wildcards):
             )
         ),
 
-    # Assemble reads with k-mers
+    # Assemble reads with k-mers and align contigs
     if assemble_reads_with_kmers:
         target_output.extend(
             expand(
                 "results/align_contigs/align_contigs.done"
+            )
+        ),
+    
+    # IGV report for aligned contigs
+    if assemble_reads_with_kmers and align_contigs_igv_report:
+        target_output.extend(
+            expand(
+                "results/igv_reports/align_contigs.igv_report.done"
+            )
+        ),
+    
+    # IGV report for aligned reads
+    if align_reads_with_kmers and align_reads_igv_report:
+        target_output.extend(
+            expand(
+                "results/igv_reports/align_reads.igv_report.done"
             )
         ),
 
