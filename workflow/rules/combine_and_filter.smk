@@ -61,16 +61,17 @@ rule plot_kmer_allele_counts:
         shareness = rules.combine_and_filter.output.shareness
     output:
         kmer_allele_counts_plot = report(
-            "results/plots/kmers_list/kmer_allele_counts.pdf",
+            "results/plots/kmer_allele_counts/kmer_allele_counts.barplot.pdf",
             caption="../report/plot_kmer_allele_counts.rst",
-            category="k-mers Count Stats",
+            category="k-mer Counts - Summary Statistics",
+            subcategory="k-mer Allele Counts",
         )
     conda:
-        "../envs/kmers_stats.yaml"
+        "../envs/kmer_stats.yaml"
     message:
         "Plotting the k-mer allele counts..."
     log:
-        "logs/plots/kmers_list/plot_kmer_allele_counts.log"
+        "logs/plots/kmer_allele_counts/plot_kmer_allele_counts.log"
     script:
         "../scripts/plot_kmer_allele_counts.py"
 
