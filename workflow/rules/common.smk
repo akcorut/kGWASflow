@@ -120,7 +120,7 @@ logger.info("     * Voichek, Y., Weigel, D. Identifying genetic variants underly
 logger.info("     phenotypic variation in plants without complete genomes.                         ")
 logger.info("     Nat Genet 52, 534–540 (2020). https://doi.org/10.1038/s41588-020-0612-7          ")
 logger.info("")
-logger.info("     * Kivanc Corut. akcorut/kGWASflow: v1.1.0. (2023). ")
+logger.info("     * Kivanc Corut. akcorut/kGWASflow: v1.2.0. (2023). ")
 logger.info("     https://doi.org/10.5281/zenodo.7574506                                       ")
 logger.info("")
 logger.info("# ================================================================================== #")
