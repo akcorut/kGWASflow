@@ -48,10 +48,10 @@ if not config["settings"]["trimming"]["activate"]:
                             sample=sample_names,
                             library=library_names),
         output:
-            dir = directory("results/fetch_reads_with_kmers/{phenos_filt}"),
+            out_dir = directory("results/fetch_reads_with_kmers/{phenos_filt}/individual_reads"),
+            done = touch("results/fetch_reads_with_kmers/{phenos_filt}/individual_reads/{phenos_filt}.fetching_source_reads.done")
         params:
             kmers_list_prefix = lambda w, input: os.path.dirname(input.kmers_list),
-            out_prefix = lambda w, output: os.path.dirname(output[0]),
             samples= sample_names,
             library= library_names,
             pheno = "{phenos_filt}",
@@ -79,10 +79,10 @@ if config["settings"]["trimming"]["activate"]:
                             sample=sample_names,
                             library=library_names),
         output:
-            dir = directory("results/fetch_reads_with_kmers/{phenos_filt}"),
+            out_dir = directory("results/fetch_reads_with_kmers/{phenos_filt}/individual_reads"),
+            done = touch("results/fetch_reads_with_kmers/{phenos_filt}/individual_reads/{phenos_filt}.fetching_source_reads.done")
         params:
             kmers_list_prefix = lambda w, input: os.path.dirname(input.kmers_list),
-            out_prefix = lambda w, output: os.path.dirname(output[0]),
             samples= sample_names,
             library= library_names,
             pheno = "{phenos_filt}",
