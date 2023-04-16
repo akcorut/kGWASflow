@@ -4,7 +4,7 @@
 
 rule genome_symlink:
     input:
-        reference = config["ref"]["fasta"]
+        reference = get_referece_genome()
     output:
         "resources/ref/genome/genome.fasta",
     log:
@@ -15,6 +15,28 @@ rule genome_symlink:
     shell:
         """
         ln -rs {input.reference} {output} 2> {log}
+        """
+
+# =======================================================================================================
+#    Creating index for reference genome fasta
+# =======================================================================================================
+
+rule genome_index:
+    input:
+        reference = "resources/ref/genome/genome.fasta",
+    output:
+        "resources/ref/genome/genome.fasta.fai",
+    log:
+        "logs/ref/genome_index/genome_index.log"
+    conda:
+        "../envs/align_kmers.yaml"
+    message:
+        "Creating index for reference genome fasta..."
+    threads: 
+        config["params"]["samtools"]["threads"]
+    shell:
+        """
+        samtools faidx {input.reference} 2> {log}
         """
 
 # =======================================================================================================
@@ -38,7 +60,7 @@ rule bowtie2_build:
     message:
         "Creating bowtie2 index of the reference genome..."
     wrapper:
-        "0.80.0/bio/bowtie2/build"
+        "v1.25.0/bio/bowtie2/build"
 
 # =======================================================================================================
 #    Creating bowtie index of the reference genome fasta
@@ -97,3 +119,5 @@ rule sra_get_fastq_se:
         "logs/ref/sra-pe-reads/{accession}.log"
     wrapper:
         "v1.23.5/bio/sra-tools/fasterq-dump"
+
+# =======================================================================================================
