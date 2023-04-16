@@ -30,6 +30,7 @@ workflow/*.out
 workflow/report.html
 workflow/kGWASflow-report.html
 workflow/*.sh
+!kGWASflow.py
 !environment.yaml
 !.test
 !.test/config_ecoli
