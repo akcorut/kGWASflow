@@ -126,9 +126,10 @@ rule plot_manhattan:
         "results/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.sam"
     output:
         manhattan_plot = report(
-            "results/plots/manhattan/align_kmers/{phenos_filt}/{phenos_filt}_kmers_alignment.manhattan_plot.pdf",
+            "results/plots/manhattan/align_kmers/{phenos_filt}/{phenos_filt}.kmers_alignment.manhattan_plot.pdf",
             caption="../report/plot_manhattan.rst",
-            category="k-mers GWAS Results",
+            category="k-mers GWAS Results - Manhattan Plots",
+            subcategory="{phenos_filt}"
         )
     params:
         pheno= "{phenos_filt}",
