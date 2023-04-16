@@ -12,4 +12,5 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         id: release
         with:
+          tag: v1.1.0
           release-type: simple
