@@ -4,98 +4,103 @@ import pandas as pd
 import numpy as np
 import sys
 
-# logging
+# Logging
 with open(snakemake.log[0], "w") as f:
     sys.stderr = sys.stdout = f
 
     ## Set float presicion for the p-values
     pd.set_option("display.precision", 8)
     
+    # Input directory path for kmersGWAS results
+    res_dir_path = os.path.dirname(snakemake.params.in_prefix)
+
     ## Set the threshold for k-mers GWAS results (%5 or %10 family-wise error rate)
     ## 5 is the default
     threshold = snakemake.params.threshold
     
-    ## Set input and output paths
-    kmers_gwas_dir = snakemake.params.in_prefix
-    outdir = snakemake.output[0]
-    check_file = snakemake.params.check_file_prefix + '/NO_KMERS_PASS_5PER_THRESHOLD_FOUND' 
+    # If threshold is not 5 or 10, print an error message and exit
+    if threshold != 5 and threshold != 10:
+        print("ERROR: threshold value must be 5 or 10. \nPlease enter a valid threshold (5 or 10). \nExiting...")
+        sys.exit(1)
     
-    if os.path.exists(check_file):
-        if not os.path.exists(outdir):
-            os.makedirs(outdir)
-        with open(outdir + '/NO_KMERS_PASS_5PER_THRESHOLD_FOUND' , 'w') as fp:
-            pass
-        print("No k-mers passing " + str(threshold) + " percent threshold were found in any of the phenotypes.")
-        print("Exiting.")
+    # Define the output directory
+    outdir = snakemake.output.dir
+    print("Output directory: " + outdir)
+    
+    # Define a function to fetch significant k-mers
+    def fetch_kmers(input_dir, pheno, out_dir, threshold):
+        """
+        Fetch significant k-mers for a given phenotype from the k-mers GWAS results.
+        """
+
+        kmers_pass_threshold = pd.read_csv(input_dir + '/' + pheno +  '/kmers/pass_threshold_{threshold}per'.
+                                           format(threshold=threshold),
+                               sep="\t") # read the k-mers that pass the threshold
         
-    else:
-        ## Get the phenotype names using k-mers GWAS results directory path
-        phenos=[]
-        for file in os.listdir(kmers_gwas_dir):
-            d = os.path.join(kmers_gwas_dir, file)
-            if os.path.isdir(d):
-                phenos.append(os.path.basename(d))
-    
-        # print(phenos) # For debugging only
-    
-        ## For each phenotype do the followings:
-        for pheno in phenos:
-        
-            ## Check the threshold and choose the k-mers GWAS result 
-            # based on the threshold (pass_threshold_5per or pass_threshold_10per)
-            if threshold == 5:
-                kmers_pass_threshold= pd.read_csv(kmers_gwas_dir + '/' + pheno + '/kmers/pass_threshold_5per',
-                                                  sep="\t")
-            else:
-                kmers_pass_threshold= pd.read_csv(kmers_gwas_dir + '/' + pheno + '/kmers/pass_threshold_10per',
-                                                  sep="\t")
-    
-            ## Check if any significant k-mers associated with given phenotype were found
-            if kmers_pass_threshold.empty:
-                pass
-                print("No k-mers passing " + str(threshold) + " percent threshold were found for the phenotype: " + pheno)
-                print("")
-    
-            else:
-                print("Signifincat k-mers passing " + str(threshold)  + " percent threshold were found for the phenotype: " + pheno)
-    
-                ## Get significant k-mers without k-mer number
-                kmers_pass_threshold['rs']= kmers_pass_threshold['rs'].apply(lambda x: x.split('_')[0])
-    
-                # print(kmers_pass_threshold) # For debugging only
-    
-                if not os.path.exists(outdir):
-                    os.makedirs(outdir)
-    
-                ## Write significant k-mers list in TEXT format 
-                print("Writing significant k-mers list in TEXT format...")
-                kmers_pass_threshold['rs'].to_csv(outdir + "/" + pheno + "_kmers_list.txt", 
-                                                 index=False, sep="\t", header=None)
-                print ("Done.")
-    
-                ## Make a new column with k-mer number and its p_value (e.g. kmer1_8.543334e-11)
-                kmers_pass_threshold['kmer_name']= 'kmer' + (kmers_pass_threshold.index+1).astype(str) + '_' + kmers_pass_threshold['p_lrt'].astype(str)
-    
-                # print(kmers_pass_threshold) # For debugging only
-    
-                ### Write significant k-mers list in FASTA format (based on: https://www.biostars.org/p/271977/)
-                ## Fasta file output
-                fileOutput = open(outdir + "/" + pheno + "_kmers_list.fa", "w")
-    
-                ## Seq count
-                count = 1
-    
-                ## Loop through each line in the input file
-                print("Writing significant k-mers list in FASTA format...")
-                for index, row in kmers_pass_threshold.iterrows():
+        if not os.path.exists(out_dir):
+                os.makedirs(out_dir) # create the output directory if it does not exist
                 
-                    #Output the header
-                    fileOutput.write(">" + row['kmer_name'] + "\n")
-                    fileOutput.write(row['rs'] + "\n")
+        if kmers_pass_threshold.empty: # if no k-mers pass the 5% threshold:
+            # create a file to indicate that no k-mers pass the 5% threshold
+            with open(out_dir + '/{pheno}_NO_KMERS_PASS_5PER_THRESHOLD_FOUND'.
+                      format(pheno=pheno), 'a'): 
+                print("No k-mers pass the {threshold}% threshold for the phenotype {pheno}.".
+                      format(threshold=threshold, pheno=pheno)) # print a message to the user and exit the script
+                pass
+            
+        else: # if k-mers pass thethreshold
+            
+        ## Get significant k-mers without k-mer number
+            kmers_pass_threshold['rs']= kmers_pass_threshold['rs'].apply(lambda x: x.split('_')[0])
     
-                    count = count + 1
-                print ("Done.")
-                print("")
+            # print(kmers_pass_threshold) # For debugging only
     
-                #Close the input and output file
-                fileOutput.close()
+            ## Write significant k-mers list in TEXT format 
+            print("Writing significant k-mers list in TEXT format...")
+            kmers_pass_threshold['rs'].to_csv(out_dir + "/" + pheno + "_kmers_list.txt", 
+                                             index=False, 
+                                             sep="\t", 
+                                             header=None) # write the k-mers list in a text file
+            print ("Done.")
+    
+            ## Make a new column with k-mer number and its p_value (e.g. kmer1_8.543334e-11)
+            kmers_pass_threshold['kmer_name']= 'kmer' + (kmers_pass_threshold.index+1).astype(str) + '_' + kmers_pass_threshold['p_lrt'].astype(str)
+    
+            ### Write significant k-mers list in FASTA format (based on: https://www.biostars.org/p/271977/)
+            ## Fasta file output
+            fileOutput = open(out_dir + "/" + pheno + "_kmers_list.fa", "w")
+    
+            ## Seq count
+            count = 1
+    
+            ## Loop through each line in the input file
+            print("Writing significant k-mers list in FASTA format...")
+            for index, row in kmers_pass_threshold.iterrows():
+            
+                #Output the header
+                fileOutput.write(">" + row['kmer_name'] + "\n")
+                fileOutput.write(row['rs'] + "\n")
+    
+                count = count + 1
+            print ("Done.")
+            print("")
+    
+            #Close the input and output file
+            fileOutput.close()
+
+    # Get the list of phenotypes
+    phenos = [os.path.basename(x) for x in glob.glob(res_dir_path + '/*')]
+    print("Phenotypes: " + str(phenos)) # print the list of phenotypes
+    
+    for pheno in phenos: # for each phenotype
+        
+        print("Fetching significant k-mers for phenotype: " + pheno)
+        print("Threshold: " + str(threshold) + "%")
+        
+        # Fetch significant k-mers for the current phenotype
+        fetch_kmers(input_dir=res_dir_path, pheno=pheno, out_dir=outdir , threshold=threshold)
+        
+    print("Done!.")
+
+
+ 
