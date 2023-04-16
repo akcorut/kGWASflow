@@ -3,14 +3,14 @@
 from snakemake.utils import min_version
 
 # Make Sure Minimun Snakemake version
-min_version("7.18.2")
+min_version("7.25.0")
 
 # =========================================================================================================
 #     Setup Config and Report
 # =========================================================================================================
 
 # Load config file
-configfile: "config/config.yaml"
+configfile: "../config/config.yaml"
 
 # validate(config, schema="../schemas/config.schema.yaml")
 
@@ -41,6 +41,7 @@ include: "rules/fetch_reads.smk"
 include: "rules/align_reads.smk"
 include: "rules/assemble_reads.smk"
 include: "rules/align_contigs.smk"
+include: "rules/igv_report.smk"
 include: "rules/blast_contigs.smk"
 
 # =========================================================================================================
