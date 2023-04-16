@@ -20,7 +20,7 @@ rule blast_makedb_nuc:
     params:
         "-input_type fasta -blastdb_version 5 -parse_seqids"
     wrapper:
-        "v1.12.2/bio/blast/makeblastdb"
+        "v1.25.0/bio/blast/makeblastdb"
 
 # =======================================================================================================
 #     Filter out short contigs
@@ -66,7 +66,7 @@ rule blast_contigs:
         format= config["params"]["blastn"]["format"],
         extra= config["params"]["blastn"]["extra"]
     wrapper:
-        "v1.12.2/bio/blast/blastn"
+        "v1.25.0/bio/blast/blastn"
 
 # =========================================================================================================
 #     Aggregate blast_contigs outputs
