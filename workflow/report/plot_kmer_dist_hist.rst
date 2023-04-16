@@ -1,0 +1,1 @@
+Histogram plot showing the distribution of k-mer counts in `n` number of samples (here, `n` = sample size). The x-axis shows the unique k-mer counts (canonical or non-canonical) and the y-axis shows the number of sample with that count. The total number of unique k-mers (canonical or non-canonical) is shown in the legend.
