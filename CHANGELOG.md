@@ -1,0 +1,76 @@
+# Changelog
+
+## [1.2.0](https://github.com/akcorut/kGWASflow/compare/v1.0.0...v1.2.0) (2023-04-16)
+
+
+### Features
+
+* add a function to extract chromosome names and lengths from a SAM file ([413ead9](https://github.com/akcorut/kGWASflow/commit/413ead9fdf373c4809c2ade506b5d77a82821634))
+* add a rule for genome indexing ([f2d596e](https://github.com/akcorut/kGWASflow/commit/f2d596e8d21af1be92a78d68b1a2ff6d7efb6eb3))
+* add a rule to convert BAM files to BED ([a948d98](https://github.com/akcorut/kGWASflow/commit/a948d987de60dbbc7615cfbb7618a0192217d9e5))
+* add a rule to convert kmers table to PLINK ([8c4bfad](https://github.com/akcorut/kGWASflow/commit/8c4bfad582c84d510aef8a81be20536a572a89df))
+* add error handling ([da92bdb](https://github.com/akcorut/kGWASflow/commit/da92bdbb749ab7b841cd87fe6ba68f45627d2a3e))
+* add k-mer counts dist. plots ([7df4787](https://github.com/akcorut/kGWASflow/commit/7df4787221c8f5d25cd0ee8e6c8689a25ae80686))
+* add k-mer counts dist. plots ([79427b4](https://github.com/akcorut/kGWASflow/commit/79427b447dbba2b6ea20ccd519574785f509b351))
+* add k-mer counts dist. plots ([c45c412](https://github.com/akcorut/kGWASflow/commit/c45c4125101a1526952877bee146254c17ca341c))
+* add kGWASflow.py ([698dcb8](https://github.com/akcorut/kGWASflow/commit/698dcb83ecfa4d160b793adf4e844216b98db7f5))
+* add manhattan plot point size parameter ([84415fe](https://github.com/akcorut/kGWASflow/commit/84415fed2f6009e04090b7e7b760cb68534ebe77))
+* add manhattan plot point size parameter ([cfa961d](https://github.com/akcorut/kGWASflow/commit/cfa961d4aa16ceb44d6fbadfae2f359b6fb5f56a))
+* add missing logs and messages ([293b2b6](https://github.com/akcorut/kGWASflow/commit/293b2b6427a0a7efed4be3ec89ae852e084397a1))
+* add missing logs and messages ([ba23335](https://github.com/akcorut/kGWASflow/commit/ba23335efcca720803823daa8c8e9b1cc96bf498))
+* add new functions, update checkpoints + target outputs ([6dac404](https://github.com/akcorut/kGWASflow/commit/6dac404e0c2f94928203ae03bd688a851537ddba))
+* add rules for converting BAM to BED ([33ed058](https://github.com/akcorut/kGWASflow/commit/33ed058e90d017f0cd60932f65494237c848eeae))
+* add rules for generating igv reports (igv-report) ([2c4b4fe](https://github.com/akcorut/kGWASflow/commit/2c4b4fe79cf78a3e3ed96b6fa3d8f84509079df0))
+* added container to define underlying OS for each job ([022ab15](https://github.com/akcorut/kGWASflow/commit/022ab1504f7ced3a1300486c274a4dda9224f119))
+* added log to merge_read rule ([7caf0cf](https://github.com/akcorut/kGWASflow/commit/7caf0cf453a6d48d940a5f78bfd1fe443d9dc58a))
+* added touch output to kmc rules + add priorities ([758c807](https://github.com/akcorut/kGWASflow/commit/758c807586130d877ded3d048f661dba1f3e9e23))
+* control y axis limits in manhattan plot ([76ec1ed](https://github.com/akcorut/kGWASflow/commit/76ec1ed8cb0ee44ea835b9c6b460941af94104f0))
+* improve the kmers GWAS summary reports ([9d5de9e](https://github.com/akcorut/kGWASflow/commit/9d5de9e60e279c585cbd30d2cdec4d157d6ccd6c))
+* plot the k-mer's position on the chr if only one chr is provided ([1fc8e5c](https://github.com/akcorut/kGWASflow/commit/1fc8e5c76254a7fb7cd3ffcbf954a9940a576779))
+* udpate config files + add new parameters ([38c939b](https://github.com/akcorut/kGWASflow/commit/38c939ba9cac5d8f3a337a5366116f02c7111d61))
+* update blast wrapper to v1.25.0 ([3da03ba](https://github.com/akcorut/kGWASflow/commit/3da03bad243d15c07dde8f9a15c2c8b490900fdd))
+* update kmersGWAS to v.0.3 ([84cfb9f](https://github.com/akcorut/kGWASflow/commit/84cfb9f9e1c5236edb0be97eca7b1732ed764f17))
+* update to kmc 3.2.1 ([c933fda](https://github.com/akcorut/kGWASflow/commit/c933fdafb5ba16c42d9becd15464960280485cb5))
+* use python qmplot instead of qqman r package for manhattan plots ([42dc51b](https://github.com/akcorut/kGWASflow/commit/42dc51bb1d1ef2f7362f06e7f870d2a5634e3d13))
+* use python qmplot instead of qqman r package for manhattan plots ([1dbfae4](https://github.com/akcorut/kGWASflow/commit/1dbfae4f8a976fbec491f5d6b69140c3ff701d16))
+
+
+### Bug Fixes
+
+* change conda channels order ([6b5d561](https://github.com/akcorut/kGWASflow/commit/6b5d561a159743e0da64141dd5238c708ebeca70))
+* change output, log paths and report caption ([827dcad](https://github.com/akcorut/kGWASflow/commit/827dcadb28cd81cb35853449c8e07f0913cd7bdb))
+* change x and y-axis ticks and labels ([c7cdf87](https://github.com/akcorut/kGWASflow/commit/c7cdf87ff1246b8cc3374a8785afdeab987b7e4c))
+* changed conda channel_priority to flexible ([fda022b](https://github.com/akcorut/kGWASflow/commit/fda022b2dbaf68288e8e90b21be651beaa90187a))
+* changed conda-frontend to conda ([0aa0d01](https://github.com/akcorut/kGWASflow/commit/0aa0d01b14ea6adfb0016049811689ce8579d145))
+* changed plot_manhattan default parameter ([a8ad464](https://github.com/akcorut/kGWASflow/commit/a8ad46421b7b64c54f7401fa5e95ad9324eee890))
+* fixed issues with hardcoded param indexes ([978ce5b](https://github.com/akcorut/kGWASflow/commit/978ce5b3e83a7aafcdb5b9bea319a4248747a15d))
+* fixed lints in build_kmers_gwas rules ([3045d8e](https://github.com/akcorut/kGWASflow/commit/3045d8e5bfb98346a2b3078bc30f98932b44bf4f))
+* fixed lints in combine_and_filter rules ([d545a76](https://github.com/akcorut/kGWASflow/commit/d545a76355fbc67553a531437ad99dfbb261ae8e))
+* fixed lints in count_kmers rules ([70157d8](https://github.com/akcorut/kGWASflow/commit/70157d81ee1c23b0b7f17be3ec29d28f312dca00))
+* fixed lints in create_kmers_table rule ([dd97786](https://github.com/akcorut/kGWASflow/commit/dd97786b0faa252f477af2f039e5f503bda404f2))
+* fixed lints in create_kmers_table rule ([94018ab](https://github.com/akcorut/kGWASflow/commit/94018ab79a2fe1ec1decb225f90076b102b9444d))
+* fixed lints in fetch_reads rules ([19756fd](https://github.com/akcorut/kGWASflow/commit/19756fda10d375424d6240843711b0e71dfd4ad8))
+* fixed lints in fetch_significant_kmers rule ([65d9fd4](https://github.com/akcorut/kGWASflow/commit/65d9fd429b97253e9ec230608f3c2112952edc6a))
+* fixed lints in filter_kmers rules ([4824847](https://github.com/akcorut/kGWASflow/commit/482484735f7e3e89f46a4f063678a48cbbcf593a))
+* fixed lints in generate_results_table rule ([3288591](https://github.com/akcorut/kGWASflow/commit/3288591027e9050b698f40db078fa962efe2e96f))
+* fixed lints in ref rules ([d904046](https://github.com/akcorut/kGWASflow/commit/d904046eb282113c7ef3252b8f52b6f822afd7a9))
+* fixed the issues with ends_with_gz function ([30f1c41](https://github.com/akcorut/kGWASflow/commit/30f1c4192cf64d01cceb945198d6cca86f7dc7f3))
+* make the script compatible to new kmers GWAS summary reports ([3dbecf0](https://github.com/akcorut/kGWASflow/commit/3dbecf0f5661b4c641e37476dbdbe587f1bbe710))
+* remove build info from env yaml ([0f5d3e6](https://github.com/akcorut/kGWASflow/commit/0f5d3e604711c4b6ce730fe8361f0e91a5f104b9))
+* solve the lib dependency issues with samtools ([3695279](https://github.com/akcorut/kGWASflow/commit/3695279974bfdd7da2c7dcbd52d1c2abc8566f7e))
+* solve the lib dependency issues with samtools ([b5b19af](https://github.com/akcorut/kGWASflow/commit/b5b19af7d187c7c932bf3c4ffe007940da43803a))
+* specify the spades version ([35d5690](https://github.com/akcorut/kGWASflow/commit/35d5690f113222c168907f4ef2623bcac5d256d4))
+* update input file paths ([05d7e6b](https://github.com/akcorut/kGWASflow/commit/05d7e6b8499920b3c175d7def7909dc241b27adc))
+* update input, ouput and params paths ([4637ed6](https://github.com/akcorut/kGWASflow/commit/4637ed6349755397a966bba7e5b4666b03ecd99b))
+* update output directory paths + add touch ([a0500c2](https://github.com/akcorut/kGWASflow/commit/a0500c26248408f288acaa984f80447b5020c166))
+* wrong path fetch_reads ([49ec743](https://github.com/akcorut/kGWASflow/commit/49ec74384a09b3714f99845b4b2f30178ba6db86))
+
+
+### Performance Improvements
+
+* update kGWASflow version to 1.1.0 ([178180f](https://github.com/akcorut/kGWASflow/commit/178180f55973c35d1a8a2b2805d174e2a8160dfb))
+* update snakemake version to 7.25.0 ([5b999c4](https://github.com/akcorut/kGWASflow/commit/5b999c48382ddbf647ef235ee214783fee572bcb))
+* update to fasterq-dump wrapper v1.23.5 ([373b406](https://github.com/akcorut/kGWASflow/commit/373b4063c2c13d1485de77863b0bb6f5f6296492))
+* update to libgcc 7.2.0 + libiconv 1.17 ([cdb0e8f](https://github.com/akcorut/kGWASflow/commit/cdb0e8f6538c07f2b0e2d41d453ce918bebf2c86))
+* update to snakemake 7.18.2 ([2feba33](https://github.com/akcorut/kGWASflow/commit/2feba3342d75bc533f9b47b2e084fbecbe665340))
+* update to snakemake 7.18.2 ([fdb9255](https://github.com/akcorut/kGWASflow/commit/fdb9255958411b821b5db765577e715def0dcb87))
