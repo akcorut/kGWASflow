@@ -16,6 +16,6 @@ Read trimming were performed using `Cutadapt <http://cutadapt.readthedocs.io>`_.
 
 If you use **kGWASflow**, please **cite**:
 
-* Kivanc Corut. akcorut/kGWASflow: v1.1.0. (2023). https://doi.org/10.5281/zenodo.7574506
+* Kivanc Corut. akcorut/kGWASflow: v1.2.0. (2023). https://doi.org/10.5281/zenodo.7290926
 
 * Voichek, Y., Weigel, D. Identifying genetic variants underlying phenotypic variation in plants without complete genomes. Nat Genet 52, 534–540 (2020). https://doi.org/10.1038/s41588-020-0612-7
