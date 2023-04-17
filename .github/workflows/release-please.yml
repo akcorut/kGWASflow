@@ -13,4 +13,5 @@ jobs:
         id: release
         with:
           release-type: simple
-          latest-release-sha: a8ad46421b7b64c54f7401fa5e95ad9324eee890
+          release-as: v.1.2.0
+          last-release-sha: a8ad46421b7b64c54f7401fa5e95ad9324eee890
