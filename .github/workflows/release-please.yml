@@ -14,3 +14,4 @@ jobs:
         with:
           release-type: simple
           release-as: v.1.2.0
+          path: https://github.com/akcorut/kGWASflow/tree/v.1.1.0
