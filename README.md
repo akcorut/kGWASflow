@@ -3,7 +3,7 @@
 
 A modular, flexible and reproducible Snakemake workflow to perform k-mers-based GWAS.
 
-[![Snakemake](https://img.shields.io/badge/snakemake-≥7.18-blue.svg)](https://snakemake.github.io)
+[![Snakemake](https://img.shields.io/badge/snakemake-≥7.25-blue.svg)](https://snakemake.github.io)
 [![GitHub actions status](https://github.com/akcorut/kGWASflow/workflows/Tests/badge.svg?branch=main)](https://github.com/akcorut/kGWASflow/actions)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 [![DOI](https://zenodo.org/badge/421139649.svg)](https://zenodo.org/badge/latestdoi/421139649)
