@@ -126,13 +126,11 @@ ___________
 
 ## Citation
 
-If you use kGWASflow in your research, please cite using the DOI: [10.5281/zenodo.7290926](https://doi.org/10.5281/zenodo.7290926 ) and the original method paper by [Voichek et al. (2020)](https://www.nature.com/articles/s41588-020-0612-7):
+If you use kGWASflow in your research, please cite using the DOI: [10.5281/zenodo.7834410](https://doi.org/10.5281/zenodo.7834410) and the original method paper by [Voichek et al. (2020)](https://www.nature.com/articles/s41588-020-0612-7):
 
-> Kivanc Corut. akcorut/kGWASflow: v1.0.0. (2022). 
-> https://doi.org/10.5281/zenodo.7290926 
+* Kivanc Corut. akcorut/kGWASflow: v1.2.0. (2023). https://doi.org/10.5281/zenodo.7834410  
 
-> Voichek, Y., Weigel, D. Identifying genetic variants underlying phenotypic variation in plants without complete genomes.  
-> Nat Genet 52, 534–540 (2020). https://doi.org/10.1038/s41588-020-0612-7
+* Voichek, Y., Weigel, D. Identifying genetic variants underlying phenotypic variation in plants without complete genomes. Nat Genet 52, 534–540 (2020). https://doi.org/10.1038/s41588-020-0612-7
 
 ## License
 kGWASflow is licensed under the [MIT](LICENSE.md) license.
