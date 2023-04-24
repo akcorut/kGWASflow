@@ -1,1 +1,0 @@
-from .kGWASflow import main
