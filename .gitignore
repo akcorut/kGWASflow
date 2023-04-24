@@ -25,6 +25,8 @@
 !.gitattributes
 !Dockerfile
 !README.md
+!MANIFEST.IN
+!setup.py
 workflow/*.err
 workflow/*.out
 workflow/report.html
