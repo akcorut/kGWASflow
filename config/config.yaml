@@ -2,8 +2,8 @@
 # !!! Required !!!
 # Paths to the samples.tsv and phenos.tsv
 # For more information: https://github.com/akcorut/kGWASflow/tree/main/config
-samples: ../config/samples.tsv
-phenotypes: ../config/phenos.tsv
+samples: config/samples.tsv
+phenotypes: config/phenos.tsv
 
 # =================================================================================================
 #     Reference Genome
