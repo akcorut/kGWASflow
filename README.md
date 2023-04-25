@@ -3,9 +3,13 @@
 
 A modular, flexible and reproducible Snakemake workflow to perform k-mers-based GWAS.
 
+[![Anaconda-Server Badge](https://anaconda.org/bioconda/kgwasflow/badges/version.svg)](https://anaconda.org/bioconda/kgwasflow)
+![Anaconda-Server Badge](https://anaconda.org/bioconda/kgwasflow/badges/latest_release_date.svg)
+![](https://img.shields.io/github/v/tag/akcorut/kGWASflow?label=version&style=flat-square)
+[![install with bioconda](https://img.shields.io/badge/Install%20with-conda-brightgreen.svg?style=flat-square)](https://anaconda.org/bioconda/kgwasflow)
 [![Snakemake](https://img.shields.io/badge/snakemake-≥7.25-blue.svg)](https://snakemake.github.io)
 [![GitHub actions status](https://github.com/akcorut/kGWASflow/workflows/Tests/badge.svg?branch=main)](https://github.com/akcorut/kGWASflow/actions)
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-black.svg)
 [![DOI](https://zenodo.org/badge/421139649.svg)](https://zenodo.org/badge/latestdoi/421139649)
 
 ## Table of Contents
@@ -125,6 +129,8 @@ kGWASflow was developed by [Adnan Kivanc Corut ](https://www.github.com/akcorut)
 ___________
 
 ## Citation
+
+‼️**kGWASflow manuscript** is **in preparation**.‼️ In the meantime,
 
 If you use kGWASflow in your research, please cite using the DOI: [10.5281/zenodo.7834410](https://doi.org/10.5281/zenodo.7834410) and the original method paper by [Voichek et al. (2020)](https://www.nature.com/articles/s41588-020-0612-7):
 
