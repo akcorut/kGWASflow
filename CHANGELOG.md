@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.1](https://github.com/akcorut/kGWASflow/compare/v1.2.0...v1.2.1) (2023-04-24)
+
+
+### Features
+
+* add kGWASflow cli ([da57735](https://github.com/akcorut/kGWASflow/commit/da57735cf38cd5623edc69fd940f7642dc301d3f))
+* add python cli support ([56ca35c](https://github.com/akcorut/kGWASflow/commit/56ca35c7c6f6b91497d7f320f58708fc0ef83680))
+* add setup and manifest ([d15224a](https://github.com/akcorut/kGWASflow/commit/d15224a6cc5e54f6a16bab48a009c373a5fb0579))
+
+
+### Bug Fixes
+
+* fixed a typo ([bcc6b70](https://github.com/akcorut/kGWASflow/commit/bcc6b70265b9ff049a332dd09cf92b5c7b8f2085))
+
 ## [1.2.0](https://github.com/akcorut/kGWASflow/compare/v1.0.0...v1.2.0) (2023-04-17)
 
 
