@@ -80,7 +80,7 @@ wildcard_constraints:
 #     Pipeline User Output
 # =================================================================================================
 
-kgwasflow_version = "v1.2.1"
+kgwasflow_version = "v1.2.2"
 kgwasflow_author = "Adnan Kivanc Corut"
 date_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 snake_version = snakemake.__version__
@@ -120,8 +120,8 @@ logger.info("     * Voichek, Y., Weigel, D. Identifying genetic variants underly
 logger.info("     phenotypic variation in plants without complete genomes.                         ")
 logger.info("     Nat Genet 52, 534–540 (2020). https://doi.org/10.1038/s41588-020-0612-7          ")
 logger.info("")
-logger.info("     * Kivanc Corut. akcorut/kGWASflow: v1.2.0. (2023). ")
-logger.info("     https://doi.org/10.5281/zenodo.7834410                                      ")
+logger.info("     * Kivanc Corut. akcorut/kGWASflow: v1.2.2. (2023). ")
+logger.info("     https://doi.org/10.5281/zenodo.7860705                                      ")
 logger.info("")
 logger.info("# ================================================================================== #")
 logger.info("")
