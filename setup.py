@@ -19,11 +19,18 @@ setup(
     license="MIT",
     packages=find_packages(),
     package_data={'workflow': [
+        "Snakefile",
+        "scripts/*",
+        "envs/*",
+        "rules/*",
+        "scripts/*",
+        "schemas/*",
+        "report/*",
         "config/*", 
         "test/config_ecoli/*", 
         "test/data/ecoli_ref/*", 
         "test/data/ecoli_phenos/*"]},
-    include_package_data= True,
+    # include_package_data= True,
     entry_points={
         "console_scripts": [
             "kgwasflow = workflow.kgwasflow:main",
