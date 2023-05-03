@@ -13,7 +13,6 @@
 !workflow/scripts
 !workflow/scripts/*
 !config
-# !config/*
 !config/config.yaml
 !config/cluster.yaml
 !config/samples.tsv
@@ -43,3 +42,4 @@ workflow/*.sh
 !.test/data/ecoli_phenos/*
 !.test/data/ecoli_ref
 !.test/data/ecoli_ref/CP026474.1.fa
+!.test/data/ecoli_ref/CP026474.gff3
