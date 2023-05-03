@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/akcorut/kGWASflow/compare/v1.2.1...v1.2.2) (2023-05-03)
+
+
+### Bug Fixes
+
+* fixed the issue with missing package data ([4573f50](https://github.com/akcorut/kGWASflow/commit/4573f50fe711cd4970d22b20b967cfac34abe39d))
+
 ## [1.2.1](https://github.com/akcorut/kGWASflow/compare/v1.2.0...v1.2.1) (2023-04-24)
 
 
