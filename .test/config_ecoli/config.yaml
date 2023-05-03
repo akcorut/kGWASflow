@@ -2,8 +2,8 @@
 # !!! Required !!!
 # Paths to the samples.tsv and phenos.tsv
 # For more information: https://github.com/akcorut/kGWASflow/tree/main/config
-samples: ../.test/config_ecoli/samples.tsv
-phenotypes: ../.test/config_ecoli/phenos.tsv
+samples: test/config_ecoli/samples.tsv
+phenotypes: test/config_ecoli/phenos.tsv
 
 # =================================================================================================
 #     Reference Genome
@@ -12,10 +12,9 @@ phenotypes: ../.test/config_ecoli/phenos.tsv
 ref:
   # !!! Reference genome in Fasta format required for the alignment step !!!
   # Path to the fasta file of the reference genome
-  fasta: ../.test/data/ecoli_ref/CP026474.1.fa
+  fasta: test/data/ecoli_ref/CP026474.1.fa
   # Path to the annotation file of the reference genome
-  annotation: ../.test/data/ecoli_ref/GCF_002953455.1/ncbi_dataset/data/GCF_002953455.1/genomic.gff 
-  
+  annotation: test/data/ecoli_ref/CP026474.gff3
 # =================================================================================================
 #     Workflow Settings
 # =================================================================================================
