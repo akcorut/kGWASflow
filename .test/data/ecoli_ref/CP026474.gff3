@@ -1,0 +1,215 @@
+##gff-version 3
+#!gff-spec-version 1.21
+#!processor NCBI annotwriter
+##sequence-region CP026474.1 1 107229
+##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=562
+CP026474.1	Genbank	region	1	107229	.	+	.	ID=CP026474.1:1..107229;Dbxref=taxon:562;Is_circular=true;Name=pKBN10P04869A;collection-date=2017-03-28;country=South Korea: Daegu;gbkey=Src;genome=plasmid;isolation-source=blood;lat-lon=35.86 N 128.60 E;mol_type=genomic DNA;nat-host=Homo sapiens;plasmid-name=pKBN10P04869A;strain=KBN10P04869
+CP026474.1	Genbank	gene	260	1117	.	+	.	ID=gene-YKEC1_4521;Name=YKEC1_4521;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4521
+CP026474.1	Genbank	CDS	260	1117	.	+	0	ID=cds-AUY31457.1;Parent=gene-YKEC1_4521;Dbxref=NCBI_GP:AUY31457.1;Name=AUY31457.1;Note=Pfam:pfam02387 IncFII RepA protein family;gbkey=CDS;locus_tag=YKEC1_4521;product=IncFII family plasmid replication initiator RepA;protein_id=AUY31457.1;transl_table=11
+CP026474.1	Genbank	gene	2057	2710	.	+	.	ID=gene-YKEC1_4522;Name=YKEC1_4522;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4522
+CP026474.1	Genbank	CDS	2057	2710	.	+	0	ID=cds-AUY31458.1;Parent=gene-YKEC1_4522;Dbxref=NCBI_GP:AUY31458.1;Name=AUY31458.1;Note=Pfam:pfam02517 CAAX protease self-immunity;gbkey=CDS;locus_tag=YKEC1_4522;product=CAAX protease family protein;protein_id=AUY31458.1;transl_table=11
+CP026474.1	Genbank	gene	2803	3060	.	+	.	ID=gene-YKEC1_4523;Name=YKEC1_4523;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4523
+CP026474.1	Genbank	CDS	2803	3060	.	+	0	ID=cds-AUY31459.1;Parent=gene-YKEC1_4523;Dbxref=NCBI_GP:AUY31459.1;Name=AUY31459.1;gbkey=CDS;locus_tag=YKEC1_4523;product=Antitoxin PemI;protein_id=AUY31459.1;transl_table=11
+CP026474.1	Genbank	gene	3062	3394	.	+	.	ID=gene-YKEC1_4524;Name=YKEC1_4524;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4524
+CP026474.1	Genbank	CDS	3062	3394	.	+	0	ID=cds-AUY31460.1;Parent=gene-YKEC1_4524;Dbxref=NCBI_GP:AUY31460.1;Name=AUY31460.1;Note=Pfam:pfam02452 PemK-like protein;gbkey=CDS;locus_tag=YKEC1_4524;product=hypothetical protein;protein_id=AUY31460.1;transl_table=11
+CP026474.1	Genbank	pseudogene	3531	5831	.	-	.	ID=gene-YKEC1_4525;Name=YKEC1_4525;Note=Tn3 transposase DDE domain protein;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4525;pseudo=true
+CP026474.1	Genbank	gene	5939	6643	.	+	.	ID=gene-YKEC1_4526;Name=YKEC1_4526;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4526
+CP026474.1	Genbank	CDS	5939	6643	.	+	0	ID=cds-AUY31461.1;Parent=gene-YKEC1_4526;Dbxref=NCBI_GP:AUY31461.1;Name=AUY31461.1;Note=Pfam:pfam13610 DDE domain;gbkey=CDS;locus_tag=YKEC1_4526;product=IS6 family transposase;protein_id=AUY31461.1;transl_table=11
+CP026474.1	Genbank	gene	6742	7341	.	+	.	ID=gene-YKEC1_4527;Name=YKEC1_4527;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4527
+CP026474.1	Genbank	CDS	6742	7341	.	+	0	ID=cds-AUY31462.1;Parent=gene-YKEC1_4527;Dbxref=NCBI_GP:AUY31462.1;Name=AUY31462.1;Note=Pfam:pfam13523 Acetyltransferase (GNAT) domain;gbkey=CDS;locus_tag=YKEC1_4527;product=fluoroquinolone-acetylating aminoglycoside 6'-N-acetyltransferase AAC(6')-Ib-cr5;protein_id=AUY31462.1;transl_table=11
+CP026474.1	Genbank	gene	7427	8302	.	+	.	ID=gene-YKEC1_4528;Name=YKEC1_4528;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4528
+CP026474.1	Genbank	CDS	7427	8302	.	+	0	ID=cds-AUY31463.1;Parent=gene-YKEC1_4528;Dbxref=NCBI_GP:AUY31463.1;Name=AUY31463.1;Note=Pfam:pfam00905 Penicillin binding protein transpeptidase domain;gbkey=CDS;locus_tag=YKEC1_4528;product=OXA-1 family class D beta-lactamase;protein_id=AUY31463.1;transl_table=11
+CP026474.1	Genbank	gene	8440	8988	.	+	.	ID=gene-YKEC1_4529;Name=YKEC1_4529;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4529
+CP026474.1	Genbank	CDS	8440	8988	.	+	0	ID=cds-AUY31464.1;Parent=gene-YKEC1_4529;Dbxref=NCBI_GP:AUY31464.1;Name=AUY31464.1;Note=Pfam:pfam00132 Bacterial transferase hexapeptide (six repeats);gbkey=CDS;locus_tag=YKEC1_4529;product=type B-3 chloramphenicol O-acetyltransferase CatB3;protein_id=AUY31464.1;transl_table=11
+CP026474.1	Genbank	gene	8934	9638	.	-	.	ID=gene-YKEC1_4530;Name=YKEC1_4530;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4530
+CP026474.1	Genbank	CDS	8934	9638	.	-	0	ID=cds-AUY31465.1;Parent=gene-YKEC1_4530;Dbxref=NCBI_GP:AUY31465.1;Name=AUY31465.1;Note=Pfam:pfam13610 DDE domain;gbkey=CDS;locus_tag=YKEC1_4530;product=IS6 family transposase;protein_id=AUY31465.1;transl_table=11
+CP026474.1	Genbank	gene	9685	11700	.	-	.	ID=gene-YKEC1_4531;Name=YKEC1_4531;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4531
+CP026474.1	Genbank	CDS	9685	11700	.	-	0	ID=cds-AUY31466.1;Parent=gene-YKEC1_4531;Dbxref=NCBI_GP:AUY31466.1;Name=AUY31466.1;Note=Pfam:pfam01526 Tn3 transposase DDE domain;gbkey=CDS;locus_tag=YKEC1_4531;product=transposase;protein_id=AUY31466.1;transl_table=11
+CP026474.1	Genbank	pseudogene	12020	12292	.	+	.	ID=gene-YKEC1_4532;Name=YKEC1_4532;Note=ORF477;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4532;pseudo=true
+CP026474.1	Genbank	gene	12339	13214	.	-	.	ID=gene-YKEC1_4533;Name=YKEC1_4533;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4533
+CP026474.1	Genbank	CDS	12339	13214	.	-	0	ID=cds-AUY31467.1;Parent=gene-YKEC1_4533;Dbxref=NCBI_GP:AUY31467.1;Name=AUY31467.1;Note=Pfam:pfam13354 Beta-lactamase enzyme family;gbkey=CDS;locus_tag=YKEC1_4533;product=class A extended-spectrum beta-lactamase;protein_id=AUY31467.1;transl_table=11
+CP026474.1	Genbank	signal_peptide_region_of_CDS	13128	13214	.	-	.	ID=id-AUY31467.1:1..29;Parent=cds-AUY31467.1;gbkey=Prot
+CP026474.1	Genbank	gene	13596	14300	.	-	.	ID=gene-YKEC1_4535;Name=YKEC1_4535;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4535
+CP026474.1	Genbank	CDS	13596	14300	.	-	0	ID=cds-AUY31468.1;Parent=gene-YKEC1_4535;Dbxref=NCBI_GP:AUY31468.1;Name=AUY31468.1;Note=Pfam:pfam13610 DDE domain;gbkey=CDS;locus_tag=YKEC1_4535;product=TnpA IS26 (1);protein_id=AUY31468.1;transl_table=11
+CP026474.1	Genbank	pseudogene	14370	14702	.	+	.	ID=gene-YKEC1_4536;Name=YKEC1_4536;Note=Transposon resolvase;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4536;pseudo=true
+CP026474.1	Genbank	gene	14885	15745	.	+	.	ID=gene-YKEC1_4537;Name=YKEC1_4537;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4537
+CP026474.1	Genbank	CDS	14885	15745	.	+	0	ID=cds-AUY31469.1;Parent=gene-YKEC1_4537;Dbxref=NCBI_GP:AUY31469.1;Name=AUY31469.1;Note=Pfam:pfam13354 Beta-lactamase enzyme family;gbkey=CDS;locus_tag=YKEC1_4537;product=beta-lactamase class A TEM;protein_id=AUY31469.1;transl_table=11
+CP026474.1	Genbank	signal_peptide_region_of_CDS	14885	14956	.	+	.	ID=id-AUY31469.1:1..24;Parent=cds-AUY31469.1;gbkey=Prot
+CP026474.1	Genbank	gene	15856	18363	.	-	.	ID=gene-YKEC1_4538;Name=YKEC1_4538;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4538
+CP026474.1	Genbank	CDS	15856	18363	.	-	0	ID=cds-AUY31470.1;Parent=gene-YKEC1_4538;Dbxref=NCBI_GP:AUY31470.1;Name=AUY31470.1;Note=Pfam:pfam01526 Tn3 transposase DDE domain;gbkey=CDS;locus_tag=YKEC1_4538;product=transposase;protein_id=AUY31470.1;transl_table=11
+CP026474.1	Genbank	gene	18366	18926	.	-	.	ID=gene-YKEC1_4539;Name=YKEC1_4539;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4539
+CP026474.1	Genbank	CDS	18366	18926	.	-	0	ID=cds-AUY31471.1;Parent=gene-YKEC1_4539;Dbxref=NCBI_GP:AUY31471.1;Name=AUY31471.1;Note=Pfam:pfam00239 Resolvase%2C N terminal domain;gbkey=CDS;locus_tag=YKEC1_4539;product=transposase;protein_id=AUY31471.1;transl_table=11
+CP026474.1	Genbank	gene	19499	20140	.	+	.	ID=gene-YKEC1_4541;Name=YKEC1_4541;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4541
+CP026474.1	Genbank	CDS	19499	20140	.	+	0	ID=cds-AUY31472.1;Parent=gene-YKEC1_4541;Dbxref=NCBI_GP:AUY31472.1;Name=AUY31472.1;Note=Pfam:pfam00753 Metallo-beta-lactamase superfamily;gbkey=CDS;locus_tag=YKEC1_4541;product=MBL fold metallo-hydrolase;protein_id=AUY31472.1;transl_table=11
+CP026474.1	Genbank	gene	20356	21027	.	-	.	ID=gene-YKEC1_4542;Name=YKEC1_4542;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4542
+CP026474.1	Genbank	CDS	20356	21027	.	-	0	ID=cds-AUY31473.1;Parent=gene-YKEC1_4542;Dbxref=NCBI_GP:AUY31473.1;Name=AUY31473.1;gbkey=CDS;locus_tag=YKEC1_4542;product=hypothetical protein;protein_id=AUY31473.1;transl_table=11
+CP026474.1	Genbank	pseudogene	21100	21804	.	+	.	ID=gene-YKEC1_4543;Name=YKEC1_4543;Note=IS26-TnpA protein;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4543;pseudo=true
+CP026474.1	Genbank	pseudogene	21866	22573	.	+	.	ID=gene-YKEC1_4544;Name=YKEC1_4544;Note=Regulatory protein repA;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4544;pseudo=true
+CP026474.1	Genbank	gene	22560	23411	.	+	.	ID=gene-YKEC1_4545;Name=YKEC1_4545;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4545
+CP026474.1	Genbank	CDS	22560	23411	.	+	0	ID=cds-AUY31474.1;Parent=gene-YKEC1_4545;Dbxref=NCBI_GP:AUY31474.1;Name=AUY31474.1;Note=Pfam:pfam06504 Replication protein C (RepC);gbkey=CDS;locus_tag=YKEC1_4545;product=Replication protein C;protein_id=AUY31474.1;transl_table=11
+CP026474.1	Genbank	gene	23719	24534	.	+	.	ID=gene-YKEC1_4546;Name=YKEC1_4546;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4546
+CP026474.1	Genbank	CDS	23719	24534	.	+	0	ID=cds-AUY31475.1;Parent=gene-YKEC1_4546;Dbxref=NCBI_GP:AUY31475.1;Name=AUY31475.1;Note=Pfam:pfam00809 Pterin binding enzyme;gbkey=CDS;locus_tag=YKEC1_4546;product=sulfonamide-resistant dihydropteroate synthase Sul2;protein_id=AUY31475.1;transl_table=11
+CP026474.1	Genbank	gene	24595	25398	.	+	.	ID=gene-YKEC1_4547;Name=YKEC1_4547;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4547
+CP026474.1	Genbank	CDS	24595	25398	.	+	0	ID=cds-AUY31476.1;Parent=gene-YKEC1_4547;Dbxref=NCBI_GP:AUY31476.1;Name=AUY31476.1;Note=Pfam:pfam01636 Phosphotransferase enzyme family;gbkey=CDS;locus_tag=YKEC1_4547;product=APH(3'') family aminoglycoside O-phosphotransferase;protein_id=AUY31476.1;transl_table=11
+CP026474.1	Genbank	gene	25398	26234	.	+	.	ID=gene-YKEC1_4548;Name=YKEC1_4548;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4548
+CP026474.1	Genbank	CDS	25398	26234	.	+	0	ID=cds-AUY31477.1;Parent=gene-YKEC1_4548;Dbxref=NCBI_GP:AUY31477.1;Name=AUY31477.1;Note=Pfam:pfam04655 Aminoglycoside/hydroxyurea antibiotic resistance kinase;gbkey=CDS;locus_tag=YKEC1_4548;product=aminoglycoside O-phosphotransferase APH(6)-Id;protein_id=AUY31477.1;transl_table=11
+CP026474.1	Genbank	gene	26295	26999	.	-	.	ID=gene-YKEC1_4549;Name=YKEC1_4549;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4549
+CP026474.1	Genbank	CDS	26295	26999	.	-	0	ID=cds-AUY31478.1;Parent=gene-YKEC1_4549;Dbxref=NCBI_GP:AUY31478.1;Name=AUY31478.1;Note=Pfam:pfam13610 DDE domain;gbkey=CDS;locus_tag=YKEC1_4549;product=IS6 family transposase;protein_id=AUY31478.1;transl_table=11
+CP026474.1	Genbank	gene	27139	27903	.	+	.	ID=gene-YKEC1_4550;Name=YKEC1_4550;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4550
+CP026474.1	Genbank	CDS	27139	27903	.	+	0	ID=cds-AUY31479.1;Parent=gene-YKEC1_4550;Dbxref=NCBI_GP:AUY31479.1;Name=AUY31479.1;Note=Pfam:pfam13610 DDE domain;gbkey=CDS;locus_tag=YKEC1_4550;product=IS6100 transposase;protein_id=AUY31479.1;transl_table=11
+CP026474.1	Genbank	gene	28396	28980	.	-	.	ID=gene-YKEC1_4551;Name=YKEC1_4551;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4551
+CP026474.1	Genbank	CDS	28396	28980	.	-	0	ID=cds-AUY31480.1;Parent=gene-YKEC1_4551;Dbxref=NCBI_GP:AUY31480.1;Name=AUY31480.1;gbkey=CDS;locus_tag=YKEC1_4551;product=macrolide 2'-phosphotransferase I repressor A;protein_id=AUY31480.1;transl_table=11
+CP026474.1	Genbank	gene	28980	30218	.	-	.	ID=gene-YKEC1_4552;Name=YKEC1_4552;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4552
+CP026474.1	Genbank	CDS	28980	30218	.	-	0	ID=cds-AUY31481.1;Parent=gene-YKEC1_4552;Dbxref=NCBI_GP:AUY31481.1;Name=AUY31481.1;Note=Pfam:pfam05977 Transmembrane secretion effector;gbkey=CDS;locus_tag=YKEC1_4552;product=MFS transporter;protein_id=AUY31481.1;transl_table=11
+CP026474.1	Genbank	gene	30215	31129	.	-	.	ID=gene-YKEC1_4553;Name=YKEC1_4553;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4553
+CP026474.1	Genbank	CDS	30215	31129	.	-	0	ID=cds-AUY31482.1;Parent=gene-YKEC1_4553;Dbxref=NCBI_GP:AUY31482.1;Name=AUY31482.1;Note=Pfam:pfam01636 Phosphotransferase enzyme family;gbkey=CDS;locus_tag=YKEC1_4553;product=Mph(A) family macrolide 2'-phosphotransferase;protein_id=AUY31482.1;transl_table=11
+CP026474.1	Genbank	gene	31251	31955	.	-	.	ID=gene-YKEC1_4554;Name=YKEC1_4554;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4554
+CP026474.1	Genbank	CDS	31251	31955	.	-	0	ID=cds-AUY31483.1;Parent=gene-YKEC1_4554;Dbxref=NCBI_GP:AUY31483.1;Name=AUY31483.1;Note=Pfam:pfam13610 DDE domain;gbkey=CDS;locus_tag=YKEC1_4554;product=IS6 family transposase;protein_id=AUY31483.1;transl_table=11
+CP026474.1	Genbank	gene	31992	33119	.	-	.	ID=gene-YKEC1_4555;Name=YKEC1_4555;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4555
+CP026474.1	Genbank	CDS	31992	33119	.	-	0	ID=cds-AUY31484.1;Parent=gene-YKEC1_4555;Dbxref=NCBI_GP:AUY31484.1;Name=AUY31484.1;Note=Pfam:pfam13020 Domain of unknown function (DUF3883);gbkey=CDS;locus_tag=YKEC1_4555;product=hypothetical protein;protein_id=AUY31484.1;transl_table=11
+CP026474.1	Genbank	gene	33170	33397	.	-	.	ID=gene-YKEC1_4556;Name=YKEC1_4556;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4556
+CP026474.1	Genbank	CDS	33170	33397	.	-	0	ID=cds-AUY31485.1;Parent=gene-YKEC1_4556;Dbxref=NCBI_GP:AUY31485.1;Name=AUY31485.1;gbkey=CDS;locus_tag=YKEC1_4556;product=hypothetical protein;protein_id=AUY31485.1;transl_table=11
+CP026474.1	Genbank	gene	34094	34636	.	-	.	ID=gene-YKEC1_4557;Name=YKEC1_4557;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4557
+CP026474.1	Genbank	CDS	34094	34636	.	-	0	ID=cds-AUY31486.1;Parent=gene-YKEC1_4557;Dbxref=NCBI_GP:AUY31486.1;Name=AUY31486.1;Note=Pfam:pfam13238 AAA domain;gbkey=CDS;locus_tag=YKEC1_4557;product=hypothetical protein;protein_id=AUY31486.1;transl_table=11
+CP026474.1	Genbank	gene	34649	35509	.	-	.	ID=gene-YKEC1_4558;Name=YKEC1_4558;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4558
+CP026474.1	Genbank	CDS	34649	35509	.	-	0	ID=cds-AUY31487.1;Parent=gene-YKEC1_4558;Dbxref=NCBI_GP:AUY31487.1;Name=AUY31487.1;Note=Pfam:pfam02522 Aminoglycoside 3-N-acetyltransferase;gbkey=CDS;locus_tag=YKEC1_4558;product=aminoglycoside 3-N-acetyltransferase VI AAC(3)-Iia;protein_id=AUY31487.1;transl_table=11
+CP026474.1	Genbank	gene	35652	36620	.	+	.	ID=gene-YKEC1_4559;Name=YKEC1_4559;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4559
+CP026474.1	Genbank	CDS	35652	36620	.	+	0	ID=cds-AUY31488.1;Parent=gene-YKEC1_4559;Dbxref=NCBI_GP:AUY31488.1;Name=AUY31488.1;Note=Pfam:pfam01609 Transposase DDE domain;gbkey=CDS;locus_tag=YKEC1_4559;product=transposase;protein_id=AUY31488.1;transl_table=11
+CP026474.1	Genbank	gene	36724	37590	.	+	.	ID=gene-YKEC1_4560;Name=YKEC1_4560;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4560
+CP026474.1	Genbank	CDS	36724	37590	.	+	0	ID=cds-AUY31489.1;Parent=gene-YKEC1_4560;Dbxref=NCBI_GP:AUY31489.1;Name=AUY31489.1;gbkey=CDS;locus_tag=YKEC1_4560;product=TnpA transposase of IS10;protein_id=AUY31489.1;transl_table=11
+CP026474.1	Genbank	pseudogene	37624	38328	.	-	.	ID=gene-YKEC1_4561;Name=YKEC1_4561;Note=IS26-TnpA protein;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4561;pseudo=true
+CP026474.1	Genbank	gene	38766	39626	.	+	.	ID=gene-YKEC1_4562;Name=YKEC1_4562;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4562
+CP026474.1	Genbank	CDS	38766	39626	.	+	0	ID=cds-AUY31490.1;Parent=gene-YKEC1_4562;Dbxref=NCBI_GP:AUY31490.1;Name=AUY31490.1;Note=Pfam:pfam13354 Beta-lactamase enzyme family;gbkey=CDS;locus_tag=YKEC1_4562;product=beta-lactamase class A TEM-1;protein_id=AUY31490.1;transl_table=11
+CP026474.1	Genbank	signal_peptide_region_of_CDS	38766	38837	.	+	.	ID=id-AUY31490.1:1..24;Parent=cds-AUY31490.1;gbkey=Prot
+CP026474.1	Genbank	gene	39776	40201	.	+	.	ID=gene-YKEC1_4563;Name=YKEC1_4563;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4563
+CP026474.1	Genbank	CDS	39776	40201	.	+	0	ID=cds-AUY31491.1;Parent=gene-YKEC1_4563;Dbxref=NCBI_GP:AUY31491.1;Name=AUY31491.1;Note=Pfam:pfam14319 Transposase zinc-binding domain;gbkey=CDS;locus_tag=YKEC1_4563;product=IS91 family transposase;protein_id=AUY31491.1;transl_table=11
+CP026474.1	Genbank	gene	40213	40917	.	+	.	ID=gene-YKEC1_4564;Name=YKEC1_4564;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4564
+CP026474.1	Genbank	CDS	40213	40917	.	+	0	ID=cds-AUY31492.1;Parent=gene-YKEC1_4564;Dbxref=NCBI_GP:AUY31492.1;Name=AUY31492.1;Note=Pfam:pfam13610 DDE domain;gbkey=CDS;locus_tag=YKEC1_4564;product=IS6 family transposase;protein_id=AUY31492.1;transl_table=11
+CP026474.1	Genbank	pseudogene	40808	41350	.	-	.	ID=gene-YKEC1_4565;Name=YKEC1_4565;Note=EAL domain protein;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4565;pseudo=true
+CP026474.1	Genbank	gene	41319	42332	.	-	.	ID=gene-YKEC1_4566;Name=YKEC1_4566;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4566
+CP026474.1	Genbank	CDS	41319	42332	.	-	0	ID=cds-AUY31493.1;Parent=gene-YKEC1_4566;Dbxref=NCBI_GP:AUY31493.1;Name=AUY31493.1;Note=Pfam:pfam00589 Phage integrase family;gbkey=CDS;locus_tag=YKEC1_4566;product=class 1 integron integrase IntI1;protein_id=AUY31493.1;transl_table=11
+CP026474.1	Genbank	pseudogene	42490	42963	.	+	.	ID=gene-YKEC1_4567;Name=YKEC1_4567;Note=Dihydrofolate reductase;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4567;pseudo=true
+CP026474.1	Genbank	gene	43094	43882	.	+	.	ID=gene-YKEC1_4568;Name=YKEC1_4568;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4568
+CP026474.1	Genbank	CDS	43094	43882	.	+	0	ID=cds-AUY31494.1;Parent=gene-YKEC1_4568;Dbxref=NCBI_GP:AUY31494.1;Name=AUY31494.1;Note=Pfam:pfam13427 Domain of unknown function (DUF4111);gbkey=CDS;locus_tag=YKEC1_4568;product=ANT(3'')-Ia family aminoglycoside nucleotidyltransferase AadA5;protein_id=AUY31494.1;transl_table=11
+CP026474.1	Genbank	pseudogene	44088	44435	.	+	.	ID=gene-YKEC1_4569;Name=YKEC1_4569;Note=ORF3-QacEdelta1 fusion protein;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4569;pseudo=true
+CP026474.1	Genbank	gene	44429	45268	.	+	.	ID=gene-YKEC1_4570;Name=YKEC1_4570;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4570
+CP026474.1	Genbank	CDS	44429	45268	.	+	0	ID=cds-AUY31495.1;Parent=gene-YKEC1_4570;Dbxref=NCBI_GP:AUY31495.1;Name=AUY31495.1;Note=Pfam:pfam00809 Pterin binding enzyme;gbkey=CDS;locus_tag=YKEC1_4570;product=sulfonamide-resistant dihydropteroate synthase Sul1;protein_id=AUY31495.1;transl_table=11
+CP026474.1	Genbank	gene	45673	47214	.	+	.	ID=gene-YKEC1_4571;Name=YKEC1_4571;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4571
+CP026474.1	Genbank	CDS	45673	47214	.	+	0	ID=cds-AUY31496.1;Parent=gene-YKEC1_4571;Dbxref=NCBI_GP:AUY31496.1;Name=AUY31496.1;Note=Pfam:pfam04986 Putative transposase;gbkey=CDS;locus_tag=YKEC1_4571;product=IS91 family transposase;protein_id=AUY31496.1;transl_table=11
+CP026474.1	Genbank	gene	47527	48558	.	+	.	ID=gene-YKEC1_4572;Name=YKEC1_4572;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4572
+CP026474.1	Genbank	CDS	47527	48558	.	+	0	ID=cds-AUY31497.1;Parent=gene-YKEC1_4572;Dbxref=NCBI_GP:AUY31497.1;Name=AUY31497.1;Note=Pfam:pfam11412 Disulphide bond corrector protein DsbC;gbkey=CDS;locus_tag=YKEC1_4572;product=twin-arginine translocation (TAT) pathway signal sequence domain protein;protein_id=AUY31497.1;transl_table=11
+CP026474.1	Genbank	signal_peptide_region_of_CDS	47527	47613	.	+	.	ID=id-AUY31497.1:1..29;Parent=cds-AUY31497.1;gbkey=Prot
+CP026474.1	Genbank	gene	48569	49207	.	-	.	ID=gene-YKEC1_4573;Name=YKEC1_4573;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4573
+CP026474.1	Genbank	CDS	48569	49207	.	-	0	ID=cds-AUY31498.1;Parent=gene-YKEC1_4573;Dbxref=NCBI_GP:AUY31498.1;Name=AUY31498.1;Note=Pfam:pfam00697 N-(5'phosphoribosyl)anthranilate (PRA) isomerase;gbkey=CDS;locus_tag=YKEC1_4573;product=phosphoribosylanthranilate isomerase;protein_id=AUY31498.1;transl_table=11
+CP026474.1	Genbank	gene	49212	49472	.	-	.	ID=gene-YKEC1_4574;Name=YKEC1_4574;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4574
+CP026474.1	Genbank	CDS	49212	49472	.	-	0	ID=cds-AUY31499.1;Parent=gene-YKEC1_4574;Dbxref=NCBI_GP:AUY31499.1;Name=AUY31499.1;gbkey=CDS;locus_tag=YKEC1_4574;product=bleomycin resistance protein;protein_id=AUY31499.1;transl_table=11
+CP026474.1	Genbank	gene	49581	50393	.	-	.	ID=gene-YKEC1_4575;Name=YKEC1_4575;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4575
+CP026474.1	Genbank	CDS	49581	50393	.	-	0	ID=cds-AUY31500.1;Parent=gene-YKEC1_4575;Dbxref=NCBI_GP:AUY31500.1;Name=AUY31500.1;Note=Pfam:pfam00753 Metallo-beta-lactamase superfamily;gbkey=CDS;locus_tag=YKEC1_4575;product=subclass B1 metallo-beta-lactamase NDM-5;protein_id=AUY31500.1;transl_table=11
+CP026474.1	Genbank	gene	50952	51656	.	+	.	ID=gene-YKEC1_4576;Name=YKEC1_4576;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4576
+CP026474.1	Genbank	CDS	50952	51656	.	+	0	ID=cds-AUY31501.1;Parent=gene-YKEC1_4576;Dbxref=NCBI_GP:AUY31501.1;Name=AUY31501.1;Note=Pfam:pfam13610 DDE domain;gbkey=CDS;locus_tag=YKEC1_4576;product=IS6 family transposase;protein_id=AUY31501.1;transl_table=11
+CP026474.1	Genbank	gene	51690	52577	.	-	.	ID=gene-YKEC1_4577;Name=YKEC1_4577;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4577
+CP026474.1	Genbank	CDS	51690	52577	.	-	0	ID=cds-AUY31502.1;Parent=gene-YKEC1_4577;Dbxref=NCBI_GP:AUY31502.1;Name=AUY31502.1;Note=Pfam:pfam00589 Phage integrase family;gbkey=CDS;locus_tag=YKEC1_4577;product=integron integrase;protein_id=AUY31502.1;transl_table=11
+CP026474.1	Genbank	gene	52722	53219	.	+	.	ID=gene-YKEC1_4578;Name=YKEC1_4578;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4578
+CP026474.1	Genbank	CDS	52722	53219	.	+	0	ID=cds-AUY31503.1;Parent=gene-YKEC1_4578;Dbxref=NCBI_GP:AUY31503.1;Name=AUY31503.1;Note=Pfam:pfam00186 Dihydrofolate reductase;gbkey=CDS;locus_tag=YKEC1_4578;product=trimethoprim-resistant dihydrofolate reductase;protein_id=AUY31503.1;transl_table=11
+CP026474.1	Genbank	gene	53639	54418	.	+	.	ID=gene-YKEC1_4579;Name=YKEC1_4579;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4579
+CP026474.1	Genbank	CDS	53639	54418	.	+	0	ID=cds-AUY31504.1;Parent=gene-YKEC1_4579;Dbxref=NCBI_GP:AUY31504.1;Name=AUY31504.1;Note=Pfam:pfam13427 Domain of unknown function (DUF4111);gbkey=CDS;locus_tag=YKEC1_4579;product=Streptomycin 3'-adenylyltransferase;protein_id=AUY31504.1;transl_table=11
+CP026474.1	Genbank	pseudogene	54582	54929	.	+	.	ID=gene-YKEC1_4580;Name=YKEC1_4580;Note=ORF3-QacEdelta1 fusion protein;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4580;pseudo=true
+CP026474.1	Genbank	gene	54923	55762	.	+	.	ID=gene-YKEC1_4581;Name=YKEC1_4581;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4581
+CP026474.1	Genbank	CDS	54923	55762	.	+	0	ID=cds-AUY31505.1;Parent=gene-YKEC1_4581;Dbxref=NCBI_GP:AUY31505.1;Name=AUY31505.1;Note=Pfam:pfam00809 Pterin binding enzyme;gbkey=CDS;locus_tag=YKEC1_4581;product=sulfonamide-resistant dihydropteroate synthase;protein_id=AUY31505.1;transl_table=11
+CP026474.1	Genbank	pseudogene	55890	56093	.	+	.	ID=gene-YKEC1_4582;Name=YKEC1_4582;Note=incomplete;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4582;pseudo=true
+CP026474.1	Genbank	pseudogene	56249	56722	.	+	.	ID=gene-YKEC1_4583;Name=YKEC1_4583;Note=Putative truncated chromate ion transport;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4583;pseudo=true
+CP026474.1	Genbank	pseudogene	56668	57372	.	-	.	ID=gene-YKEC1_4584;Name=YKEC1_4584;Note=IS26-TnpA protein;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4584;pseudo=true
+CP026474.1	Genbank	pseudogene	57506	58099	.	+	.	ID=gene-YKEC1_4585;Name=YKEC1_4585;Note=transposon Tn10 tetC protein;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4585;pseudo=true
+CP026474.1	Genbank	gene	58212	59417	.	-	.	ID=gene-YKEC1_4586;Name=YKEC1_4586;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4586
+CP026474.1	Genbank	CDS	58212	59417	.	-	0	ID=cds-AUY31506.1;Parent=gene-YKEC1_4586;Dbxref=NCBI_GP:AUY31506.1;Name=AUY31506.1;Note=Pfam:pfam07690 Major Facilitator Superfamily;gbkey=CDS;locus_tag=YKEC1_4586;product=tetracycline efflux MFS transporter Tet(B);protein_id=AUY31506.1;transl_table=11
+CP026474.1	Genbank	gene	59499	60122	.	+	.	ID=gene-YKEC1_4587;Name=YKEC1_4587;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4587
+CP026474.1	Genbank	CDS	59499	60122	.	+	0	ID=cds-AUY31507.1;Parent=gene-YKEC1_4587;Dbxref=NCBI_GP:AUY31507.1;Name=AUY31507.1;Note=Pfam:pfam02909 Tetracyclin repressor%2C C-terminal all-alpha domain;gbkey=CDS;locus_tag=YKEC1_4587;product=TetR family transcriptional regulator;protein_id=AUY31507.1;transl_table=11
+CP026474.1	Genbank	pseudogene	60235	60612	.	-	.	ID=gene-YKEC1_4588;Name=YKEC1_4588;Note=Putative transposase (Fragment);gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4588;pseudo=true
+CP026474.1	Genbank	gene	60657	60932	.	-	.	ID=gene-YKEC1_4589;Name=YKEC1_4589;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4589
+CP026474.1	Genbank	CDS	60657	60932	.	-	0	ID=cds-AUY31508.1;Parent=gene-YKEC1_4589;Dbxref=NCBI_GP:AUY31508.1;Name=AUY31508.1;Note=Pfam:pfam12759 InsA C-terminal domain;gbkey=CDS;locus_tag=YKEC1_4589;product=Transposase;protein_id=AUY31508.1;transl_table=11
+CP026474.1	Genbank	pseudogene	60966	61838	.	-	.	ID=gene-YKEC1_4590;Name=YKEC1_4590;Note=incomplete;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4590;pseudo=true
+CP026474.1	Genbank	gene	62149	62514	.	+	.	ID=gene-YKEC1_4591;Name=YKEC1_4591;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4591
+CP026474.1	Genbank	CDS	62149	62514	.	+	0	ID=cds-AUY31509.1;Parent=gene-YKEC1_4591;Dbxref=NCBI_GP:AUY31509.1;Name=AUY31509.1;Note=Pfam:pfam01527 Transposase;gbkey=CDS;locus_tag=YKEC1_4591;product=Transposase;protein_id=AUY31509.1;transl_table=11
+CP026474.1	Genbank	gene	62472	63377	.	+	.	ID=gene-YKEC1_4592;Name=YKEC1_4592;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4592
+CP026474.1	Genbank	CDS	62472	63377	.	+	0	ID=cds-AUY31510.1;Parent=gene-YKEC1_4592;Dbxref=NCBI_GP:AUY31510.1;Name=AUY31510.1;Note=Pfam:pfam00665 Integrase core domain;gbkey=CDS;locus_tag=YKEC1_4592;product=Transposase;protein_id=AUY31510.1;transl_table=11
+CP026474.1	Genbank	pseudogene	63706	63888	.	+	.	ID=gene-YKEC1_4593;Name=YKEC1_4593;Note=IPF_393;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4593;pseudo=true
+CP026474.1	Genbank	gene	63844	64101	.	-	.	ID=gene-YKEC1_4594;Name=YKEC1_4594;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4594
+CP026474.1	Genbank	CDS	63844	64101	.	-	0	ID=cds-AUY31511.1;Parent=gene-YKEC1_4594;Dbxref=NCBI_GP:AUY31511.1;Name=AUY31511.1;gbkey=CDS;locus_tag=YKEC1_4594;product=hypothetical protein;protein_id=AUY31511.1;transl_table=11
+CP026474.1	Genbank	gene	64620	65360	.	+	.	ID=gene-YKEC1_4595;Name=YKEC1_4595;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4595
+CP026474.1	Genbank	CDS	64620	65360	.	+	0	ID=cds-AUY31512.1;Parent=gene-YKEC1_4595;Dbxref=NCBI_GP:AUY31512.1;Name=AUY31512.1;Note=Pfam:pfam00589 Phage integrase family;gbkey=CDS;locus_tag=YKEC1_4595;product=Site-specific recombinase;protein_id=AUY31512.1;transl_table=11
+CP026474.1	Genbank	gene	65645	66622	.	-	.	ID=gene-YKEC1_4597;Name=YKEC1_4597;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4597
+CP026474.1	Genbank	CDS	65645	66622	.	-	0	ID=cds-AUY31513.1;Parent=gene-YKEC1_4597;Dbxref=NCBI_GP:AUY31513.1;Name=AUY31513.1;gbkey=CDS;locus_tag=YKEC1_4597;product=Protein RepA;protein_id=AUY31513.1;transl_table=11
+CP026474.1	Genbank	pseudogene	67418	67792	.	-	.	ID=gene-YKEC1_4598;Name=YKEC1_4598;Note=transposase%2C partial;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4598;pseudo=true
+CP026474.1	Genbank	gene	67755	68114	.	-	.	ID=gene-YKEC1_4599;Name=YKEC1_4599;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4599
+CP026474.1	Genbank	CDS	67755	68114	.	-	0	ID=cds-AUY31514.1;Parent=gene-YKEC1_4599;Dbxref=NCBI_GP:AUY31514.1;Name=AUY31514.1;gbkey=CDS;locus_tag=YKEC1_4599;product=PdcB;protein_id=AUY31514.1;transl_table=11
+CP026474.1	Genbank	gene	68142	68321	.	-	.	ID=gene-YKEC1_4600;Name=YKEC1_4600;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4600
+CP026474.1	Genbank	CDS	68142	68321	.	-	0	ID=cds-AUY31515.1;Parent=gene-YKEC1_4600;Dbxref=NCBI_GP:AUY31515.1;Name=AUY31515.1;gbkey=CDS;locus_tag=YKEC1_4600;product=PdcA protein;protein_id=AUY31515.1;transl_table=11
+CP026474.1	Genbank	gene	68326	68706	.	-	.	ID=gene-YKEC1_4601;Name=YKEC1_4601;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4601
+CP026474.1	Genbank	CDS	68326	68706	.	-	0	ID=cds-AUY31516.1;Parent=gene-YKEC1_4601;Dbxref=NCBI_GP:AUY31516.1;Name=AUY31516.1;Note=Pfam:pfam02661 Fic/DOC family;gbkey=CDS;locus_tag=YKEC1_4601;product=prevent-host-death family protein;protein_id=AUY31516.1;transl_table=11
+CP026474.1	Genbank	gene	68706	68927	.	-	.	ID=gene-YKEC1_4602;Name=YKEC1_4602;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4602
+CP026474.1	Genbank	CDS	68706	68927	.	-	0	ID=cds-AUY31517.1;Parent=gene-YKEC1_4602;Dbxref=NCBI_GP:AUY31517.1;Name=AUY31517.1;Note=Pfam:pfam02604 Antitoxin Phd_YefM%2C type II toxin-antitoxin system;gbkey=CDS;locus_tag=YKEC1_4602;product=Antitoxin phd;protein_id=AUY31517.1;transl_table=11
+CP026474.1	Genbank	gene	69110	70666	.	+	.	ID=gene-YKEC1_4603;Name=YKEC1_4603;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4603
+CP026474.1	Genbank	CDS	69110	70666	.	+	0	ID=cds-AUY31518.1;Parent=gene-YKEC1_4603;Dbxref=NCBI_GP:AUY31518.1;Name=AUY31518.1;Note=Pfam:pfam02384 N-6 DNA Methylase;gbkey=CDS;locus_tag=YKEC1_4603;product=type I restriction-modification system subunit M;protein_id=AUY31518.1;transl_table=11
+CP026474.1	Genbank	gene	70663	71946	.	+	.	ID=gene-YKEC1_4604;Name=YKEC1_4604;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4604
+CP026474.1	Genbank	CDS	70663	71946	.	+	0	ID=cds-AUY31519.1;Parent=gene-YKEC1_4604;Dbxref=NCBI_GP:AUY31519.1;Name=AUY31519.1;Note=Pfam:pfam01420 Type I restriction modification DNA specificity domain;gbkey=CDS;locus_tag=YKEC1_4604;product=type I restriction-modification system subunit S;protein_id=AUY31519.1;transl_table=11
+CP026474.1	Genbank	gene	72068	75184	.	+	.	ID=gene-YKEC1_4605;Name=YKEC1_4605;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4605
+CP026474.1	Genbank	CDS	72068	75184	.	+	0	ID=cds-AUY31520.1;Parent=gene-YKEC1_4605;Dbxref=NCBI_GP:AUY31520.1;Name=AUY31520.1;Note=Pfam:pfam12008 Type I restriction and modification enzyme - subunit R C terminal;gbkey=CDS;locus_tag=YKEC1_4605;product=type I restriction-modification system subunit R;protein_id=AUY31520.1;transl_table=11
+CP026474.1	Genbank	gene	75592	76095	.	+	.	ID=gene-YKEC1_4606;Name=YKEC1_4606;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4606
+CP026474.1	Genbank	CDS	75592	76095	.	+	0	ID=cds-AUY31521.1;Parent=gene-YKEC1_4606;Dbxref=NCBI_GP:AUY31521.1;Name=AUY31521.1;Note=Pfam:pfam03400 IS1 transposase;gbkey=CDS;locus_tag=YKEC1_4606;product=IS1 transposase;protein_id=AUY31521.1;transl_table=11
+CP026474.1	Genbank	gene	76232	77125	.	-	.	ID=gene-YKEC1_4607;Name=YKEC1_4607;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4607
+CP026474.1	Genbank	CDS	76232	77125	.	-	0	ID=cds-AUY31522.1;Parent=gene-YKEC1_4607;Dbxref=NCBI_GP:AUY31522.1;Name=AUY31522.1;gbkey=CDS;locus_tag=YKEC1_4607;product=hypothetical protein;protein_id=AUY31522.1;transl_table=11
+CP026474.1	Genbank	gene	77168	78163	.	-	.	ID=gene-YKEC1_4608;Name=YKEC1_4608;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4608
+CP026474.1	Genbank	CDS	77168	78163	.	-	0	ID=cds-AUY31523.1;Parent=gene-YKEC1_4608;Dbxref=NCBI_GP:AUY31523.1;Name=AUY31523.1;gbkey=CDS;locus_tag=YKEC1_4608;product=hypothetical protein;protein_id=AUY31523.1;transl_table=11
+CP026474.1	Genbank	gene	78628	80766	.	+	.	ID=gene-YKEC1_4609;Name=YKEC1_4609;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4609
+CP026474.1	Genbank	CDS	78628	80766	.	+	0	ID=cds-AUY31524.1;Parent=gene-YKEC1_4609;Dbxref=NCBI_GP:AUY31524.1;Name=AUY31524.1;Note=Pfam:pfam13166 AAA domain;gbkey=CDS;locus_tag=YKEC1_4609;product=hypothetical protein;protein_id=AUY31524.1;transl_table=11
+CP026474.1	Genbank	gene	80928	81329	.	-	.	ID=gene-YKEC1_4610;Name=YKEC1_4610;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4610
+CP026474.1	Genbank	CDS	80928	81329	.	-	0	ID=cds-AUY31525.1;Parent=gene-YKEC1_4610;Dbxref=NCBI_GP:AUY31525.1;Name=AUY31525.1;Note=Pfam:pfam01850 PIN domain;gbkey=CDS;locus_tag=YKEC1_4610;product=twitching motility protein PilT;protein_id=AUY31525.1;transl_table=11
+CP026474.1	Genbank	gene	81341	81571	.	-	.	ID=gene-YKEC1_4611;Name=YKEC1_4611;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4611
+CP026474.1	Genbank	CDS	81341	81571	.	-	0	ID=cds-AUY31526.1;Parent=gene-YKEC1_4611;Dbxref=NCBI_GP:AUY31526.1;Name=AUY31526.1;Note=Pfam:pfam04014 Antidote-toxin recognition MazE;gbkey=CDS;locus_tag=YKEC1_4611;product=virulence factor;protein_id=AUY31526.1;transl_table=11
+CP026474.1	Genbank	gene	81878	84997	.	+	.	ID=gene-YKEC1_4612;Name=YKEC1_4612;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4612
+CP026474.1	Genbank	CDS	81878	84997	.	+	0	ID=cds-AUY31527.1;Parent=gene-YKEC1_4612;Dbxref=NCBI_GP:AUY31527.1;Name=AUY31527.1;gbkey=CDS;locus_tag=YKEC1_4612;product=hypothetical protein;protein_id=AUY31527.1;transl_table=11
+CP026474.1	Genbank	gene	85260	86393	.	+	.	ID=gene-YKEC1_4613;Name=YKEC1_4613;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4613
+CP026474.1	Genbank	CDS	85260	86393	.	+	0	ID=cds-AUY31528.1;Parent=gene-YKEC1_4613;Dbxref=NCBI_GP:AUY31528.1;Name=AUY31528.1;gbkey=CDS;locus_tag=YKEC1_4613;product=hypothetical protein;protein_id=AUY31528.1;transl_table=11
+CP026474.1	Genbank	gene	86413	86697	.	+	.	ID=gene-YKEC1_4614;Name=YKEC1_4614;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4614
+CP026474.1	Genbank	CDS	86413	86697	.	+	0	ID=cds-AUY31529.1;Parent=gene-YKEC1_4614;Dbxref=NCBI_GP:AUY31529.1;Name=AUY31529.1;gbkey=CDS;locus_tag=YKEC1_4614;product=hypothetical protein;protein_id=AUY31529.1;transl_table=11
+CP026474.1	Genbank	pseudogene	86694	86891	.	-	.	ID=gene-YKEC1_4615;Name=YKEC1_4615;Note=incomplete;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4615;pseudo=true
+CP026474.1	Genbank	gene	87525	87743	.	+	.	ID=gene-YKEC1_4616;Name=YKEC1_4616;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4616
+CP026474.1	Genbank	CDS	87525	87743	.	+	0	ID=cds-AUY31530.1;Parent=gene-YKEC1_4616;Dbxref=NCBI_GP:AUY31530.1;Name=AUY31530.1;Note=Pfam:pfam07362 Post-segregation antitoxin CcdA;gbkey=CDS;locus_tag=YKEC1_4616;product=antitoxin CcdA;protein_id=AUY31530.1;transl_table=11
+CP026474.1	Genbank	gene	87745	88050	.	+	.	ID=gene-YKEC1_4617;Name=YKEC1_4617;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4617
+CP026474.1	Genbank	CDS	87745	88050	.	+	0	ID=cds-AUY31531.1;Parent=gene-YKEC1_4617;Dbxref=NCBI_GP:AUY31531.1;Name=AUY31531.1;Note=Pfam:pfam01845 CcdB protein;gbkey=CDS;locus_tag=YKEC1_4617;product=plasmid maintenance protein CcdB;protein_id=AUY31531.1;transl_table=11
+CP026474.1	Genbank	gene	88051	88857	.	+	.	ID=gene-YKEC1_4618;Name=YKEC1_4618;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4618
+CP026474.1	Genbank	CDS	88051	88857	.	+	0	ID=cds-AUY31532.1;Parent=gene-YKEC1_4618;Dbxref=NCBI_GP:AUY31532.1;Name=AUY31532.1;Note=Pfam:pfam00589 Phage integrase family;gbkey=CDS;locus_tag=YKEC1_4618;product=resolvase;protein_id=AUY31532.1;transl_table=11
+CP026474.1	Genbank	gene	89631	90386	.	+	.	ID=gene-YKEC1_4619;Name=YKEC1_4619;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4619
+CP026474.1	Genbank	CDS	89631	90386	.	+	0	ID=cds-AUY31533.1;Parent=gene-YKEC1_4619;Dbxref=NCBI_GP:AUY31533.1;Name=AUY31533.1;Note=Pfam:pfam01051 Initiator Replication protein;gbkey=CDS;locus_tag=YKEC1_4619;product=Replication initiation protein;protein_id=AUY31533.1;transl_table=11
+CP026474.1	Genbank	gene	90974	92140	.	+	.	ID=gene-YKEC1_4620;Name=YKEC1_4620;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4620
+CP026474.1	Genbank	CDS	90974	92140	.	+	0	ID=cds-AUY31534.1;Parent=gene-YKEC1_4620;Dbxref=NCBI_GP:AUY31534.1;Name=AUY31534.1;Note=Pfam:pfam01656 CobQ/CobB/MinD/ParA nucleotide binding domain;gbkey=CDS;locus_tag=YKEC1_4620;product=Chromosome (plasmid) partitioning protein ParA;protein_id=AUY31534.1;transl_table=11
+CP026474.1	Genbank	gene	92140	93111	.	+	.	ID=gene-YKEC1_4621;Name=YKEC1_4621;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4621
+CP026474.1	Genbank	CDS	92140	93111	.	+	0	ID=cds-AUY31535.1;Parent=gene-YKEC1_4621;Dbxref=NCBI_GP:AUY31535.1;Name=AUY31535.1;Note=Pfam:pfam02195 ParB-like nuclease domain;gbkey=CDS;locus_tag=YKEC1_4621;product=chromosome partitioning protein ParB;protein_id=AUY31535.1;transl_table=11
+CP026474.1	Genbank	pseudogene	93954	94880	.	+	.	ID=gene-YKEC1_4622;Name=YKEC1_4622;Note=YccB;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4622;pseudo=true
+CP026474.1	Genbank	gene	95265	95948	.	+	.	ID=gene-YKEC1_4623;Name=YKEC1_4623;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4623
+CP026474.1	Genbank	CDS	95265	95948	.	+	0	ID=cds-AUY31536.1;Parent=gene-YKEC1_4623;Dbxref=NCBI_GP:AUY31536.1;Name=AUY31536.1;Note=Pfam:pfam01555 DNA methylase;gbkey=CDS;locus_tag=YKEC1_4623;product=DNA methylase;protein_id=AUY31536.1;transl_table=11
+CP026474.1	Genbank	gene	95949	96170	.	+	.	ID=gene-YKEC1_4624;Name=YKEC1_4624;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4624
+CP026474.1	Genbank	CDS	95949	96170	.	+	0	ID=cds-AUY31537.1;Parent=gene-YKEC1_4624;Dbxref=NCBI_GP:AUY31537.1;Name=AUY31537.1;gbkey=CDS;locus_tag=YKEC1_4624;product=hypothetical protein;protein_id=AUY31537.1;transl_table=11
+CP026474.1	Genbank	gene	96184	96618	.	+	.	ID=gene-YKEC1_4625;Name=YKEC1_4625;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4625
+CP026474.1	Genbank	CDS	96184	96618	.	+	0	ID=cds-AUY31538.1;Parent=gene-YKEC1_4625;Dbxref=NCBI_GP:AUY31538.1;Name=AUY31538.1;Note=Pfam:pfam07128 Protein of unknown function (DUF1380);gbkey=CDS;locus_tag=YKEC1_4625;product=hypothetical protein;protein_id=AUY31538.1;transl_table=11
+CP026474.1	Genbank	gene	96618	97445	.	+	.	ID=gene-YKEC1_4626;Name=YKEC1_4626;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4626
+CP026474.1	Genbank	CDS	96618	97445	.	+	0	ID=cds-AUY31539.1;Parent=gene-YKEC1_4626;Dbxref=NCBI_GP:AUY31539.1;Name=AUY31539.1;gbkey=CDS;locus_tag=YKEC1_4626;product=hypothetical protein;protein_id=AUY31539.1;transl_table=11
+CP026474.1	Genbank	gene	97862	98287	.	+	.	ID=gene-YKEC1_4627;Name=YKEC1_4627;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4627
+CP026474.1	Genbank	CDS	97862	98287	.	+	0	ID=cds-AUY31540.1;Parent=gene-YKEC1_4627;Dbxref=NCBI_GP:AUY31540.1;Name=AUY31540.1;Note=Pfam:pfam03230 Antirestriction protein;gbkey=CDS;locus_tag=YKEC1_4627;product=Putative antirestriction protein;protein_id=AUY31540.1;transl_table=11
+CP026474.1	Genbank	gene	98334	98756	.	+	.	ID=gene-YKEC1_4628;Name=YKEC1_4628;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4628
+CP026474.1	Genbank	CDS	98334	98756	.	+	0	ID=cds-AUY31541.1;Parent=gene-YKEC1_4628;Dbxref=NCBI_GP:AUY31541.1;Name=AUY31541.1;gbkey=CDS;locus_tag=YKEC1_4628;product=hypothetical protein;protein_id=AUY31541.1;transl_table=11
+CP026474.1	Genbank	pseudogene	98753	99040	.	+	.	ID=gene-YKEC1_4629;Name=YKEC1_4629;Note=incomplete;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4629;pseudo=true
+CP026474.1	Genbank	pseudogene	98982	101318	.	+	.	ID=gene-YKEC1_4630;Name=YKEC1_4630;Note=conjugal transfer protein TraI;gbkey=Gene;gene_biotype=pseudogene;locus_tag=YKEC1_4630;pseudo=true
+CP026474.1	Genbank	gene	101338	102084	.	+	.	ID=gene-YKEC1_4631;Name=YKEC1_4631;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4631
+CP026474.1	Genbank	CDS	101338	102084	.	+	0	ID=cds-AUY31542.1;Parent=gene-YKEC1_4631;Dbxref=NCBI_GP:AUY31542.1;Name=AUY31542.1;Note=Pfam:pfam05857 TraX protein;gbkey=CDS;locus_tag=YKEC1_4631;product=conjugal transfer pilus acetylase TraX;protein_id=AUY31542.1;transl_table=11
+CP026474.1	Genbank	gene	102139	102699	.	+	.	ID=gene-YKEC1_4632;Name=YKEC1_4632;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4632
+CP026474.1	Genbank	CDS	102139	102699	.	+	0	ID=cds-AUY31543.1;Parent=gene-YKEC1_4632;Dbxref=NCBI_GP:AUY31543.1;Name=AUY31543.1;Note=Pfam:pfam04352 ProQ/FINO family;gbkey=CDS;locus_tag=YKEC1_4632;product=conjugal transfer protein;protein_id=AUY31543.1;transl_table=11
+CP026474.1	Genbank	gene	103856	104047	.	+	.	ID=gene-YKEC1_4633;Name=YKEC1_4633;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4633
+CP026474.1	Genbank	CDS	103856	104047	.	+	0	ID=cds-AUY31544.1;Parent=gene-YKEC1_4633;Dbxref=NCBI_GP:AUY31544.1;Name=AUY31544.1;Note=Pfam:pfam01848 Hok/gef family;gbkey=CDS;locus_tag=YKEC1_4633;product=protein SrnB;protein_id=AUY31544.1;transl_table=11
+CP026474.1	Genbank	gene	104344	104598	.	+	.	ID=gene-YKEC1_4634;Name=YKEC1_4634;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4634
+CP026474.1	Genbank	CDS	104344	104598	.	+	0	ID=cds-AUY31545.1;Parent=gene-YKEC1_4634;Dbxref=NCBI_GP:AUY31545.1;Name=AUY31545.1;Note=Pfam:pfam10723 Replication regulatory protein RepB;gbkey=CDS;locus_tag=YKEC1_4634;product=Replication protein;protein_id=AUY31545.1;transl_table=11
+CP026474.1	Genbank	gene	104758	105504	.	-	.	ID=gene-YKEC1_4635;Name=YKEC1_4635;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4635
+CP026474.1	Genbank	CDS	104758	105504	.	-	0	ID=cds-AUY31546.1;Parent=gene-YKEC1_4635;Dbxref=NCBI_GP:AUY31546.1;Name=AUY31546.1;Note=Pfam:pfam01695 IstB-like ATP binding protein;gbkey=CDS;locus_tag=YKEC1_4635;product=ATP-binding protein;protein_id=AUY31546.1;transl_table=11
+CP026474.1	Genbank	gene	105519	107060	.	-	.	ID=gene-YKEC1_4636;Name=YKEC1_4636;gbkey=Gene;gene_biotype=protein_coding;locus_tag=YKEC1_4636
+CP026474.1	Genbank	CDS	105519	107060	.	-	0	ID=cds-AUY31547.1;Parent=gene-YKEC1_4636;Dbxref=NCBI_GP:AUY31547.1;Name=AUY31547.1;Note=Pfam:pfam00665 Integrase core domain;gbkey=CDS;locus_tag=YKEC1_4636;product=Integrase;protein_id=AUY31547.1;transl_table=11
+
