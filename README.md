@@ -7,6 +7,7 @@ A modular, flexible and reproducible Snakemake workflow to perform k-mers-based 
 ![Anaconda-Server Badge](https://anaconda.org/bioconda/kgwasflow/badges/latest_release_date.svg)
 ![](https://img.shields.io/github/v/tag/akcorut/kGWASflow?label=version&style=flat-square)
 [![install with bioconda](https://img.shields.io/badge/Install%20with-conda-brightgreen.svg?style=flat-square)](https://anaconda.org/bioconda/kgwasflow)
+[![Anaconda-Server Badge](https://anaconda.org/bioconda/kgwasflow/badges/downloads.svg)](https://anaconda.org/bioconda/kgwasflow)
 [![Snakemake](https://img.shields.io/badge/snakemake-≥7.25-blue.svg)](https://snakemake.github.io)
 [![GitHub actions status](https://github.com/akcorut/kGWASflow/workflows/Tests/badge.svg?branch=main)](https://github.com/akcorut/kGWASflow/actions)
 ![License](https://img.shields.io/badge/license-MIT-black.svg)
