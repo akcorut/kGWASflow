@@ -22,20 +22,44 @@ def get_configfile(file="config.yaml"):
         sys.exit("Unable to locate the config.yaml file;  tried %s" % config_file)
     return config_file
 
+def get_samplefile(file="samples.tsv"):
+    sample_file = os.path.join(workflow_dir, "config", file)
+    if not os.path.exists(sample_file):
+        sys.exit("Unable to locate the samples.tsv file;  tried %s" % sample_file)
+    return sample_file
+
+def get_phenosfile(file="phenos.tsv"):
+    phenos_file = os.path.join(workflow_dir, "config", file)
+    if not os.path.exists(phenos_file):
+        sys.exit("Unable to locate the phenos.tsv file;  tried %s" % phenos_file)
+    return phenos_file
+
+def get_testdir(dir="test"):
+    test_dir = os.path.join(workflow_dir, dir)
+    if not os.path.exists(test_dir):
+        sys.exit("Unable to locate the test directory;  tried %s" % test_dir)
+    return test_dir
+
 def show_help_message():
     message = (
         "\nUsage examples:\n"
+        "\n    kgwasflow init [OPTIONS]        Initialize a new kGWASflow working directory"
         "\n    kgwasflow run [OPTIONS]         Run the kGWASflow workflow\n"
         "\n    kgwasflow test [OPTIONS]        Run the kGWASflow test\n"
         "\n    kgwasflow --help"
+        "\n\nInit examples:"
+        "\n\n1. Initialize a new kGWASflow working directory in the current directory:"
+        "\n\n    kgwasflow init"
+        "\n\n2. Initialize a new kGWASflow working directory in a specified directory:"
+        "\n\n    kgwasflow init --work-dir path/to/working_dir"
         "\n\nRun examples:"
-        "\n\n1. Run kGWASflow with the default config file (../config/config.yaml), default snakemake arguments and 16 threads:\n"
+        "\n\n1. Run kGWASflow with the default config file, default arguments and 16 threads:\n"
         "\n    kgwasflow run -t 16 --snake-default"
-        "\n\n2. Run kGWASflow with a custom config file (path/to/custom_config.yaml) and default settings:\n"
+        "\n\n2. Run kGWASflow with a custom config file and default settings:\n"
         "\n    kgwasflow run -t 16 -c path/to/custom_config.yaml"
         "\n\n3. Run kGWASflow with user defined output directory:\n"
         "\n    kgwasflow run -t 16 --output path/to/output_dir"
-        "\n\n4. Run kGWASflow in dryrun mode to see what tasks would be executed without actually running them:\n"
+        "\n\n4. Run kGWASflow in dryrun mode to see what tasks would be executed:\n"
         "\n    kgwasflow run -t 16 -n"
         "\n\n5. Run kGWASflow using mamba as the conda frontend:\n"
         "\n    kgwasflow run -t 16 --conda-frontend mamba"
@@ -65,7 +89,7 @@ def show_ascii_art():
     kGWASflow: A Snakemake Workflow for k-mers Based GWAS
     """)
 
-def run_snake(snakefile, config_file, threads, output, conda_frontend, dryrun, generate_report, snake_default, rerun_triggers, verbose, unlock, snakemake_args):
+def run_snake(snakefile, config_file, threads, work_dir, conda_frontend, dryrun, generate_report, snake_default, rerun_triggers, verbose, unlock, snakemake_args):
     # Define the command to run snakemake
     cmd = ['snakemake', '--use-conda', '--conda-frontend', conda_frontend, '--cores', str(threads)]
 
@@ -77,10 +101,10 @@ def run_snake(snakefile, config_file, threads, output, conda_frontend, dryrun, g
         cmd += ['--configfile', config_file]
         
     # if output directory is provided, use it
-    if output:
-        if not os.path.exists(output):
-            os.makedirs(output)
-        cmd += ['--directory', output]
+    if work_dir:
+        if not os.path.exists(work_dir):
+            os.makedirs(work_dir)
+        cmd += ['--directory', work_dir]
         
     if dryrun:
         cmd.append('--dryrun')
