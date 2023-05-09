@@ -13,4 +13,4 @@ jobs:
         id: release
         with:
           release-type: simple
-          release-as: 1.2.2
+          release-as: 1.2.3
