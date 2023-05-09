@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.3](https://github.com/akcorut/kGWASflow/compare/v1.2.2...v1.2.3) (2023-05-09)
+
+
+### Features
+
+* added init func. to initialize a new workdir ([be02e7f](https://github.com/akcorut/kGWASflow/commit/be02e7f99d14155e83b9de9e5ab5cda83847231a))
+
+
+### Bug Fixes
+
+* fixes broken input path ([bcc1606](https://github.com/akcorut/kGWASflow/commit/bcc1606aaaff394126ebd08e6c84f7a00bbf77af))
+
 ## [1.2.2](https://github.com/akcorut/kGWASflow/compare/v1.2.1...v1.2.2) (2023-05-03)
 
 
