@@ -81,38 +81,42 @@ with open(snakemake.log[0], "w") as f:
             os.makedirs(out_dir)
         
         # Plot the histogram of the -log10(p-value) values
-        f, ax = plt.subplots(figsize=(16, 9), facecolor='w', edgecolor='k')
+        f, ax = plt.subplots(figsize=(16, 8), facecolor='w', edgecolor='k')
         plt.hist(-np.log10(pheno_val_assoc['p_lrt']), bins=50, color='g', alpha=0.5)
         
         # Add labels to the axes
-        plt.xlabel('-log10(pval)', fontsize=16)
-        plt.ylabel('Frequency', fontsize=16)
+        plt.xlabel('-log10(pval)', fontsize=24)
+        plt.ylabel('Frequency', fontsize=24)
 
         # Add a vertical line to the histogram based on the 5% threshold
         plt.axvline(x=threshold_5per['threshold'][0], color='r', linestyle='--')
          # Add a caption to the right bottom corner of the outside of the plot
-        ax.text(1.0, -0.1, "*Red dashed line indicates 5% family-wise error-rate threshold", color='r', transform=ax.transAxes, ha='right', va='bottom')
+        ax.text(1.0, -0.1, "*Red dashed line indicates 5% family-wise error-rate threshold", color='r', transform=ax.transAxes, ha='right', va='bottom', fontsize=12)
         
         # Add label to the top of the vertical line
-        ax.text(threshold_5per['threshold'][0], 1, '5% threshold', 
+        ax.text(threshold_5per['threshold'][0]+0.3, 1, '5% threshold', 
                 rotation=0, color='r', va='top' , ha='left', 
                 bbox=dict(facecolor='w', edgecolor='r', boxstyle='round,pad=0.5'),
-                transform=ax.get_xaxis_transform())
+                transform=ax.get_xaxis_transform(),
+                fontsize=12)
         
         # Add a vertical line to the histogram based on the 10% threshold
         plt.axvline(x=threshold_10per['threshold'][0], color='b', linestyle='--')
         
         # Add a caption to the right bottom corner of the outside of the plot
-        ax.text(1.0, -0.12, "*Blue dashed line indicates 10% family-wise error-rate threshold", color='b', transform=ax.transAxes, ha='right', va='bottom')
+        ax.text(1.0, -0.13, "*Blue dashed line indicates 10% family-wise error-rate threshold", color='b', transform=ax.transAxes, ha='right', va='bottom', fontsize=12)
         # Add label to the top of the vertical line
-        ax.text(threshold_10per['threshold'][0], 1, '10% threshold', 
+        ax.text(threshold_10per['threshold'][0]-0.3, 1, '10% threshold', 
                 rotation=0, color='b', va='top' , ha='right', 
                 bbox=dict(facecolor='w', edgecolor='b', boxstyle='round,pad=0.5'),
-                transform=ax.get_xaxis_transform())
+                transform=ax.get_xaxis_transform(),
+                fontsize=12)
 
         # Add title to the histogram
         plt.title('Histogram of (-log10) p-values - k-mers passing the first filtering step (n={kmers_num})'.format(kmers_num=kmers_number), 
                   fontsize=16, y=1.02)
+        plt.xticks(fontsize = 18)
+        plt.yticks(fontsize = 18)
         
         # Adjust the layout of the plot
         plt.tight_layout() 
