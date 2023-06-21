@@ -61,11 +61,13 @@ with open(snakemake.log[0], "w") as f:
         Y=target_df["total_reads"] # Total reads as y-axis
         # Plot scatter plot
         plt.figure(figsize=(10, 10)) # set figure size
-        plt.scatter(X, Y, alpha=0.5) 
+        plt.scatter(X, Y, alpha=0.5, s=200) 
         slope, intercept = np.polyfit(X, Y, 1) # calculate regression line
         plt.plot(X, slope*X + intercept,color="red") # plot regression line
-        plt.xlabel("No. of unique kmers") # add x-axis label
-        plt.ylabel("No. of total reads") # add y-axis label
+        plt.xlabel("No. of unique kmers", fontsize=24) # add x-axis label
+        plt.ylabel("No. of total reads", fontsize=24) # add y-axis label
+        plt.xticks(fontsize = 18)
+        plt.yticks(fontsize = 18)
         plt.title(plot_name) # add plot title
         plt.tight_layout() # tight layout
         plt.savefig(out_file, dpi=300) # save plot
@@ -80,17 +82,22 @@ with open(snakemake.log[0], "w") as f:
         joint_plot= sns.jointplot(x="unique_kmers", y="total_reads", 
                                   data=target_df, # data
                                   kind="reg", # regression line
-                                  height=10, 
-                                  joint_kws={'line_kws':{'color':'red'}})
+                                  height=10,
+                                  joint_kws={'line_kws':{'color':'red'},
+                                             'scatter_kws': {'s': 150}})
         
         # pearson correlation coefficient
         r, p = stats.pearsonr(target_df["unique_kmers"], target_df["total_reads"]) # calculate pearson correlation coefficient
         phantom, = joint_plot.ax_joint.plot([], [], linestyle="", alpha=0) # add pearson correlation coefficient to the legend
-        joint_plot.ax_joint.legend([phantom],['r={:f}, p={:f}'.format(r,p)]) # add pearson correlation coefficient to the legend
+        legend = joint_plot.ax_joint.legend([phantom],['r={:f}, p={:f}'.format(r,p)]) # add pearson correlation coefficient to the legend
         
         # add x-axis label, y-axis label and plot title
-        joint_plot.ax_joint.set_xlabel('No. of unique kmers') # add x-axis label
-        joint_plot.ax_joint.set_ylabel('No. of total reads') # add y-axis label
+        joint_plot.ax_joint.set_xlabel('No. of unique kmers', fontsize=24) # add x-axis label
+        joint_plot.ax_joint.set_ylabel('No. of total reads', fontsize=24) # add y-axis label
+        plt.figure(figsize=(10, 10)) # set figure size
+        joint_plot.ax_joint.xaxis.set_tick_params(labelsize=18)
+        joint_plot.ax_joint.yaxis.set_tick_params(labelsize=18)
+        plt.setp(legend.get_texts(), fontsize='14') # for legend text
         joint_plot.fig.suptitle(plot_name, y = 1) # add plot title
         joint_plot.fig.tight_layout() # tight layout
         joint_plot.savefig(out_file, dpi=300) # save plot
@@ -109,9 +116,11 @@ with open(snakemake.log[0], "w") as f:
                  alpha=0.5, 
                  edgecolor="black",
                  linewidth=1.2) #
-        plt.xlabel("No. of unique kmers", fontsize=14) # add x-axis label
-        plt.ylabel("No. of samples", fontsize=14) # add y-axis label
-        plt.title(plot_name, fontsize=16) # add plot title
+        plt.xlabel("No. of unique kmers", fontsize=24) # add x-axis label
+        plt.ylabel("No. of samples", fontsize=24) # add y-axis label
+        plt.xticks(fontsize = 18)
+        plt.yticks(fontsize = 18)
+        plt.title(plot_name, fontsize=24) # add plot title
         plt.ticklabel_format(style='sci', axis='x', scilimits=(0,0)) # set x-axis to scientific notation
         plt.gca().xaxis.set_major_formatter(plt.ScalarFormatter())
         
@@ -120,7 +129,7 @@ with open(snakemake.log[0], "w") as f:
         # add box around the text
         plt.gca().text(0.95, 0.95, textstr, 
                        transform=plt.gca().transAxes, 
-                       fontsize=10,
+                       fontsize=16,
                        color="black",
                        verticalalignment='top', 
                        horizontalalignment='right',
