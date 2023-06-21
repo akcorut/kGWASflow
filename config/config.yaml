@@ -1,3 +1,19 @@
+# =============================================================================================== #
+#                   _     _______          __      _____  __ _                                    # 
+#                  | |   / ____\ \        / /\    / ____|/ _| |                                   #
+#                  | | _| |  __ \ \  /\  / /  \  | (___ | |_| | _____      __                     #
+#                  | |/ / | |_ | \ \/  \/ / /\ \  \___ \|  _| |/ _ \ \ /\ / /                     #
+#                  |   <| |__| |  \  /\  / ____ \ ____) | | | | (_) \ V  V /                      #
+#                  |_|\_\\_____|   \/  \/_/    \_\_____/|_| |_|\___/ \_/\_/                       #
+#                                                                                                 #
+# =============================================================================================== #
+
+# USAGE: https://github.com/akcorut/kGWASflow/wiki
+
+# =================================================================================================
+#     Input Information
+# =================================================================================================
+
 # Sample and Phenotype Sheets 
 # !!! Required !!!
 # Paths to the samples.tsv and phenos.tsv
@@ -13,7 +29,7 @@ ref:
   # !!! Reference genome in Fasta format required for the alignment step !!!
   # Path to the fasta file of the reference genome
   fasta: ""
-  # Path to the annotation file of the reference genome
+  # Path to the annotation file of the reference genome (.gtf or .gff3)
   annotation: ""
   
 # =================================================================================================
@@ -28,7 +44,7 @@ settings:
   
   ## Set to true in order to use single end reads
   # TODO Add single-end support
-  single_end: false
+  # single_end: false
 
   trimming: 
     # Set to true in order to perform addapter trimming on raw reads
@@ -78,23 +94,23 @@ settings:
   align_reads_with_kmers:
   # Set to true in order to align reads
   # with k-mers to the reference genome
-    activate: true
+    activate: false
     # Set to true in order to generate IGV report
-    igv_report: true 
+    igv_report: false 
 
   assemble_reads:
   # Set to true in order to assemble and
   # align reads with k-mers to the reference genome
-    activate: true
+    activate: false
     # Set to true in order to generate IGV report
-    igv_report: true
+    igv_report: false
 
   blast_contigs:
   # Set to true in order to BLAST contigs
     activate: false
 
 # =================================================================================================
-#     Resoruces
+#     Resources
 # =================================================================================================
 
 resources:
@@ -121,11 +137,10 @@ params:
   # ----------------------------------------------------------------------
 
   fastqc:
-    # Additional parameters for fastqc
-    extra: ""
-
     # Number of threads for fastqc
     threads: 8
+    # Additional parameters for fastqc
+    extra: ""
 
   # ----------------------------------------------------------------------
   #     MultiQC Params
@@ -297,7 +312,20 @@ params:
     # Number of threads to use
     threads: 8
     # Manhattan plot point size
-    point_size: 20
+    point_size: 200
+    # Define xtick interval for 
+    # single chromosome only plots (Default is: 10000)
+    # e.g. 10000 to show 10kb intervals on the x-axis
+    # Not need to define for multiple chromosomes
+    xtick_interval: 10000
+    # Define x and y ticks fontsizes
+    tick_fontsize: 18
+    # Define x and y-axis label fontsizes
+    label_fontsize: 24
+    # Define the title fontsize
+    title_fontsize: 24
+    # Define saved plot dpi
+    dpi: 300
 
   # ----------------------------------------------------------------------
   #     samtools Params

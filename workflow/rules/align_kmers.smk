@@ -133,7 +133,12 @@ rule plot_manhattan:
         )
     params:
         pheno= "{phenos_filt}",
-        point_size= config["params"]["plot_manhattan"]["point_size"]
+        point_size= config["params"]["plot_manhattan"]["point_size"],
+        xtick_interval= config["params"]["plot_manhattan"]["xtick_interval"],
+        tick_fontsize = config["params"]["plot_manhattan"]["tick_fontsize"],
+        label_fontsize = config["params"]["plot_manhattan"]["label_fontsize"],
+        title_fontsize = config["params"]["plot_manhattan"]["title_fontsize"],
+        dpi= config["params"]["plot_manhattan"]["dpi"],
     conda:
         "../envs/plot_manhattan.yaml"
     threads:

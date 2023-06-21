@@ -34,6 +34,7 @@ if __name__ == "__main__":
 
       # Get colors for manhattan plot
       colors = sns.color_palette("colorblind").as_hex()
+      colors_2 = sns.color_palette("husl").as_hex()
 
       # Make a column of minus log10 p-values
       align_kmers_sam_sorted['minuslog10pvalue'] = -np.log10(align_kmers_sam_sorted.p_value)
@@ -77,6 +78,14 @@ if __name__ == "__main__":
       # Plotting the manhattan plot
       print("Plotting...")
       
+      # Set font sizes
+      tick_fontsize = snakemake.params["tick_fontsize"]
+      label_fontsize = snakemake.params["label_fontsize"]
+      title_fontsize = snakemake.params["title_fontsize"]
+      
+      # Set the figure dpi
+      dpi = snakemake.params["dpi"]
+      
       ## If only one chromosome is provided, plot the k-mer's position on
       ## that chromosome on the x axis
       if num_of_chrs == 1:
@@ -85,6 +94,7 @@ if __name__ == "__main__":
                       snp="kmer_id",
                       chrom="chr",
                       CHR= pd.unique(align_kmers_sam_sorted['chr']),
+                      color=colors_2,
                       pos="bp",
                       pv="p_value",
                       suggestiveline=None,  # Turn off suggestiveline
@@ -93,10 +103,23 @@ if __name__ == "__main__":
                       ax=ax,
                       s = snakemake.params["point_size"],
                       clip_on=False)
-        ax.set_ylim([y_min-5, y_max+5]) # Set y axis limits
-        f.suptitle('k-mer Based GWAS Manhattan Plot for ' + snakemake.params["pheno"], fontsize=22)
-        plt.xlabel('Chromosome: ' + pd.unique(align_kmers_sam_sorted['chr'])[0], fontsize=18)
-        plt.ylabel(r"$-log_{10}{(P)}$", fontsize=18) 
+        ax.set_ylim([y_min-0.5, y_max+1]) # Set y axis limits
+        
+        # Set x axis tick interval
+        xtick_interval = snakemake.params["xtick_interval"]
+        
+        # Calculate the minimum and maximum of your data, rounded to the nearest multiple of 5000
+        min_val = align_kmers_sam_sorted['bp'].min() // xtick_interval * xtick_interval
+        max_val = (align_kmers_sam_sorted['bp'].max() // xtick_interval + 1) * xtick_interval
+
+        # Generate the tick locations
+        xtick_locs = np.arange(min_val, max_val, xtick_interval)
+        
+        f.suptitle('k-mer Based GWAS Manhattan Plot for ' + snakemake.params["pheno"], fontsize=title_fontsize)
+        plt.xlabel('Chromosome: ' + pd.unique(align_kmers_sam_sorted['chr'])[0], fontsize=label_fontsize)
+        plt.ylabel(r"$-log_{10}{(P)}$", fontsize=label_fontsize) 
+        plt.xticks(xtick_locs, fontsize = tick_fontsize)
+        plt.yticks(fontsize = tick_fontsize)
         plt.tight_layout()
       
       ## If more than one chromosome is provided, use all chromosomes
@@ -131,7 +154,7 @@ if __name__ == "__main__":
                       ax=ax,
                       s = snakemake.params["point_size"],
                       clip_on=True)
-        ax.set_ylim([y_min-3, y_max+1]) # Set y axis limits
+        ax.set_ylim([y_min-2, y_max+1]) # Set y axis limits
         plt.scatter(extra_rows['bp'], -np.log10(extra_rows['p_value']), alpha=0)
         
         # Calculate the cumulative distances from the start of each chromosome and store them in a list
@@ -143,18 +166,20 @@ if __name__ == "__main__":
           
         # Add a caption to the right bottom corner of the outside of the plot
         caption = '*Vertical dashed lines indicate chromosome boundaries.'
-        ax.text(1.0, -0.1, caption, transform=ax.transAxes, ha='right', va='bottom')
+        ax.text(1.0, -0.2, caption, transform=ax.transAxes, ha='right', va='bottom', fontsize=12)
         
         # Set the title of the plot
-        f.suptitle('k-mer Based GWAS Manhattan Plot for ' + snakemake.params["pheno"], fontsize=22) 
+        f.suptitle('k-mer Based GWAS Manhattan Plot for ' + snakemake.params["pheno"], fontsize=title_fontsize) 
         
         # Set the x and y axis labels
-        plt.xlabel('Chromosome', fontsize=18) # Set the x axis label
-        plt.ylabel(r"$-log_{10}{(P)}$", fontsize=18) # Set the y axis label
+        plt.xlabel('Chromosome', fontsize=label_fontsize) # Set the x axis label
+        plt.ylabel(r"$-log_{10}{(P)}$", fontsize=label_fontsize) # Set the y axis label
+        plt.xticks(fontsize = tick_fontsize)
+        plt.yticks(fontsize = tick_fontsize)
         
         # Adjust the plot layout
         plt.tight_layout() 
       
       ## Saving the plot as pdf
       print("Plotting is done. Saving the plot...")
-      plt.savefig(snakemake.output["manhattan_plot"])
+      plt.savefig(snakemake.output["manhattan_plot"], dpi=dpi)
