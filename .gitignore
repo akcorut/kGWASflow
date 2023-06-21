@@ -28,8 +28,7 @@
 !setup.py
 workflow/*.err
 workflow/*.out
-workflow/report.html
-workflow/kGWASflow-report.html
+workflow/*.html
 workflow/*.sh
 !kgwasflow
 !kgwasflow/*
