@@ -42,8 +42,13 @@ def get_testdir(dir="test"):
 
 def show_help_message():
     message = (
-        "\nUsage examples:\n"
-        "\n    kgwasflow init [OPTIONS]        Initialize a new kGWASflow working directory"
+        "\nCLUSTER EXECUTION:\n"
+        "\n kgwasflow run ... --profile [profile]\n"
+        "\n For information on Snakemake profiles see:\n"
+        "https://snakemake.readthedocs.io/en/stable/executing/cluster.html"
+        "\nhttps://snakemake.readthedocs.io/en/stable/executing/cli.html#profiles\n"
+        "\nUSAGE EXAMPLES:\n"
+        "\n    kgwasflow init [OPTIONS]        Initialize a new kGWASflow working directory\n"
         "\n    kgwasflow run [OPTIONS]         Run the kGWASflow workflow\n"
         "\n    kgwasflow test [OPTIONS]        Run the kGWASflow test\n"
         "\n    kgwasflow --help"
