@@ -25,13 +25,13 @@ with open(snakemake.log[0], "w") as f:
     # x-axis is allele count and y-axis is no. of k-mers
     # For every n accession/sample, the number of k-mers 
     # appeared in exactly that number of accessions.
-    fig_dims = (10, 12)
+    fig_dims = (10, 10)
     fig, ax = plt.subplots(figsize=fig_dims)
     sns_plot = sns.barplot(x=kmers_shareness[0], y=kmers_shareness[1], 
                            color="darksalmon", 
                            saturation=1)
-    sns_plot.set_xlabel("No. of samples",fontsize=14)
-    sns_plot.set_ylabel("No. of k-mers",fontsize=14)
+    sns_plot.set_xlabel("No. of samples",fontsize=24)
+    sns_plot.set_ylabel("No. of k-mers",fontsize=24)
 
     sns_plot.set_yscale("log")
 
@@ -45,8 +45,9 @@ with open(snakemake.log[0], "w") as f:
 
     # set x-axis ticks
     sns_plot.xaxis.set_major_formatter(ticker.FormatStrFormatter('%d'))
-    sns_plot.xaxis.set_major_locator(ticker.MultipleLocator(base=20))
-    
+    sns_plot.xaxis.set_major_locator(ticker.MultipleLocator(base=30))
+    plt.xticks(fontsize = 18)
+    plt.yticks(fontsize = 18)
     # rotate x axis labels
     ax.tick_params(axis='x', rotation=45)
     fig.tight_layout()
