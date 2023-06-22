@@ -19,7 +19,10 @@ A modular, flexible and reproducible Snakemake workflow to perform k-mers-based 
 * [Installation](#installation)
 * [Configuration](#configuration)
 * [Usage](#usage)
+* [Testing](#testing)
 * [Authors](#authors)
+* [Issues](#issues)
+* [Maintainers](#maintainers)
 * [License](#license)
 
 ## Summary
@@ -193,13 +196,49 @@ Information about how to use kGWASflow with Snakemake commands can be found in t
 
 ___________
 
+## Testing
+
+In order to test kGWASflow using an E.coli dataset ([Earle et al. 2016](https://www.nature.com/articles/nmicrobiol201641), [Rahman et al. 2018](https://elifesciences.org/articles/32920))
+
+
+```shell
+# Activating the conda environment
+conda activate kgwasflow
+```
+
+After activating kGWASflow, you can perform a test run as axplained below:
+
+```shell
+Test examples:
+
+1. Run the kGWASflow test in dryrun mode to see what tasks would be executed:
+
+   kgwasflow test -t 16 -n
+
+2. Run the kGWASflow test using the test config file with 16 threads:
+
+   kgwasflow test -t 16
+
+3. Run the kGWASflow test and define the test output folder:
+
+   kgwasflow test -t 16  --output path/to/test_output_dir
+```
+
+___________
+
 ## Authors
 
 kGWASflow was developed by [Adnan Kivanc Corut](https://www.github.com/akcorut).
 
-**For Issues:** [[https://github.com/fei0810/Triti-Map/issues](https://github.com/akcorut/kGWASflow/issues)](https://github.com/akcorut/kGWASflow/issues)
+___________
+
+## Issues
+
+For Issues: [[https://github.com/fei0810/Triti-Map/issues](https://github.com/akcorut/kGWASflow/issues)](https://github.com/akcorut/kGWASflow/issues)
 
 **Contributions to the development of kGWASflow are welcome! Create Pull Requests to fix bugs or recommend new features!**
+
+___________
 
 ## Maintainers
 
@@ -213,11 +252,13 @@ ___________
 
 ‼️**kGWASflow manuscript** is **in preparation**.‼️ In the meantime,
 
-If you use kGWASflow in your research, please cite using the DOI: [10.5281/zenodo.7834410](https://doi.org/10.5281/zenodo.7834410) and the original method paper by [Voichek et al. (2020)](https://www.nature.com/articles/s41588-020-0612-7):
+If you use kGWASflow in your research, please cite using the DOI: [10.5281/zenodo.7916305](https://doi.org/10.5281/zenodo.7916305) and the original method paper by [Voichek et al. (2020)](https://www.nature.com/articles/s41588-020-0612-7):
 
-* Kivanc Corut. akcorut/kGWASflow: v1.2.0. (2023). https://doi.org/10.5281/zenodo.7834410  
+* Kivanc Corut. akcorut/kGWASflow: v1.2.3. (2023). https://doi.org/10.5281/zenodo.7916305  
 
 * Voichek, Y., Weigel, D. Identifying genetic variants underlying phenotypic variation in plants without complete genomes. Nat Genet 52, 534–540 (2020). https://doi.org/10.1038/s41588-020-0612-7
+
+___________
 
 ## License
 kGWASflow is licensed under the [MIT](LICENSE.md) license.
