@@ -146,27 +146,50 @@ ___________
 
 ## Usage
 
-After [changing into the kGWASflow directory](https://github.com/akcorut/kGWASflow#step-1-obtain-the-latest-release-of-this-workflow) and [activating the kGWASflow conda environment](https://github.com/akcorut/kGWASflow#step-2-install-snakemake-and-the-other-dependencies), you can start using the workflow as below:
+After initializing (`kgwasflow init`) [step](#configuration) and modifying the configuration files, kGWASflow can be run as below:
 
-**1. Test your configuration by performing a dry-run**
+```shell
+# Activating the conda environment
+conda activate kgwasflow
 
-```bash
-snakemake -n --use-conda 
+# Change into your preferred working directory
+cd path/to/your/work_dir 
+
+# Run kgwasflow
+kgwasflow run -t 16
 ```
 
-**2. Run the workflow and install software dependencies**
+Below are some of the run examples of kGWASflow:
 
-```bash
-snakemake --cores all --use-conda
+```shell
+Run examples:
+
+1. Run kGWASflow with the default config file, default arguments and 16 threads:
+
+  kgwasflow run -t 16 --snake-default
+
+2. Run kGWASflow with a custom config file and default settings:
+
+  kgwasflow run -t 16 -c path/to/custom_config.yaml
+
+3. Run kGWASflow with user defined output directory:
+
+  kgwasflow run -t 16 --output path/to/output_dir
+
+4. Run kGWASflow in dryrun mode to see what tasks would be executed:
+
+  kgwasflow run -t 16 -n
+
+5. Run kGWASflow using mamba as the conda frontend:
+
+  kgwasflow run -t 16 --conda-frontend mamba
+
+6. Run kGWASflow and generate an HTML report:
+
+  kgwasflow run -t 16 --generate-report
 ```
 
-If you want to run the workflow with a different `config.yaml` file, you can us the `--configfile` parameter to specify it:
-
-```bash
-snakemake --use-conda --configfile <path/to/config.yaml>
-```
-
-The usage of this workflow is also described in the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog/?usage=akcorut%2FkGWASflow).
+Information about how to use kGWASflow with Snakemake commands can be found in the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog/?usage=akcorut%2FkGWASflow).
 
 ___________
 
