@@ -24,7 +24,9 @@ A modular, flexible and reproducible Snakemake workflow to perform k-mers-based 
 
 ## Summary
 
-**kGWASflow** is a [Snakemake](https://snakemake.github.io) pipeline developed for performing k-mers-based genome-wide association study (GWAS) based on the method developed by [Voichek et al. (2020)](https://www.nature.com/articles/s41588-020-0612-7). It performs several pre-GWAS analysis including read trimming, quality control and k-mer counting. It implements the [kmersGWAS method worfklow](https://github.com/voichek/kmersGWAS/blob/master/manual.pdf) for performing k-mers-based GWAS. The pipeline also contains post-GWAS analysis, such as mapping k-mers to a reference genome, finding and mapping the source reads for k-mers, assembling source reads of k-mers into contigs and mapping them to a reference genome. kGWASflow is also highly customizable and offers users multiple options to choose from depends on their needs.
+**kGWASflow** is a [Snakemake](https://snakemake.github.io) pipeline developed for performing k-mers-based genome-wide association study (GWAS) based on the method developed by [Voichek et al. (2020)](https://www.nature.com/articles/s41588-020-0612-7). It performs several pre-GWAS analyses, including read trimming, quality control, and k-mer counting. It implements the [kmersGWAS method]([https://github.com/voichek/kmersGWAS/blob/master/manual.pdf](https://www.nature.com/articles/s41588-020-0612-7)) into an easy to use and accessible workflow. The pipeline also contains post-GWAS analyses, such as mapping k-mers to a reference genome, finding and mapping the source reads of k-mers, assembling source reads into contigs, and mapping them to a reference genome. kGWASflow is also highly customizable and offers users multiple options to choose from depending on their needs.
+
+**More information and explanations on how to install, configure and run kGWASflow are provided in the [kGWASflow Wiki](https://github.com/akcorut/kGWASflow/wiki).**
 
 ![My project-1-3](https://user-images.githubusercontent.com/42179487/198741149-406abb40-5d1c-4ed0-9a2f-1c6fd9ebed3c.png)
 
@@ -32,49 +34,54 @@ ___________
 
 ## Installation
 
-### Step 1: Obtain the latest release of this workflow
+### Installing via Bioconda 
 
-**1. Clone this repository to your local machine using below command:**
+‼️This is the **preferred method**.‼️
+
+In order to use this workflow, you need [`conda`](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) to be installed (to install `conda`, please follow the instructions [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html)).
 
 ```bash
-git clone https://github.com/akcorut/kGWASflow.git
+# Create a new conda environment with kgwasflow 
+# and its dependencies
+conda create -c bioconda -n kgwasflow kgwasflow
+
+# Activate kGWASflow conda environment
+conda activate kgwasflow
+
+# test kGWASflow
+kgwasflow --help
 ```
 
-**Alternatively**, you can also download and extract the [source code of the latest release](https://github.com/akcorut/kGWASflow/releases).
+### Installing via GitHub (Alternative Method)
 
-**2. Change into the kGWASflow directory:**
+Alternatively, kGWASflow can be installed by cloning [the GitHub repository](https://github.com/akcorut/kGWASflow).
 
 ```bash
+# Clone this repository to your local machin
+git clone https://github.com/akcorut/kGWASflow.git
+
+# Change into the kGWASflow directory
 cd kGWASflow
 ```
 
-### Step 2: Install Snakemake and the other dependencies
-
-In order to use this worklow, you need [`conda`](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) to be installed (to install `conda`, please follow the instructions [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html)).
-
-**1. Install Snakemake via [`mamba`](https://github.com/mamba-org/mamba) package manager:**
-
-Snakemake recommends `mamba` to be used to install snakemake. More detailed information can be found in the [Snakemake manual](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html). To install `mamba`, you can use the below command:
+After cloning the GitHub repo, you can install snakemake and the other dependencies using `conda` as below:
 
 ```bash
-conda install -c conda-forge mamba
-```
-
-After installing `mamba`, you can use below commands to install and activate snakemake and the other dependencies:
-
-```bash
-mamba env create -f environment.yaml
-conda activate kGWASflow
-```
-
-**1a. Alternative installation without `mamba`** 
-
-You can also install snakemake and the other dependencies without `mamba` and just using `conda` as below:
-
-```bash
-# This assumes conda is installed in your local machine or computing environment
+# This assumes conda is installed
 conda env create -f environment.yaml
+
+# Activate kGWASflow conda environment
 conda activate kGWASflow
+```
+
+Finally, you can install kGWASflow using the setup script as below:
+
+```bash
+# Install kgwasflow
+python setup.py install
+
+# Test kgwasflow
+kgwasflow --help
 ```
 
 ### Other Options: 
@@ -85,15 +92,55 @@ ___________
 
 ## Configuration
 
-Configure the workflow according to your needs by modifying the files in the `config/` folder.
+### Initializing kGWASflow
+
+To configure kGWASflow, you first need to initialize a new kGWASflow working directory by following the below steps:
+
+```bash
+# Activating the conda environment
+conda activate kgwasflow
+
+# Initializing a new kgwasflow working dir
+kgwasflow init --working-dir path/to/your/work_dir 
+```
+
+or
+
+```bash
+# Activating the conda environment
+conda activate kgwasflow
+
+# Change into your preferred working directory
+cd path/to/your/work_dir 
+
+# Initializing a new kgwasflow working dir
+kgwasflow init
+```
+
+### kGWASflow Working Directory Structure 
+
+This command will initialize a new kGWASflow working directory with the default configuration files. Below is the directory structure of the working directory:
+
+```
+path/to/your/work_dir 
+├── config
+│   ├── config.yaml
+│   ├── phenos.tsv
+│   └── samples.tsv
+└── test
+```
+
+### kGWASflow Configuration Files
+
+Below are the configuration files generated by `kgwasflow init` command:
 
 - `config/config.yaml` is a YAML file containing the workflow configuration.
 
 - `config/samples.tsv` is a TSV file containing the sample information.
 
-- `config/phenos.tsv` is a TSV file contains the phenotype information.
+- `config/phenos.tsv` is a TSV file containing the phenotype information.
 
-For more information, please click [here](https://github.com/akcorut/kGWASflow/tree/main/config#configuration-settings).
+**For more information about each configuration file, please see [kGWASflow Wiki](https://github.com/akcorut/kGWASflow/wiki).**
 
 ___________
 
@@ -125,8 +172,18 @@ ___________
 
 ## Authors
 
-kGWASflow was developed by [Adnan Kivanc Corut ](https://www.github.com/akcorut).
+kGWASflow was developed by [Adnan Kivanc Corut](https://www.github.com/akcorut).
 
+**For Issues:** [[https://github.com/fei0810/Triti-Map/issues](https://github.com/akcorut/kGWASflow/issues)](https://github.com/akcorut/kGWASflow/issues)
+
+**Contributions to the development of kGWASflow are welcome! Create Pull Requests to fix bugs or recommend new features!**
+
+## Maintainers
+
+- [Adnan Kivanc Corut ![orcid]](https://orcid.org/0009-0002-7622-7300), [![github]](https://github.com/akcorut)
+
+[github]: https://cbg-ethz.github.io/V-pipe/img/mark-github.svg
+[orcid]: https://cbg-ethz.github.io/V-pipe/img/ORCIDiD_iconvector.svg
 ___________
 
 ## Citation
