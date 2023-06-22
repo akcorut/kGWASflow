@@ -234,7 +234,7 @@ ___________
 
 ## Issues
 
-For Issues: [[https://github.com/fei0810/Triti-Map/issues](https://github.com/akcorut/kGWASflow/issues)](https://github.com/akcorut/kGWASflow/issues)
+For Issues: [https://github.com/akcorut/kGWASflow/issues](https://github.com/akcorut/kGWASflow/issues)
 
 **Contributions to the development of kGWASflow are welcome! Create Pull Requests to fix bugs or recommend new features!**
 
