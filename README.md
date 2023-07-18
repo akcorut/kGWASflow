@@ -1,7 +1,7 @@
 
 # kGWASflow <img align="right" width="420" src="https://user-images.githubusercontent.com/42179487/194161153-cc832e57-dd03-481b-8eed-34cb13ba3097.png">
 
-A modular, flexible and reproducible Snakemake workflow to perform k-mers-based GWAS.
+A modular, flexible, and reproducible Snakemake workflow to perform k-mers-based GWAS.
 
 [![Anaconda-Server Badge](https://anaconda.org/bioconda/kgwasflow/badges/version.svg)](https://anaconda.org/bioconda/kgwasflow)
 ![Anaconda-Server Badge](https://anaconda.org/bioconda/kgwasflow/badges/latest_release_date.svg)
@@ -30,6 +30,9 @@ A modular, flexible and reproducible Snakemake workflow to perform k-mers-based 
 **kGWASflow** is a [Snakemake](https://snakemake.github.io) pipeline developed for performing k-mers-based genome-wide association study (GWAS) based on the method developed by [Voichek et al. (2020)](https://www.nature.com/articles/s41588-020-0612-7). It performs several pre-GWAS analyses, including read trimming, quality control, and k-mer counting. It implements the [kmersGWAS method]([https://github.com/voichek/kmersGWAS/blob/master/manual.pdf](https://www.nature.com/articles/s41588-020-0612-7)) into an easy to use and accessible workflow. The pipeline also contains post-GWAS analyses, such as mapping k-mers to a reference genome, finding and mapping the source reads of k-mers, assembling source reads into contigs, and mapping them to a reference genome. kGWASflow is also highly customizable and offers users multiple options to choose from depending on their needs.
 
 **More information and explanations on how to install, configure and run kGWASflow are provided in the [kGWASflow Wiki](https://github.com/akcorut/kGWASflow/wiki).**
+
+**kGWASflow preprint is out on bioRxiv:** 
+- Adnan Kivanc Corut, Jason G. Wallace. kGWASflow: a modular, flexible, and reproducible Snakemake workflow for k-mers-based GWAS (2023). bioRxiv. [https://doi.org/10.1101/2023.07.10.548365](https://doi.org/10.1101/2023.07.10.548365)
 
 ![My project-1-3](https://user-images.githubusercontent.com/42179487/198741149-406abb40-5d1c-4ed0-9a2f-1c6fd9ebed3c.png)
 
