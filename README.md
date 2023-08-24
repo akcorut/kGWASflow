@@ -106,7 +106,7 @@ To configure kGWASflow, you first need to initialize a new kGWASflow working dir
 conda activate kgwasflow
 
 # Initializing a new kgwasflow working dir
-kgwasflow init --working-dir path/to/your/work_dir 
+kgwasflow init --work-dir path/to/your/work_dir 
 ```
 
 or
@@ -177,9 +177,9 @@ Run examples:
 
   kgwasflow run -t 16 -c path/to/custom_config.yaml
 
-3. Run kGWASflow with user defined output directory:
+3. Run kGWASflow with user defined working directory:
 
-  kgwasflow run -t 16 --output path/to/output_dir
+  kgwasflow run -t 16 --work-dir path/to/work_dir
 
 4. Run kGWASflow in dryrun mode to see what tasks would be executed:
 
@@ -221,9 +221,9 @@ Test examples:
 
    kgwasflow test -t 16
 
-3. Run the kGWASflow test and define the test output folder:
+3. Run the kGWASflow test and define the test working directory:
 
-   kgwasflow test -t 16  --output path/to/test_output_dir
+   kgwasflow test -t 16 --work-dir path/to/test_work_dir
 ```
 
 ___________
