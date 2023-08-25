@@ -75,8 +75,8 @@ def show_help_message():
         "\n    kgwasflow test -t 16 -n"
         "\n\n2. Run the kGWASflow test using the test config file with 16 threads:\n"
         "\n    kgwasflow test -t 16"
-        "\n\n3. Run the kGWASflow test and define the test output folder:\n"
-        "\n    kgwasflow test -t 16  --output path/to/test_output_dir"
+        "\n\n3. Run the kGWASflow test and define the working directory:\n"
+        "\n    kgwasflow test -t 16 --work-dir path/to/test_output_dir"
     )
     return message
 

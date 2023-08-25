@@ -52,6 +52,14 @@ def run(snakefile, config_file, **kwargs):
 @click.command(epilog=show_help_message(), context_settings=dict(help_option_names=["-h", "--help"], ignore_unknown_options=True))
 def test(snakefile, config_file, **kwargs):
     """Test kGWASflow workflow."""
+    
+    click.secho("Starting kGWASflow test using the E.coli dataset...", fg="yellow")
+    click.secho("\nFor detailed info on this test, visit: ", fg="yellow", nl=False)
+    click.secho("https://github.com/akcorut/kGWASflow#testing", fg="blue", underline=True)
+    
+    if kwargs.get('dryrun', False):
+        click.secho("\n[WARNING] This is a dryrun (flag -n or --dryrun was used)!\n", fg="magenta")
+    
     if not snakefile:
         snakefile = get_snakefile()
     
@@ -72,6 +80,8 @@ def test(snakefile, config_file, **kwargs):
 def init_workdir(work_dir):
     """Initialize a new kGWASflow working directory with default configuration files."""
     
+    click.secho("Initializing a new kGWASflow working directory... Won't take long!", fg="yellow")
+
     config_file = get_configfile() # Get the default config.yaml file
     sample_file = get_samplefile() # Get the default samples.tsv file
     phenos_file = get_phenosfile() # Get the default phenos.tsv file
@@ -89,11 +99,21 @@ def init_workdir(work_dir):
         os.makedirs(work_dir)
     if not os.path.exists(config_path):
         os.makedirs(config_path)
-    
+        
     copyfile(config_file, config_yaml_path)
+    click.secho("\n[INFO] Config.yaml file has been created at: " + config_yaml_path, fg="cyan")
+
     copyfile(sample_file, samples_tsv_path)
+    click.secho("[INFO] Samples.tsv file has been created at: " + samples_tsv_path, fg="cyan")
+
     copyfile(phenos_file, phenos_tsv_path)
+    click.secho("[INFO] Phenos.tsv file has been created at: " + phenos_tsv_path, fg="cyan")
+
     shutil.copytree(test_dir, new_test_dir, dirs_exist_ok=True)
+    click.secho("[INFO] Test directory has been created at: " + new_test_dir, fg="cyan")
+    
+    click.secho("\nSuccess! kGWASflow initialization is complete! You can now run the workflow with:", fg="green")
+    click.secho("\nkgwasflow run (...)\n", fg="blue", bold=True)
     
 cli.add_command(run)
 cli.add_command(test)
