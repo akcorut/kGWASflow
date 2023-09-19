@@ -80,7 +80,7 @@ wildcard_constraints:
 #     Pipeline User Output
 # =================================================================================================
 
-kgwasflow_version = "v1.2.3"
+kgwasflow_version = "v1.2.4"
 kgwasflow_author = "Adnan Kivanc Corut"
 date_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 snake_version = snakemake.__version__
