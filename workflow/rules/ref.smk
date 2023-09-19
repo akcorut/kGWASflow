@@ -45,7 +45,7 @@ rule genome_index:
 
 rule bowtie2_build:
     input:
-        reference = "resources/ref/genome/genome.fasta",
+        ref = "resources/ref/genome/genome.fasta",
     output:
         multiext(
             "resources/ref/genome/bowtie2_index/genome",
