@@ -284,6 +284,16 @@ params:
     threads: 8
 
   # ----------------------------------------------------------------------
+  #     sort_reads Params
+  # ----------------------------------------------------------------------
+  
+  sort_reads:
+    # Parameter to activate seqkit rename before sorting
+    # Set to True if you want to rename duplicated reads
+    # (Default is: False)
+    rename_dups: False
+    
+  # ----------------------------------------------------------------------
   #     bowtie2 Params
   # ----------------------------------------------------------------------
 
@@ -326,6 +336,9 @@ params:
     title_fontsize: 24
     # Define saved plot dpi
     dpi: 300
+    # Define the plot size
+    fig_width: 18 # Width of the plot
+    fig_height: 9 # Height of the plot
 
   # ----------------------------------------------------------------------
   #     samtools Params
