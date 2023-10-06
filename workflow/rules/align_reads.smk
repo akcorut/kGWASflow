@@ -35,6 +35,8 @@ rule sort_reads:
         sorted_r1 = "results/fetch_reads_with_kmers/{phenos_filt}/merged_reads/{phenos_filt}_reads_with_kmers.merged.sorted.R1.fastq",
         sorted_r2 = "results/fetch_reads_with_kmers/{phenos_filt}/merged_reads/{phenos_filt}_reads_with_kmers.merged.sorted.R2.fastq",
         done = touch("results/fetch_reads_with_kmers/{phenos_filt}/merged_reads/{phenos_filt}.sorting_merged_source_reads.done")
+    params:
+        rename_duplicates = config["params"]["sort_reads"]["rename_dups"]
     conda:
         "../envs/align_reads.yaml"
     log:
@@ -43,8 +45,13 @@ rule sort_reads:
         "Sorting reads..."
     shell:
         """
-        seqkit sort -n {input.r1} > {output.sorted_r1} 2> {log}
-        seqkit sort -n {input.r2} > {output.sorted_r2} 2> {log}
+        if [ {params.rename_duplicates} = True ]; then
+            seqkit rename {input.r1} | seqkit sort -n > {output.sorted_r1} 2> {log}
+            seqkit rename {input.r2} | seqkit sort -n > {output.sorted_r2} 2>> {log}
+        else
+            seqkit sort -n {input.r1} > {output.sorted_r1} 2> {log}
+            seqkit sort -n {input.r2} > {output.sorted_r2} 2>> {log}
+        fi
         """
 
 # =======================================================================================================
