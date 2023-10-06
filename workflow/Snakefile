@@ -41,7 +41,9 @@ include: "rules/fetch_reads.smk"
 include: "rules/align_reads.smk"
 include: "rules/assemble_reads.smk"
 include: "rules/align_contigs.smk"
-include: "rules/igv_report.smk"
+# Activate igv_report if only igv_report is active in config.yaml
+if config["settings"]["assemble_reads"]["igv_report"] or config["settings"]["align_reads_with_kmers"]["igv_report"]:
+    include: "rules/igv_report.smk"
 include: "rules/blast_contigs.smk"
 
 # =========================================================================================================
