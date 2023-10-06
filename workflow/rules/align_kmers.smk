@@ -139,6 +139,8 @@ rule plot_manhattan:
         label_fontsize = config["params"]["plot_manhattan"]["label_fontsize"],
         title_fontsize = config["params"]["plot_manhattan"]["title_fontsize"],
         dpi= config["params"]["plot_manhattan"]["dpi"],
+        figure_width= config["params"]["plot_manhattan"]["fig_width"],
+        figure_height= config["params"]["plot_manhattan"]["fig_height"],
     conda:
         "../envs/plot_manhattan.yaml"
     threads:

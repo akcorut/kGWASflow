@@ -29,6 +29,9 @@ if __name__ == "__main__":
       align_kmers_sam['p_value'] = align_kmers_sam['p_value'].astype(float)
       align_kmers_sam['bp'] = align_kmers_sam['bp'].astype(int)
       
+      # Drop na values
+      align_kmers_sam = align_kmers_sam.dropna(subset=['p_value'])
+
       # Sort the data by chromosome and chromosome position
       align_kmers_sam_sorted = align_kmers_sam.sort_values(by=["chr", "bp"], key=natsort.natsort_keygen())
 
@@ -85,11 +88,13 @@ if __name__ == "__main__":
       
       # Set the figure dpi
       dpi = snakemake.params["dpi"]
+      figure_width = snakemake.params["figure_width"]
+      figure_height = snakemake.params["figure_height"]
       
       ## If only one chromosome is provided, plot the k-mer's position on
       ## that chromosome on the x axis
       if num_of_chrs == 1:
-        f, ax = plt.subplots(figsize=(18, 9), facecolor='w', edgecolor='k')
+        f, ax = plt.subplots(figsize=(figure_width, figure_height), facecolor='w', edgecolor='k')
         manhattanplot(data=align_kmers_sam_sorted,
                       snp="kmer_id",
                       chrom="chr",
@@ -108,12 +113,27 @@ if __name__ == "__main__":
         # Set x axis tick interval
         xtick_interval = snakemake.params["xtick_interval"]
         
-        # Calculate the minimum and maximum of your data, rounded to the nearest multiple of 5000
+        # Calculate the minimum and maximum of your data, rounded to the nearest multiple of xtick_interval
         min_val = align_kmers_sam_sorted['bp'].min() // xtick_interval * xtick_interval
         max_val = (align_kmers_sam_sorted['bp'].max() // xtick_interval + 1) * xtick_interval
 
-        # Generate the tick locations
-        xtick_locs = np.arange(min_val, max_val, xtick_interval)
+        # Determine the range and midpoint of your data
+        range_val = align_kmers_sam_sorted['bp'].max() - align_kmers_sam_sorted['bp'].min()
+        midpoint = align_kmers_sam_sorted['bp'].min() + (range_val / 2)
+
+        # Calculate the left and right limits for your x-axis
+        half_width = (max_val - min_val) / 2
+        left_limit = max(0, midpoint - half_width)  # ensure left_limit doesn't go below 0
+        right_limit = midpoint + half_width
+
+        # Set the x limits of your plot
+        ax.set_xlim([left_limit, right_limit])
+
+        # Calculate the closest multiple of xtick_interval that is greater than or equal to left_limit
+        starting_tick = np.ceil(left_limit / xtick_interval) * xtick_interval
+
+        # Generate the tick locations based on the updated limits and interval
+        xtick_locs = np.arange(starting_tick, right_limit + 100, xtick_interval)
         
         f.suptitle('k-mer Based GWAS Manhattan Plot for ' + snakemake.params["pheno"], fontsize=title_fontsize)
         plt.xlabel('Chromosome: ' + pd.unique(align_kmers_sam_sorted['chr'])[0], fontsize=label_fontsize)
@@ -128,11 +148,11 @@ if __name__ == "__main__":
         # Extract chromosome names and lengths from the SAM file header
         chrom_info_tab = extract_chromosome_info(snakemake.input[0])
         chrom_names = natsorted(chrom_info_tab['chr'].tolist())
-
+        
         # Add extra chromosome names and lengths to the data frame
         align_kmers_sam_with_all_chrom = pd.concat([align_kmers_sam, chrom_info_tab], ignore_index=True)
         align_kmers_sam_with_all_chrom = align_kmers_sam_with_all_chrom[align_kmers_sam_with_all_chrom['chr'].isin(chrom_names)]
-        
+
         # Sort the data by chromosome and chromosome position
         align_kmers_sam_with_all_chrom_sorted = align_kmers_sam_with_all_chrom.sort_values(by=["chr", "bp"], key=natsort.natsort_keygen()) 
         # Fill NaN values with 1
@@ -141,7 +161,7 @@ if __name__ == "__main__":
         # Plot the dots of chromosome length rows wiht the lowest opacity 
         extra_rows = align_kmers_sam_with_all_chrom_sorted[align_kmers_sam_with_all_chrom_sorted['p_value'] == 1]
 
-        f, ax = plt.subplots(figsize=(18, 9), facecolor='w', edgecolor='k')
+        f, ax = plt.subplots(figsize=(figure_width, figure_height), facecolor='w', edgecolor='k')
         manhattanplot(data=align_kmers_sam_with_all_chrom_sorted,
                       snp="kmer_id",
                       chrom="chr",
