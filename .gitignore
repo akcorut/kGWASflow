@@ -42,3 +42,11 @@ workflow/*.sh
 !.test/data/ecoli_ref
 !.test/data/ecoli_ref/CP026474.1.fa
 !.test/data/ecoli_ref/CP026474.gff3
+!.test/data/test_ref
+!.test/data/test_ref/*
+!.test/data/test_phenos
+!.test/data/test_phenos/*
+!.test/data/test_reads
+!.test/data/test_reads/*
+!.test/config_test
+!.test/config_test/*
