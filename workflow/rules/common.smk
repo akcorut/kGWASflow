@@ -80,7 +80,7 @@ wildcard_constraints:
 #     Pipeline User Output
 # =================================================================================================
 
-kgwasflow_version = "v1.2.4"
+kgwasflow_version = "v1.3"
 kgwasflow_author = "Adnan Kivanc Corut"
 date_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 snake_version = snakemake.__version__
@@ -116,13 +116,13 @@ logger.info("# =================================================================
 logger.info("")
 logger.info("     If you use kGWASflow, please cite:                                            ")
 logger.info("")
-logger.info("     * Voichek, Y., Weigel, D. Identifying genetic variants underlying                  ")
-logger.info("     phenotypic variation in plants without complete genomes.                         ")
-logger.info("     Nat Genet 52, 534–540 (2020). https://doi.org/10.1038/s41588-020-0612-7          ")
-logger.info("")
 logger.info("     * Corut, A. K. & Wallace, J. G. kGWASflow: a modular, flexible,                   ")
 logger.info("     and reproducible Snakemake workflow for k-mers-based GWAS.                        ")
 logger.info("     bioRxiv (2023). https://doi.org/10.1101/2023.07.10.548365                         ")
+logger.info("")
+logger.info("     * Voichek, Y., Weigel, D. Identifying genetic variants underlying                  ")
+logger.info("     phenotypic variation in plants without complete genomes.                         ")
+logger.info("     Nat Genet 52, 534–540 (2020). https://doi.org/10.1038/s41588-020-0612-7          ")
 logger.info("")
 logger.info("# ================================================================================== #")
 logger.info("")
