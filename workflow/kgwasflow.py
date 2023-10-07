@@ -50,12 +50,18 @@ def run(snakefile, config_file, **kwargs):
     
 @common_options
 @click.command(epilog=show_help_message(), context_settings=dict(help_option_names=["-h", "--help"], ignore_unknown_options=True))
-def test(snakefile, config_file, **kwargs):
+@click.option('--dataset', type=click.Choice(['ecoli', 'test']), default='test', help="Select the dataset for testing. Choices are 'ecoli' or 'test'.")
+def test(snakefile, config_file, dataset, **kwargs):
     """Test kGWASflow workflow."""
     
-    click.secho("Starting kGWASflow test using the E.coli dataset...", fg="yellow")
-    click.secho("\nFor detailed info on this test, visit: ", fg="yellow", nl=False)
-    click.secho("https://github.com/akcorut/kGWASflow#testing", fg="blue", underline=True)
+    if dataset == "ecoli":
+        click.secho("Starting kGWASflow test using the E.coli dataset...", fg="yellow")
+        click.secho("\nFor detailed info on this test, visit: ", fg="yellow", nl=False)
+        click.secho("https://github.com/akcorut/kGWASflow#testing", fg="blue", underline=True)
+        test_config_file = os.path.join(workflow_dir, "test", "config_ecoli", "config.yaml")
+    elif dataset == "test":
+        click.secho("Starting kGWASflow test using a mock test dataset...", fg="yellow")
+        test_config_file = os.path.join(workflow_dir, "test", "config_test", "config.yaml")
     
     if kwargs.get('dryrun', False):
         click.secho("\n[WARNING] This is a dryrun (flag -n or --dryrun was used)!\n", fg="magenta")
@@ -63,9 +69,10 @@ def test(snakefile, config_file, **kwargs):
     if not snakefile:
         snakefile = get_snakefile()
     
-    test_config_file = os.path.join(workflow_dir, "test", "config_ecoli", "config.yaml")
     if not config_file:
         config_file = test_config_file
+        
+    kwargs.pop('dataset', None)
     run_snake(snakefile, config_file, **kwargs)
     
 @cli.command('init', 

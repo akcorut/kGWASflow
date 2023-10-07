@@ -8,7 +8,7 @@ with open(os.path.join(setup_dir, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name="kgwasflow",
-    version="1.2.3",
+    version="1.3",
     python_requires=">3.10",
     description="kGWASflow is a Snakemake workflow for performing k-mers-based GWAS.",
     long_description=long_description,
@@ -27,9 +27,13 @@ setup(
         "schemas/*",
         "report/*",
         "config/*", 
-        "test/config_ecoli/*", 
+        "test/config_ecoli/*",
+        "test/config_test/*",
         "test/data/ecoli_ref/*", 
-        "test/data/ecoli_phenos/*"]},
+        "test/data/ecoli_phenos/*",
+        "test/data/test_ref/*",
+        "test/data/test_phenos/*",
+        "test/data/test_reads/*"]},
     # include_package_data= True,
     entry_points={
         "console_scripts": [

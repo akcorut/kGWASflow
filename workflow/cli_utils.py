@@ -73,12 +73,17 @@ def show_help_message():
         "\n\nTest examples:"
         "\n\n1. Run the kGWASflow test in dryrun mode to see what tasks would be executed:\n"
         "\n    kgwasflow test -t 16 -n"
-        "\n\n2. Run the kGWASflow test using the test config file with 16 threads:\n"
+        "\n\n2. Run the kGWASflow test using the default 'test' dataset with 16 threads:\n"
         "\n    kgwasflow test -t 16"
         "\n\n3. Run the kGWASflow test and define the working directory:\n"
         "\n    kgwasflow test -t 16 --work-dir path/to/test_output_dir"
+        "\n\n4. Run the kGWASflow test using the 'ecoli' dataset:\n"
+        "\n    kgwasflow test -t 16 --dataset ecoli"
+        "\n\n5. Run the kGWASflow test using the default 'test' dataset:\n"
+        "\n    kgwasflow test -t 16 --dataset test"
     )
     return message
+
 
 
 def show_ascii_art():

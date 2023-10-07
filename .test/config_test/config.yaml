@@ -1,0 +1,405 @@
+# =============================================================================================== #
+#                   _     _______          __      _____  __ _                                    # 
+#                  | |   / ____\ \        / /\    / ____|/ _| |                                   #
+#                  | | _| |  __ \ \  /\  / /  \  | (___ | |_| | _____      __                     #
+#                  | |/ / | |_ | \ \/  \/ / /\ \  \___ \|  _| |/ _ \ \ /\ / /                     #
+#                  |   <| |__| |  \  /\  / ____ \ ____) | | | | (_) \ V  V /                      #
+#                  |_|\_\\_____|   \/  \/_/    \_\_____/|_| |_|\___/ \_/\_/                       #
+#                                                                                                 #
+# =============================================================================================== #
+
+# USAGE: https://github.com/akcorut/kGWASflow/wiki
+
+# =================================================================================================
+#     Input Information
+# =================================================================================================
+
+# Sample and Phenotype Sheets 
+# !!! Required !!!
+# Paths to the samples.tsv and phenos.tsv
+# For more information: https://github.com/akcorut/kGWASflow/tree/main/config
+samples: test/config_test/samples.tsv
+phenotypes: test/config_test/phenos.tsv
+
+# =================================================================================================
+#     Reference Genome
+# =================================================================================================
+
+ref:
+  # !!! Reference genome in Fasta format required for the alignment step !!!
+  # Path to the fasta file of the reference genome
+  fasta: test/data/test_ref/test_genome.fasta
+  # Path to the annotation file of the reference genome (.gtf or .gff3)
+  annotation: 
+
+# =================================================================================================
+#     Workflow Settings
+# =================================================================================================
+
+settings:
+
+  # ----------------------------------------------------------------------
+  #     Pre-GWAS Settings
+  # ----------------------------------------------------------------------
+  
+  ## Set to true in order to use single end reads
+  # TODO Add single-end support
+  single_end: false
+
+  trimming: 
+    # Set to true in order to perform addapter trimming on raw reads
+    activate: false
+
+  # ----------------------------------------------------------------------
+  #     kmerGWAS Settings
+  # ----------------------------------------------------------------------
+
+  kmers_gwas:
+    # Convert kmers table to PLINK .bed format
+    kmers_table_to_bed:
+    # Set to true in order to convert k-mers table to PLINK format (.bed)
+      activate: false
+
+    use_kmers_kinship:
+    # Set to true in order to use k-mers based kinship matrix
+      activate: true
+    # This will be ignored if use_kmers is activated
+    use_snps_kinship:
+    # Set to true in order to use SNP based kinship matrix
+    # This will be ignored if use_kmers is activated
+      activate: false
+      # If activated, you need to provide a SNP table in PLINKformat (.bed).
+      # PLINK .bed format: https://www.cog-genomics.org/plink/1.9/formats#bed
+      ## !!! The order of the samples in SNP table has to be the same as in the samples sheet (samples.tsv file) !!!
+      snps_plink: ""
+
+  # ----------------------------------------------------------------------
+  #     Post-GWAS Settings
+  # ----------------------------------------------------------------------
+
+  align_kmers:
+  # Set to true in order to align k-mers
+  # to the reference genome
+    activate: true
+    # Choose an aligner between bowtie and bowtie2
+    # to align significant k-mers to the reference genome
+    ## ! Choose only one aligner !
+    use_bowtie: false # Set to true if you prefer bowtie
+    use_bowtie2: true # Set to true if you prefer bowtie2
+
+    # Set to true in order to generate manhattan plot 
+    # from k-mer alignment results
+    plot_manhattan: true
+
+  align_reads_with_kmers:
+  # Set to true in order to align reads
+  # with k-mers to the reference genome
+    activate: true
+    # Set to true in order to generate IGV report
+    igv_report: false 
+
+  assemble_reads:
+  # Set to true in order to assemble and
+  # align reads with k-mers to the reference genome
+    activate: false
+    # Set to true in order to generate IGV report
+    igv_report: false
+
+  blast_contigs:
+  # Set to true in order to BLAST contigs
+    activate: false
+
+# =================================================================================================
+#     Resoruces
+# =================================================================================================
+
+resources:
+  kmers_gwas:
+    
+# =================================================================================================
+#     Tool Parameters
+# =================================================================================================
+
+params:
+
+  # ----------------------------------------------------------------------
+  #     fasterq-dump Params
+  # ----------------------------------------------------------------------
+
+  fasterq_dump:
+    # Number of threads for fasterq-dump
+    threads: 4
+    # Additional parameters for fasterq-dump
+    extra: "--skip-technical"
+    
+  # ----------------------------------------------------------------------
+  #     FastQC Params
+  # ----------------------------------------------------------------------
+
+  fastqc:
+    # Number of threads for fastqc
+    threads: 4
+    # Additional parameters for fastqc
+    extra: ""
+
+  # ----------------------------------------------------------------------
+  #     MultiQC Params
+  # ----------------------------------------------------------------------
+
+  multiqc: ""
+
+  # ----------------------------------------------------------------------
+  #     cutadapt Params
+  # ----------------------------------------------------------------------
+  cutadapt:
+    # Number of threads for cutadapt
+    threads: 4
+
+    # See cutadapt manual:
+    # https://cutadapt.readthedocs.io/en/stable/guide.html
+    # Set params for single end files
+    se:
+      adapters: ""
+      extra: ""
+    # Set params for paired end files
+    # https://cutadapt.readthedocs.io/en/stable/guide.html
+    pe:
+      adapters: ""
+      extra: "-q 15,10"
+      
+  # ----------------------------------------------------------------------
+  #     KMC Params
+  # ----------------------------------------------------------------------
+
+  kmc:
+    # Number of threads for kmc
+    threads: 4
+    
+    # k-mer length (should be between 15-31)
+    kmer_len: 25
+    
+    # Threshold for counted k-mers. For example if 
+    # it is 2, k-mer has to appear at least 2 times to be
+    # counted. This parameter depends on the coverage, but should be
+    # the same for all the individuals.
+    count_thresh: 1
+
+    extra: ""
+
+  # ----------------------------------------------------------------------
+  #     merge_kmers Params
+  # ----------------------------------------------------------------------
+  
+  merge_kmers:
+    # Number of threads for kmc
+    threads: 4
+    
+  # ----------------------------------------------------------------------
+  #     convert_kmers_table_to_plink Params
+  # ----------------------------------------------------------------------
+
+  kmers_table_to_bed:
+    # Phenotypes to use (based on the phenos.tsv file)
+    # Only the individuals that exist in the given 
+
+    # phenotype file will be used
+    phenos: ["disease"]
+    # Number of threads for kmers_table_to_bed
+    threads: 4
+    # k-mer length (should be between 15-31)
+    kmer_len: 31
+    # Minor allele count
+    # (Default is: 5)
+    minor_allele_count: 5
+    # Minor allele frequency 
+    # (Default is: 0.05)
+    minor_allele_freq: 0.05
+    # Maximal number of variants in each PLINK bed file
+    # Set by -b option
+    # Use a very large number if you want to avoid splitting
+    max_num_var: 10000000000
+    # Set to true in order to keep only unique presence/absence patterns
+    only_unique: true 
+
+  # ----------------------------------------------------------------------
+  #     kmersGWAS Params
+  # ----------------------------------------------------------------------
+
+  kmers_gwas:
+    # Number of threads to use
+    threads: 4
+
+    # Minimum percent of appearance in each strand form
+    min_percent_app: 0
+
+    # Minor allele count (min allowed appearance of a k-mer) 
+    # (Default is: 5)
+    minor_allele_count: 1
+    
+    # Minor allele frequency 
+    # (Default is: 0.05)
+    minor_allele_freq: 0.01
+
+    # Number of k-mers to filter from first step 
+    # (Default is: 10001)
+    kmers_number: 10001
+
+    # Number of permutations to define the threshold 
+    # (at least 20 recommended, Default is: 100)
+    n_permutations: 20
+
+    # Number of snps to filter from the first step 
+    # (Default is: 10001)
+    snps_num: 10001
+
+    ## Min number of data points (samples) allowed 
+    # (Default is: 30)
+    min_data_points: 25
+
+    extra: ""
+
+  # ----------------------------------------------------------------------
+  #     results_table Params
+  # ----------------------------------------------------------------------
+
+  results_table:
+    ## Activate if you want to get summary table 
+    # from the kmersGWAS results with 10 percent threshold
+    use_10_per: False
+
+  # ----------------------------------------------------------------------
+  #     fetch_kmers Params
+  # ----------------------------------------------------------------------
+
+  fetch_kmers:
+    # Number of threads to use
+    threshold: 5
+
+  # ----------------------------------------------------------------------
+  #     fetch_reads Params
+  # ----------------------------------------------------------------------
+  
+  fetch_reads:
+    # Number of threads to use
+    threads: 4
+  
+  # ----------------------------------------------------------------------
+  #     sort_reads Params
+  # ----------------------------------------------------------------------
+  
+  sort_reads:
+    # Parameter to activate seqkit rename before sorting
+    # Set to True if you want to rename duplicated reads
+    # (Default is: False)
+    rename_dups: True
+
+  # ----------------------------------------------------------------------
+  #     bowtie2 Params
+  # ----------------------------------------------------------------------
+
+  bowtie2:
+    # Number of threads to use
+    threads: 4
+    # Extra bowtie parameters can be given here
+    extra: "--no-unal"
+
+  # ----------------------------------------------------------------------
+  #     bowtie Params
+  # ----------------------------------------------------------------------
+  
+  bowtie:
+    # Number of threads to use
+    threads: 4
+    # Extra bowtie parameters can be given here
+    # e.g "-m 3"
+    extra: "--no-unal"
+
+  # ----------------------------------------------------------------------
+  #     plot_manhattan Params
+  # ----------------------------------------------------------------------
+
+  plot_manhattan:
+    # Number of threads to use
+    threads: 4
+    # Manhattan plot point size
+    point_size: 200
+    # Define xtick interval for 
+    # single chromosome only plots (Default is: 10000)
+    # e.g. 10000 to show 10kb intervals on the x-axis
+    # Not need to define for multiple chromosomes
+    xtick_interval: 500
+    # Define x and y-ticks fontsizes
+    tick_fontsize: 18
+    # Define x and y-axis label fontsizes
+    label_fontsize: 24
+    # Define the title fontsize
+    title_fontsize: 24
+    # Define saved plot dpi
+    dpi: 300
+    # Define the plot size
+    fig_width: 18 # Width of the plot
+    fig_height: 9 # Height of the plot
+
+  # ----------------------------------------------------------------------
+  #     samtools Params
+  # ----------------------------------------------------------------------
+  
+  samtools:
+    # Number of threads to use
+    threads: 4    
+
+  # ----------------------------------------------------------------------
+  #     bedtools Params
+  # ----------------------------------------------------------------------
+  
+  bedtools:
+    # Number of threads to use
+    threads: 4  
+
+  # ----------------------------------------------------------------------
+  #     filter_alignment Params
+  # ----------------------------------------------------------------------
+
+  filter_alignment:
+    # Minimum mapping quality score
+    min_map_score: 30
+
+  # ----------------------------------------------------------------------
+  #     spades Params
+  # ----------------------------------------------------------------------
+
+  spades:
+    # Number of threads to use
+    threads: 4
+    # Extra parameters for SPADES
+    extra: ""
+
+  # ----------------------------------------------------------------------
+  #     minimap2 Params
+  # ----------------------------------------------------------------------
+
+  minimap2:
+    # Number of threads to use
+    threads: 4
+
+  # ----------------------------------------------------------------------
+  #     igv_report Params
+  # ----------------------------------------------------------------------
+
+  igv_report:
+    # Number of threads to use
+    threads: 4
+    # Extra parameters for IGV-report
+    extra: ""
+
+  # ----------------------------------------------------------------------
+  #     BLAST Params
+  # ----------------------------------------------------------------------
+
+  blastn:
+    # Number of threads to use
+    threads: 4
+    # BLAST output format
+    format: "6 qseqid qstart qend evalue"
+    # Extra parameters if needed
+    extra: ""
