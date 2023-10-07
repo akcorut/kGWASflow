@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.3.0](https://github.com/akcorut/kGWASflow/compare/v1.2.4...v1.3.0) (2023-10-07)
+
+
+### Features
+
+* add a mock test dataset for faster test run ([8609a09](https://github.com/akcorut/kGWASflow/commit/8609a096c6ad4e405043ac4106d4182d30f9ee75))
+* add an option to rename duplicates before seqkit sort ([bfefd72](https://github.com/akcorut/kGWASflow/commit/bfefd7285536f737c5baa4ef755d70df4ed2129e))
+* update main config.yaml ([d63291e](https://github.com/akcorut/kGWASflow/commit/d63291e305bb9251c52908730fb2c7494f285adf))
+
+
+### Bug Fixes
+
+* fixed the issues with na p-values ([c577d86](https://github.com/akcorut/kGWASflow/commit/c577d86e30a585f30b2f87397d31e0a1d3b39800))
+* make igv_report optional so the pipeline can run without providing a gff/gtf file ([61105b8](https://github.com/akcorut/kGWASflow/commit/61105b8c692f77d733516e36284e20b598f1fab4))
+
 ## [1.2.4](https://github.com/akcorut/kGWASflow/compare/v1.2.3...v1.2.4) (2023-09-19)
 
 
