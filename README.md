@@ -30,8 +30,8 @@ A modular, flexible, and reproducible Snakemake workflow to perform k-mers-based
 
 **More information and explanations on how to install, configure and run kGWASflow are provided in the [kGWASflow Wiki](https://github.com/akcorut/kGWASflow/wiki).**
 
-**kGWASflow preprint is out on bioRxiv:** 
-- Adnan Kivanc Corut, Jason G. Wallace. kGWASflow: a modular, flexible, and reproducible Snakemake workflow for k-mers-based GWAS (2023). bioRxiv. [https://doi.org/10.1101/2023.07.10.548365](https://doi.org/10.1101/2023.07.10.548365)
+**kGWASflow is out on G3 Genes|Genomes|Genetics:** 
+- Corut, A. K., & Wallace, J. G. (2024). kGWASflow: a modular, flexible, and reproducible Snakemake workflow for k-mers-based GWAS. G3: Genes, Genomes, Genetics, 14(1), jkad246.  [https://doi.org/10.1101/2023.07.10.548365](https://doi.org/10.1093/g3journal/jkad246)
 
 ![My project-1-3](https://user-images.githubusercontent.com/42179487/198741149-406abb40-5d1c-4ed0-9a2f-1c6fd9ebed3c.png)
 
@@ -252,11 +252,11 @@ ___________
 
 ## Citation
 
-‼️**kGWASflow preprint is out now on bioRxiv:** [https://doi.org/10.1101/2023.07.10.548365](https://doi.org/10.1101/2023.07.10.548365) ‼️
+‼️**kGWASflow is out now on G3:** [https://doi.org/10.1101/2023.07.10.548365](https://doi.org/10.1093/g3journal/jkad246) ‼️
 
-If you use kGWASflow in your research, please cite using the DOI: [https://doi.org/10.1101/2023.07.10.548365](https://doi.org/10.1101/2023.07.10.548365) and the original method paper by [Voichek et al. (2020)](https://www.nature.com/articles/s41588-020-0612-7):
+If you use kGWASflow in your research, please cite using the DOI: [https://doi.org/10.1101/2023.07.10.548365](https://doi.org/10.1093/g3journal/jkad246) and the original method paper by [Voichek et al. (2020)](https://www.nature.com/articles/s41588-020-0612-7):
 
-* Adnan Kivanc Corut, Jason G. Wallace. kGWASflow: a modular, flexible, and reproducible Snakemake workflow for k-mers-based GWAS (2023). bioRxiv. [https://doi.org/10.1101/2023.07.10.548365](https://doi.org/10.1101/2023.07.10.548365)
+* Corut, A. K., & Wallace, J. G. (2024). kGWASflow: a modular, flexible, and reproducible Snakemake workflow for k-mers-based GWAS. G3: Genes, Genomes, Genetics, 14(1), jkad246.  [https://doi.org/10.1101/2023.07.10.548365](https://doi.org/10.1093/g3journal/jkad246)
 
 * Voichek, Y., Weigel, D. Identifying genetic variants underlying phenotypic variation in plants without complete genomes. Nat Genet 52, 534–540 (2020). https://doi.org/10.1038/s41588-020-0612-7
 
